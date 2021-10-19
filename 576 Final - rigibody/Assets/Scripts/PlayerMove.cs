@@ -81,7 +81,7 @@ public class PlayerMove : MonoBehaviour
             if((Input.GetKeyDown(crouch_key) && isRunning()) || isSliding) {
                 Slid();
                 time += Time.deltaTime;
-                if(time >= 0.75f) {
+                if(time >= 0.82f) {
                     isSliding = false;
                 }
             } else if(isRunning()){
@@ -161,7 +161,7 @@ public class PlayerMove : MonoBehaviour
             isSliding = true;
         }
         capture_direction = false;
-        rb.AddForce(current_direction.normalized * 1.45f, ForceMode.VelocityChange);
+        rb.AddForce(current_direction.normalized * 1.3f, ForceMode.VelocityChange);
     }
 
     // Stand part.

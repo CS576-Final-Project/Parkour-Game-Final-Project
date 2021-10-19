@@ -58,7 +58,7 @@ public class MoveSway : MonoBehaviour
         // If not sliding, back to normal.
         if(!player_movement.isSliding) {
             go_back = false;
-            transform.localRotation = Quaternion.Lerp(transform.localRotation, initional_rotation, Time.deltaTime * 10f);
+            transform.localRotation = Quaternion.Lerp(transform.localRotation, initional_rotation, Time.deltaTime * 7f);
         }
 
         if(transform.localRotation == initional_rotation) {
@@ -80,7 +80,7 @@ public class MoveSway : MonoBehaviour
             transform.localPosition = new Vector3(0f, Mathf.Clamp(transform.localPosition.y, -Mathf.Infinity, initional_localY), 0f);
             
             theta += 0.003f;
-            this.transform.Translate(this.transform.up * Mathf.Sin(swing_cycle * 3f * theta) * 0.008f);
+            this.transform.Translate(this.transform.up * Mathf.Sin(swing_cycle * 3f * theta) * 0.006f);
         } 
 
         // If player is crouch walking, then begin sway.
