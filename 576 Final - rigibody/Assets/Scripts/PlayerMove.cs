@@ -73,20 +73,20 @@ public class PlayerMove : MonoBehaviour
             if(Input.GetKeyDown(jump_key) && !isCrouchWalking() && !isCrouchStationary()) {
                 Jump();
             }
-        }
-        
-        if(Input.GetKeyDown(crouch_key) && isRunning()) {
-            capture_direction = true;
-        }
 
-        if((Input.GetKeyDown(crouch_key) && isRunning()) || isSliding) {
-            Slid();
-            time += Time.deltaTime;
-            if(time >= 0.75f) {
-                isSliding = false;
+            if(Input.GetKeyDown(crouch_key) && isRunning()) {
+                capture_direction = true;
             }
-        } else if(isRunning()){
-            time = 0f;
+
+            if((Input.GetKeyDown(crouch_key) && isRunning()) || isSliding) {
+                Slid();
+                time += Time.deltaTime;
+                if(time >= 0.75f) {
+                    isSliding = false;
+                }
+            } else if(isRunning()){
+                time = 0f;
+            }
         }
     }
 
@@ -161,7 +161,7 @@ public class PlayerMove : MonoBehaviour
             isSliding = true;
         }
         capture_direction = false;
-        rb.AddForce(current_direction.normalized * 1.5f, ForceMode.VelocityChange);
+        rb.AddForce(current_direction.normalized * 1.45f, ForceMode.VelocityChange);
     }
 
     // Stand part.
@@ -180,7 +180,7 @@ public class PlayerMove : MonoBehaviour
     }
 
     public bool isStationary() {
-        if(!isWalking() && !isRunning()) {
+        if(!isWalking() && !isRunning() && !isCrouchWalking()) {
             return true;
         }
         return false;
@@ -195,7 +195,7 @@ public class PlayerMove : MonoBehaviour
     }
 
     public bool isCrouchWalking() {
-        if(Input.GetKey(crouch_key) && (Input.GetKey(walk_forward_key) || Input.GetKey(walk_left_key) || Input.GetKey(walk_right_key) || Input.GetKey(walk_backward_key))) {
+        if(Input.GetKey(crouch_key) && (Input.GetKey(walk_forward_key) || Input.GetKey(walk_left_key) || Input.GetKey(walk_right_key) || Input.GetKey(walk_backward_key)) && !isRunning()) {
             return true;
         }
         return false;

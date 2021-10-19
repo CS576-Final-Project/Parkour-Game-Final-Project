@@ -86,7 +86,7 @@ public class MoveSway : MonoBehaviour
         // If player is crouch walking, then begin sway.
         if(player_movement.isCrouchWalking() && player_movement.IsGrounded() && !player_movement.isSliding) {
             theta += 0.002f;
-            this.transform.Translate(this.transform.up * Mathf.Sin(swing_cycle * 0.05f * theta) * 0.05f);
+            this.transform.Translate(this.transform.up * Mathf.Sin(swing_cycle * 2f * theta) * 0.001f);
         }
 
         // If player is sliding, set camera offset.
