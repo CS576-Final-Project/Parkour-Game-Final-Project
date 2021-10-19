@@ -4,17 +4,21 @@ using UnityEngine;
 
 public class MouseLook : MonoBehaviour
 {
+
     public float mouse_sensitivity;
     public Transform player_head;
-    float x_rotation;
+    
+    private float x_rotation;
     private float mouseX;
     private float mouseY;
 
     // Start is called before the first frame update
     void Start() {
         player_head = GameObject.FindWithTag("Player").transform;
+
         mouse_sensitivity = 10f;
         x_rotation = 0f;
+
         Cursor.lockState = CursorLockMode.Locked;
     }
 
