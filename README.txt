@@ -20,3 +20,8 @@
 滑铲 跑的时候按C
 
 目前决定用 rigibody, 但也保留 character controller
+
+AdjustFOVWhenSliding => 在滑铲的过程中创造拉伸镜头的效果
+MouseLook => 用鼠标控制视角
+PlayerMove => 控制玩家的运动部分，包括速度，移动方向以及判定玩家当前的动作状态
+MoveSway => 控制运动时的晃动
