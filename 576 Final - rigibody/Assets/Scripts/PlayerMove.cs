@@ -11,15 +11,19 @@ public class PlayerMove : MonoBehaviour
     private MoveSway sway;
 
     [Header("Movement")]
+    public Vector3 move_direction;
     public float walking_velocity;
     public float crouching_velocity;
     public float running_velocity;
-    public float sliding_velocity;
+    public float sliding_multiplier;
     public float movement_multiplier;
-    [SerializeField] float air_multiplier;
+    [SerializeField] private float air_multiplier;
 
     [Header("Jump")]
-    public float jump_force;
+    [SerializeField] private float jump_force;
+
+    [Header("Slide")]
+    [SerializeField] private float slide_duration;
 
     [Header("Keybinds")]
     [SerializeField] KeyCode jump_key = KeyCode.Space;
@@ -31,21 +35,19 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] KeyCode run_key = KeyCode.LeftShift;
 
 
-    float rb_ground_drag = 6f;
-    float rb_air_drag = 2f;
-    float rb_slid_drag = 12f;
+    private float rb_ground_drag = 6f;
+    private float rb_air_drag = 2f;
+    private float rb_slid_drag = 12f;
 
-    float horizontal_movement;
-    float vertical_movement;
-
-    Vector3 move_direction;
+    private float horizontal_movement;
+    private float vertical_movement;
 
     Rigidbody rb;
 
     private bool capture_direction = false;
     public bool isSliding = false;
     private Vector3 current_direction = Vector3.zero;
-    public float time = 0f;
+    public float slide_time = 0f;
 
     // Start is called before the first frame update
     void Start() {
@@ -56,11 +58,13 @@ public class PlayerMove : MonoBehaviour
         walking_velocity = 7f;
         crouching_velocity = 3f;
         running_velocity = 15f;
-        sliding_velocity = 40f;
+        sliding_multiplier = 1.35f; // Use multiplier because of ForceMode.VelocityChange.
         movement_multiplier = 8f;
         air_multiplier = 0.4f;
 
         jump_force = 10f;
+
+        slide_duration = 0.88f;
 
         sway = GameObject.Find("Head").GetComponent<MoveSway>();
     }
@@ -70,22 +74,27 @@ public class PlayerMove : MonoBehaviour
         ControlDrag();
         
         if(IsGrounded()) {
-            if(Input.GetKeyDown(jump_key) && !isCrouchWalking() && !isCrouchStationary()) {
+            if(Input.GetKeyDown(jump_key) && !isCrouchWalking() && !isCrouchStationary() && !isSliding) {
                 Jump();
             }
 
+            // Capture the initional direction at the beginning of the sliding.
             if(Input.GetKeyDown(crouch_key) && isRunning()) {
                 capture_direction = true;
             }
 
+            // Slide part.
             if((Input.GetKeyDown(crouch_key) && isRunning()) || isSliding) {
-                Slid();
-                time += Time.deltaTime;
-                if(time >= 0.82f) {
+                Slide();
+                // When sliding, start the timer.
+                slide_time += Time.deltaTime;
+                // Duration of slide action
+                if(slide_time >= slide_duration) {
                     isSliding = false;
                 }
             } else if(isRunning()){
-                time = 0f;
+                // When sliding end, reset the time.
+                slide_time = 0f;
             }
         }
     }
@@ -153,7 +162,7 @@ public class PlayerMove : MonoBehaviour
         rb.AddForce(transform.up * jump_force, ForceMode.Impulse);
     }
 
-    private void Slid() {
+    private void Slide() {
         if(capture_direction) {
             current_direction = move_direction;
         }
@@ -161,7 +170,7 @@ public class PlayerMove : MonoBehaviour
             isSliding = true;
         }
         capture_direction = false;
-        rb.AddForce(current_direction.normalized * 1.3f, ForceMode.VelocityChange);
+        rb.AddForce(current_direction.normalized * sliding_multiplier, ForceMode.VelocityChange);
     }
 
     // Stand part.
