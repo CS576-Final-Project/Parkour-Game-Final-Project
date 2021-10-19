@@ -15,3 +15,5 @@
 蹲 C
 蹲走 C + WASD
 滑铲 跑的时候按C
+
+目前决定用 rigibody, 但也保留 character controller
