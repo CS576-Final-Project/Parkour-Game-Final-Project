@@ -7,7 +7,6 @@ public class MouseLook : MonoBehaviour
 
     public float mouse_sensitivity;
     public Transform player_head;
-    public Transform camera_holder;
     
     private float x_rotation, y_rotation;
     private float mouseX;
@@ -15,7 +14,7 @@ public class MouseLook : MonoBehaviour
 
     // Start is called before the first frame update
     void Start() {
-        player_head = GameObject.FindWithTag("Player").transform;
+        //player_head = GameObject.FindWithTag("Player").transform;
 
         mouse_sensitivity = 10f;
         x_rotation = 0f;
@@ -29,6 +28,7 @@ public class MouseLook : MonoBehaviour
         mouseY = Input.GetAxis("Mouse Y") * mouse_sensitivity;
 
         x_rotation -= mouseY;
+        y_rotation = mouseX;
 
         //Limits on view range of Y axis.
         x_rotation = Mathf.Clamp(x_rotation, -70f, 70f);
@@ -37,7 +37,7 @@ public class MouseLook : MonoBehaviour
         transform.localRotation = Quaternion.Euler(x_rotation, 0f, 0f);
 
         //Player game object rotates left and right, indicating the head is turned left and right.
-        camera_holder.Rotate(Vector3.up * mouseX);
+        player_head.Rotate(Vector3.up * mouseX);
 
     }
 }

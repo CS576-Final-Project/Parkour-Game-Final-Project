@@ -37,11 +37,12 @@
   </PropertyGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\AdjustFOVWhenSliding.cs" />
+     <Compile Include="Assets\Scripts\ChangeCollider.cs" />
      <Compile Include="Assets\Scripts\MoveSway.cs" />
      <Compile Include="Assets\Scripts\PlayerMove.cs" />
      <Compile Include="Assets\Scripts\MouseLook.cs" />
-     <Compile Include="Assets\Scripts\ChangeCollider.cs" />
-     <Compile Include="Assets\MoveCamera.cs" />
+     <Compile Include="Assets\Scripts\MoveMouse.cs" />
+     <Compile Include="Assets\Scripts\SimulationOfHead.cs" />
     <Reference Include="UnityEngine">
         <HintPath>C:/Program Files/2020.3.17f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>
