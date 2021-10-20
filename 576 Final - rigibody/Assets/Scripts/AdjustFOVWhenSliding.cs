@@ -13,7 +13,7 @@ public class AdjustFOVWhenSliding : MonoBehaviour
         player_camera = (Camera) GameObject.Find("Main Camera").GetComponent<Camera>();
         player_movement = GameObject.FindWithTag("Player").GetComponent<PlayerMove>();
         initional_FOV = 60f;
-        final_FOV = 85f;
+        final_FOV = 80f;
     }
 
     // Update is called once per frame

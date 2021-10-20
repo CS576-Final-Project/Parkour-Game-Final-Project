@@ -7,8 +7,9 @@ public class MouseLook : MonoBehaviour
 
     public float mouse_sensitivity;
     public Transform player_head;
+    public Transform camera_holder;
     
-    private float x_rotation;
+    private float x_rotation, y_rotation;
     private float mouseX;
     private float mouseY;
 
@@ -34,8 +35,9 @@ public class MouseLook : MonoBehaviour
 
         //The camera rotates up and down, indicating head up and head down.
         transform.localRotation = Quaternion.Euler(x_rotation, 0f, 0f);
+
         //Player game object rotates left and right, indicating the head is turned left and right.
-        player_head.Rotate(Vector3.up * mouseX);
+        camera_holder.Rotate(Vector3.up * mouseX);
 
     }
 }
