@@ -4,14 +4,13 @@ using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
-    // public Transform ground_check;
-    // public float ground_distance = 0.3f;
-    // public LayerMask ground_mask;
-    private float player_height = 2f;
+    public Transform ground_check;
+    public float ground_distance = 0.3f;
+    public LayerMask ground_mask;
     private MoveSway sway;
+    public Transform orientation;
 
     [Header("Movement")]
-    public Vector3 move_direction;
     public float walking_velocity;
     public float crouching_velocity;
     public float running_velocity;
@@ -34,6 +33,7 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] KeyCode crouch_key = KeyCode.C;
     [SerializeField] KeyCode run_key = KeyCode.LeftShift;
 
+    private Vector3 move_direction;
 
     private float rb_ground_drag = 6f;
     private float rb_air_drag = 2f;
@@ -58,7 +58,7 @@ public class PlayerMove : MonoBehaviour
         walking_velocity = 7f;
         crouching_velocity = 3f;
         running_velocity = 15f;
-        sliding_multiplier = 1.35f; // Use multiplier because of ForceMode.VelocityChange.
+        sliding_multiplier = 0.8f; // Use multiplier because of ForceMode.VelocityChange.
         movement_multiplier = 8f;
         air_multiplier = 0.4f;
 
@@ -103,7 +103,7 @@ public class PlayerMove : MonoBehaviour
         horizontal_movement = Input.GetAxisRaw("Horizontal");
         vertical_movement = Input.GetAxisRaw("Vertical");
 
-        move_direction = transform.forward * vertical_movement + transform.right * horizontal_movement;
+        move_direction = orientation.forward * vertical_movement + orientation.right * horizontal_movement;
     }
 
     private void ControlDrag() {
@@ -155,7 +155,7 @@ public class PlayerMove : MonoBehaviour
     }
 
     public bool IsGrounded() {  
-        return Physics.Raycast(transform.position, Vector3.down, player_height / 2 + 0.1f);
+        return Physics.CheckSphere(ground_check.position, ground_distance, ground_mask);
     } 
 
     private void Jump() {
@@ -197,14 +197,14 @@ public class PlayerMove : MonoBehaviour
 
     // Crouch part.
     public bool isCrouchStationary() {
-        if(Input.GetKey(crouch_key) && isStationary()) {
+        if(Input.GetKey(crouch_key) && isStationary() && !isRunning() && !isSliding) {
             return true;
         }
         return false;
     }
 
     public bool isCrouchWalking() {
-        if(Input.GetKey(crouch_key) && (Input.GetKey(walk_forward_key) || Input.GetKey(walk_left_key) || Input.GetKey(walk_right_key) || Input.GetKey(walk_backward_key)) && !isRunning()) {
+        if(Input.GetKey(crouch_key) && (Input.GetKey(walk_forward_key) || Input.GetKey(walk_left_key) || Input.GetKey(walk_right_key) || Input.GetKey(walk_backward_key)) && !isRunning() && !isSliding) {
             return true;
         }
         return false;
