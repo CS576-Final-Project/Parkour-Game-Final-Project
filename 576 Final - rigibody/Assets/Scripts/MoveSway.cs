@@ -4,102 +4,103 @@ using UnityEngine;
 
 public class MoveSway : MonoBehaviour
 {
-    public float swing_cycle;
+    public float swingCycle;
 
-    private PlayerMove player_movement;
-    private float initional_localY;
+    private PlayerMove playerMovement;
+    private float initionalLocalY;
     private float theta;
-    private float smooth_amount;
-    private Vector3 initional_walking_position;
-    private Vector3 initional_crouching_position;
-    private Vector3 sliding_position;
+    private float smoothAmount;
+    private Vector3 initionalWalkingPosition;
+    private Vector3 initionalCrouchingPosition;
+    private Vector3 slidingPosition;
 
-    public Quaternion initional_rotation;
-    private Vector3 middle_rotation_vector = new Vector3(0f, 0f, -12f);
-    private Quaternion middle_rotation;
-    private Vector3 final_rotation_vector = new Vector3(0f, 0f, 5f);
-    private Quaternion final_rotation;
-    private bool go_back = false;
-    public bool can_slide = true;
+    public Quaternion initionalRotation;
+    private Vector3 middleRotationVector = new Vector3(0f, 0f, -12f);
+    private Quaternion middleRotation;
+    private Vector3 finalRotationVector = new Vector3(0f, 0f, 5f);
+    private Quaternion finalRotation;
+    private bool goBack = false;
+    public bool canSlide = true;
 
     // Start is called before the first frame update
     void Start()
     {
-        player_movement = GameObject.FindWithTag("Player").GetComponent<PlayerMove>();
-        initional_localY = transform.localPosition.y;
-        initional_walking_position = new Vector3(0f, initional_localY + 0.0001f, 0f);
-        initional_crouching_position = new Vector3(0f, 0.55f * initional_localY + 0.0001f, 0f);
-        sliding_position = new Vector3(0f, 0.2f * initional_localY + 0.0001f, 0f);
-        initional_rotation = transform.localRotation;
-        middle_rotation = Quaternion.Euler(middle_rotation_vector);
-        final_rotation = Quaternion.Euler(final_rotation_vector);
+        playerMovement = GameObject.FindWithTag("Player").GetComponent<PlayerMove>();
+        initionalLocalY = transform.localPosition.y;
+        initionalWalkingPosition = new Vector3(0f, initionalLocalY + 0.0001f, 0f);
+        initionalCrouchingPosition = new Vector3(0f, 0.55f * initionalLocalY + 0.0001f, 0f);
+        slidingPosition = new Vector3(0f, 0.2f * initionalLocalY + 0.0001f, 0f);
+        initionalRotation = transform.localRotation;
+        middleRotation = Quaternion.Euler(middleRotationVector);
+        finalRotation = Quaternion.Euler(finalRotationVector);
         theta = 0f;
-        smooth_amount = 6f;
-        swing_cycle = 4f;
+        smoothAmount = 6f;
+        swingCycle = 4f;
     }
 
     // Update is called once per frame
     void Update()
     {
         // When player remain stationary, reset theta to 0.
-        if(player_movement.isStationary() || player_movement.isCrouchStationary()) {
+        if (playerMovement.isStationary() || playerMovement.isCrouchStationary()) {
             theta = 0f;
         }
 
         // Control the height of the player according to the pose.
-        if(player_movement.IsGrounded() && !player_movement.isSliding) {
-            if(player_movement.isCrouchStationary() || player_movement.isCrouchWalking()) {
-                transform.localPosition = Vector3.Lerp(transform.localPosition, initional_crouching_position, Time.deltaTime * smooth_amount);
-            } else if(player_movement.isStationary() || player_movement.isWalking() || player_movement.isRunning()){
-                transform.localPosition = Vector3.Lerp(transform.localPosition, initional_walking_position, Time.deltaTime * smooth_amount);
+        if (playerMovement.isGrounded() && !playerMovement.isSliding) {
+            if (playerMovement.isCrouchStationary() || playerMovement.isCrouchWalking()) {
+                transform.localPosition = Vector3.Lerp(transform.localPosition, initionalCrouchingPosition, Time.deltaTime * smoothAmount);
+            } else if (playerMovement.isStationary() || playerMovement.isWalking() || playerMovement.isRunning()) {
+                transform.localPosition = Vector3.Lerp(transform.localPosition, initionalWalkingPosition, Time.deltaTime * smoothAmount);
             }
         }
 
         // If not sliding, back to normal.
-        if(!player_movement.isSliding) {
-            go_back = false;
-            transform.localRotation = Quaternion.Lerp(transform.localRotation, initional_rotation, Time.deltaTime * 7f);
+        if (!playerMovement.isSliding) {
+            goBack = false;
+            transform.localRotation = Quaternion.Lerp(transform.localRotation, initionalRotation, Time.deltaTime * 7f);
         }
 
-        if(transform.localRotation == initional_rotation) {
-            can_slide = true;
+        if (transform.localRotation == initionalRotation) {
+            canSlide = true;
         }
 
         // If player is walking, then begin sway.
-        if(player_movement.isWalking() && player_movement.IsGrounded() && !player_movement.isCrouchWalking() && !player_movement.isSliding) {
+        if (playerMovement.isWalking() && playerMovement.isGrounded() && !playerMovement.isCrouchWalking() && !playerMovement.isSliding) {
             //Limits on swing range. Cannot exceed the initional local Y.
-            transform.localPosition = new Vector3(0f, Mathf.Clamp(transform.localPosition.y, -Mathf.Infinity, initional_localY), 0f);
-            
+            transform.localPosition = new Vector3(0f, Mathf.Clamp(transform.localPosition.y, -Mathf.Infinity, initionalLocalY), 0f);
+
             theta += 0.003f;
-            this.transform.Translate(this.transform.up * Mathf.Sin(swing_cycle * 2f * theta) * 0.003f);
-        } 
-        
+            this.transform.Translate(this.transform.up * Mathf.Sin(swingCycle * 2f * theta) * 0.003f);
+        }
+
         // If player is running, then begin sway.
-        if(player_movement.isRunning() && player_movement.IsGrounded() && !player_movement.isSliding) {
+        if (playerMovement.isRunning() && playerMovement.isGrounded() && !playerMovement.isSliding) {
             //Limits on swing range. Cannot exceed the initional local Y.
-            transform.localPosition = new Vector3(0f, Mathf.Clamp(transform.localPosition.y, -Mathf.Infinity, initional_localY), 0f);
-            
+            transform.localPosition = new Vector3(0f, Mathf.Clamp(transform.localPosition.y, -Mathf.Infinity, initionalLocalY), 0f);
+
             theta += 0.003f;
-            this.transform.Translate(this.transform.up * Mathf.Sin(swing_cycle * 3f * theta) * 0.006f);
-        } 
+            this.transform.Translate(this.transform.up * Mathf.Sin(swingCycle * 3f * theta) * 0.006f);
+        }
 
         // If player is crouch walking, then begin sway.
-        if(player_movement.isCrouchWalking() && player_movement.IsGrounded() && !player_movement.isSliding) {
+        if (playerMovement.isCrouchWalking() && playerMovement.isGrounded() && !playerMovement.isSliding) {
             theta += 0.002f;
-            this.transform.Translate(this.transform.up * Mathf.Sin(swing_cycle * 2f * theta) * 0.001f);
+            this.transform.Translate(this.transform.up * Mathf.Sin(swingCycle * 2f * theta) * 0.001f);
         }
 
         // If player is sliding, set camera offset.
-        if(player_movement.isSliding) {
-            can_slide = false;
-            transform.localPosition = Vector3.Lerp(transform.localPosition, sliding_position, Time.deltaTime * 4f);
-            if(!go_back) {
-                transform.localRotation = Quaternion.Lerp(transform.localRotation, middle_rotation, Time.deltaTime * 8f);
+        if (playerMovement.isSliding) {
+            canSlide = false;
+            transform.localPosition = Vector3.Lerp(transform.localPosition, slidingPosition, Time.deltaTime * 4f);
+            if (!goBack) {
+                transform.localRotation = Quaternion.Lerp(transform.localRotation, middleRotation, Time.deltaTime * 8f);
             } else {
-                transform.localRotation = Quaternion.Lerp(transform.localRotation, final_rotation, Time.deltaTime * 10f);
+                transform.localRotation = Quaternion.Lerp(transform.localRotation, finalRotation, Time.deltaTime * 10f);
             }
-            if(transform.localRotation.eulerAngles.z <= 348.5f) {
-                go_back = true;
+
+            if (transform.localRotation.eulerAngles.z <= 348.5f) {
+                goBack = true;
             }
         }
     }

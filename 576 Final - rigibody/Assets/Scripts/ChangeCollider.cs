@@ -4,37 +4,37 @@ using UnityEngine;
 
 public class ChangeCollider : MonoBehaviour
 {   
-    private PlayerMove player_movement;
-    private CapsuleCollider player_collider;
+    private PlayerMove playerMovement;
+    private CapsuleCollider playerCollider;
 
-    private Vector3 crouch_height;
-    private Vector3 slide_height;
+    private Vector3 crouchHeight;
+    private Vector3 slideHeight;
 
     // Start is called before the first frame update
     void Start()
     {
-        player_movement = GameObject.FindWithTag("Player").GetComponent<PlayerMove>();
-        player_collider = GetComponent<CapsuleCollider>();
+        playerMovement = GameObject.FindWithTag("Player").GetComponent<PlayerMove>();
+        playerCollider = GetComponent<CapsuleCollider>();
 
-        crouch_height = new Vector3(0f,-0.2f,0f);
-        slide_height = new Vector3(0f,-0.3f,0f);
+        crouchHeight = new Vector3(0f,-0.2f,0f);
+        slideHeight = new Vector3(0f,-0.3f,0f);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(player_movement.isCrouchWalking() || player_movement.isCrouchStationary()) {
-            player_collider.center = crouch_height;
-            player_collider.radius = 0.7f;
-            player_collider.height = 1.6f;
-        } else if(player_movement.isSliding) {
-            player_collider.center = slide_height;
-            player_collider.radius = 0.6f;
-            player_collider.height = 1.2f;
+        if(playerMovement.isCrouchWalking() || playerMovement.isCrouchStationary()) {
+            playerCollider.center = crouchHeight;
+            playerCollider.radius = 0.7f;
+            playerCollider.height = 1.6f;
+        } else if(playerMovement.isSliding) {
+            playerCollider.center = slideHeight;
+            playerCollider.radius = 0.6f;
+            playerCollider.height = 1.2f;
         } else {
-            player_collider.center = Vector3.zero;
-            player_collider.radius = 0.6f;
-            player_collider.height = 2f;
+            playerCollider.center = Vector3.zero;
+            playerCollider.radius = 0.6f;
+            playerCollider.height = 2f;
         }
     }
 }

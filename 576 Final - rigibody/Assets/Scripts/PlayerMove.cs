@@ -4,68 +4,73 @@ using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
-    public Transform ground_check;
-    public float ground_distance = 0.3f;
-    public LayerMask ground_mask;
+    [Header("Ground Check")]
+    public float groundDistance;
+    public LayerMask groundMask;
     private MoveSway sway;
 
     public Transform orientation;
 
     [Header("Movement")]
-    public float walking_velocity;
-    public float crouching_velocity;
-    public float running_velocity;
-    public float sliding_multiplier;
-    public float movement_multiplier;
-    [SerializeField] private float air_multiplier;
+    public float walkingVelocity;
+    public float crouchingVelocity;
+    public float runningVelocity;
+    public float slidingMultiplier;
+    public float movementMultiplier;
+    [SerializeField] private float airMultiplier;
 
     [Header("Jump")]
-    [SerializeField] private float jump_force;
+    [SerializeField] private float jumpForce;
 
     [Header("Slide")]
-    [SerializeField] private float slide_duration;
+    [SerializeField] private float slideDuration;
 
     [Header("Keybinds")]
-    [SerializeField] KeyCode jump_key = KeyCode.Space;
-    [SerializeField] KeyCode walk_forward_key = KeyCode.W;
-    [SerializeField] KeyCode walk_left_key = KeyCode.A;
-    [SerializeField] KeyCode walk_backward_key = KeyCode.S;
-    [SerializeField] KeyCode walk_right_key = KeyCode.D;
-    [SerializeField] KeyCode crouch_key = KeyCode.C;
-    [SerializeField] KeyCode run_key = KeyCode.LeftShift;
+    [SerializeField] KeyCode jumpKey = KeyCode.Space;
+    [SerializeField] KeyCode walkForwardKey = KeyCode.W;
+    [SerializeField] KeyCode walkLeftKey = KeyCode.A;
+    [SerializeField] KeyCode walkBackwardKey = KeyCode.S;
+    [SerializeField] KeyCode walkRightKey = KeyCode.D;
+    [SerializeField] KeyCode crouchKey = KeyCode.C;
+    [SerializeField] KeyCode runKey = KeyCode.LeftShift;
 
-    private Vector3 move_direction;
+    private Vector3 moveDirection;
+    private Vector3 slopeMoveDirection;
 
-    private float rb_ground_drag = 6f;
-    private float rb_air_drag = 2f;
-    private float rb_slid_drag = 12f;
+    private float rbGroundDrag = 6f;
+    private float rbAirDrag = 2f;
+    private float rbSlidDrag = 12f;
 
-    private float horizontal_movement;
-    private float vertical_movement;
+    private float horizontalMovement;
+    private float verticalMovement;
 
     Rigidbody rb;
 
-    private bool capture_direction = false;
+    private bool captureDirection = false;
     public bool isSliding = false;
-    private Vector3 current_direction = Vector3.zero;
-    public float slide_time = 0f;
+    private Vector3 currentDirection = Vector3.zero;
+    public float slideTime = 0f;
+
+    private RaycastHit slopeHit;
+    private float playerHeight = 2f;
 
     // Start is called before the first frame update
     void Start() {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
-        //ground_distance = 0.4f;
 
-        walking_velocity = 7f;
-        crouching_velocity = 3f;
-        running_velocity = 15f;
-        sliding_multiplier = 0.8f; // Use multiplier because of ForceMode.VelocityChange.
-        movement_multiplier = 8f;
-        air_multiplier = 0.4f;
+        groundDistance = 0.2f;
 
-        jump_force = 10f;
+        walkingVelocity = 7f;
+        crouchingVelocity = 3f;
+        runningVelocity = 15f;
+        slidingMultiplier = 0.8f; // Use multiplier because of ForceMode.VelocityChange.
+        movementMultiplier = 8f;
+        airMultiplier = 0.4f;
 
-        slide_duration = 0.88f;
+        jumpForce = 10f;
+
+        slideDuration = 0.88f;
 
         sway = GameObject.Find("Head").GetComponent<MoveSway>();
     }
@@ -74,46 +79,51 @@ public class PlayerMove : MonoBehaviour
         Inputs();
         ControlDrag();
         
-        if(IsGrounded()) {
-            if(Input.GetKeyDown(jump_key) && !isCrouchWalking() && !isCrouchStationary() && !isSliding) {
+        if(isGrounded()) {
+            if(Input.GetKeyDown(jumpKey) && !isCrouchWalking() && !isCrouchStationary() && !isSliding) {
                 Jump();
             }
 
             // Capture the initional direction at the beginning of the sliding.
-            if(Input.GetKeyDown(crouch_key) && isRunning()) {
-                capture_direction = true;
+            if(Input.GetKeyDown(crouchKey) && isRunning()) {
+                captureDirection = true;
             }
 
             // Slide part.
-            if((Input.GetKeyDown(crouch_key) && isRunning()) || isSliding) {
+            if((Input.GetKeyDown(crouchKey) && isRunning()) || isSliding) {
                 Slide();
                 // When sliding, start the timer.
-                slide_time += Time.deltaTime;
+                slideTime += Time.deltaTime;
                 // Duration of slide action
-                if(slide_time >= slide_duration) {
+                if(slideTime >= slideDuration) {
                     isSliding = false;
                 }
             } else if(isRunning()){
                 // When sliding end, reset the time.
-                slide_time = 0f;
+                slideTime = 0f;
             }
+        } else if(!isGrounded()) {
+            isSliding = false;
         }
+
+        slopeMoveDirection = Vector3.ProjectOnPlane(moveDirection, slopeHit.normal);
+        print(onSlope());
     }
 
     private void Inputs() {
-        horizontal_movement = Input.GetAxisRaw("Horizontal");
-        vertical_movement = Input.GetAxisRaw("Vertical");
+        horizontalMovement = Input.GetAxisRaw("Horizontal");
+        verticalMovement = Input.GetAxisRaw("Vertical");
 
-        move_direction = orientation.forward * vertical_movement + orientation.right * horizontal_movement;
+        moveDirection = orientation.forward * verticalMovement + orientation.right * horizontalMovement;
     }
 
     private void ControlDrag() {
-        if(IsGrounded() && !isSliding) {
-            rb.drag = rb_ground_drag;
-        } else if(!IsGrounded()){
-            rb.drag = rb_air_drag;
-        } else if(IsGrounded() && isSliding) {
-            rb.drag = rb_slid_drag;
+        if(isGrounded() && !isSliding) {
+            rb.drag = rbGroundDrag;
+        } else if(!isGrounded()){
+            rb.drag = rbAirDrag;
+        } else if(isGrounded() && isSliding) {
+            rb.drag = rbSlidDrag;
         }
     }
 
@@ -126,7 +136,7 @@ public class PlayerMove : MonoBehaviour
             PlayerRunning();
         }
 
-        if(IsGrounded()) {
+        if(isGrounded()) {
             if(isCrouchWalking()) {
                 PlayerCrouchWalking();
             }
@@ -134,56 +144,71 @@ public class PlayerMove : MonoBehaviour
     }
 
     private void PlayerWalking() {
-        if(IsGrounded()) {
-            rb.AddForce(move_direction.normalized * walking_velocity * movement_multiplier, ForceMode.Acceleration);
-        } else if(!IsGrounded()){
-            rb.AddForce(move_direction.normalized * walking_velocity * movement_multiplier * air_multiplier, ForceMode.Acceleration);
+        if(isGrounded() && !onSlope()) {
+            rb.AddForce(moveDirection.normalized * walkingVelocity * movementMultiplier, ForceMode.Acceleration);
+        } else if(!isGrounded()){
+            rb.AddForce(moveDirection.normalized * walkingVelocity * movementMultiplier * airMultiplier, ForceMode.Acceleration);
+        } else if(onSlope()) {
+            rb.AddForce(slopeMoveDirection.normalized * walkingVelocity * movementMultiplier, ForceMode.Acceleration);
         }
     }
 
     private void PlayerRunning() {
-        if(IsGrounded()) {
-            rb.AddForce(move_direction.normalized * running_velocity * movement_multiplier, ForceMode.Acceleration);
-        } else if(!IsGrounded()){
-            rb.AddForce(move_direction.normalized * running_velocity * movement_multiplier * air_multiplier, ForceMode.Acceleration);
+        if(isGrounded() && !onSlope()) {
+            rb.AddForce(moveDirection.normalized * runningVelocity * movementMultiplier, ForceMode.Acceleration);
+        } else if(!isGrounded()){
+            rb.AddForce(moveDirection.normalized * runningVelocity * movementMultiplier * airMultiplier, ForceMode.Acceleration);
+        } else if(onSlope()) {
+            rb.AddForce(slopeMoveDirection.normalized * runningVelocity * movementMultiplier, ForceMode.Acceleration);
         }
     }
 
     private void PlayerCrouchWalking() {
-        if(IsGrounded()) {
-            rb.AddForce(move_direction.normalized * crouching_velocity * movement_multiplier, ForceMode.Acceleration);
+        if(isGrounded()) {
+            rb.AddForce(moveDirection.normalized * crouchingVelocity * movementMultiplier, ForceMode.Acceleration);
         }
     }
 
-    public bool IsGrounded() {  
-        return Physics.CheckSphere(ground_check.position, ground_distance, ground_mask);
+    public bool isGrounded() {  
+        return Physics.CheckSphere(transform.position - Vector3.up, groundDistance, groundMask);
     } 
 
+    public bool onSlope() {
+        if(Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight / 2 + 0.5f)) {
+            if(slopeHit.normal != Vector3.up) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        return false;
+    }
+
     private void Jump() {
-        rb.AddForce(transform.up * jump_force, ForceMode.Impulse);
+        rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
     }
 
     private void Slide() {
-        if(capture_direction) {
-            current_direction = move_direction;
+        if(captureDirection) {
+            currentDirection = moveDirection;
         }
-        if(sway.can_slide) {
+        if(sway.canSlide) {
             isSliding = true;
         }
-        capture_direction = false;
-        rb.AddForce(current_direction.normalized * sliding_multiplier, ForceMode.VelocityChange);
+        captureDirection = false;
+        rb.AddForce(currentDirection.normalized * slidingMultiplier, ForceMode.VelocityChange);
     }
 
     // Stand part.
     public bool isWalking() {
-        if((Input.GetKey(walk_forward_key) || Input.GetKey(walk_left_key) || Input.GetKey(walk_right_key)) && !Input.GetKey(run_key) && !Input.GetKey(crouch_key) || Input.GetKey(walk_backward_key)) {
+        if((Input.GetKey(walkForwardKey) || Input.GetKey(walkLeftKey) || Input.GetKey(walkRightKey)) && !Input.GetKey(runKey) && !Input.GetKey(crouchKey) || Input.GetKey(walkBackwardKey)) {
             return true;
         }
         return false;
     }
 
     public bool isRunning() {
-        if((Input.GetKey(walk_forward_key) || Input.GetKey(walk_left_key) || Input.GetKey(walk_right_key)) && Input.GetKey(run_key) && !isSliding) {
+        if((Input.GetKey(walkForwardKey) || Input.GetKey(walkLeftKey) || Input.GetKey(walkRightKey)) && Input.GetKey(runKey) && !isSliding) {
             return true;
         }
         return false;
@@ -198,14 +223,14 @@ public class PlayerMove : MonoBehaviour
 
     // Crouch part.
     public bool isCrouchStationary() {
-        if(Input.GetKey(crouch_key) && isStationary() && !isRunning() && !isSliding) {
+        if(Input.GetKey(crouchKey) && isStationary() && !isRunning() && !isSliding && !onSlope()) {
             return true;
         }
         return false;
     }
 
     public bool isCrouchWalking() {
-        if(Input.GetKey(crouch_key) && (Input.GetKey(walk_forward_key) || Input.GetKey(walk_left_key) || Input.GetKey(walk_right_key) || Input.GetKey(walk_backward_key)) && !isRunning() && !isSliding) {
+        if(Input.GetKey(crouchKey) && (Input.GetKey(walkForwardKey) || Input.GetKey(walkLeftKey) || Input.GetKey(walkRightKey) || Input.GetKey(walkBackwardKey)) && !isRunning() && !isSliding && !onSlope()) {
             return true;
         }
         return false;
