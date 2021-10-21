@@ -3,7 +3,9 @@
 2.当检测到前方撞墙的时候，取消移动的晃动 - 细节问题不做也行 - 已完成
 3.找个空把这个README换成Markdown格式
 
-大目标：贴墙跑
+大目标：
+1.贴墙跑
+2.制作钩锁，让玩家可以摆荡
 
 可选要修复的BUG：滑铲速度在不同屏幕size下表现差异巨大，修不掉就算了
 
@@ -31,3 +33,10 @@ AdjustFOVWhenSliding => 在滑铲的过程中创造拉伸镜头的效果
 MouseLook => 用鼠标控制视角
 PlayerMove => 控制玩家的运动部分，包括速度，移动方向以及判定玩家当前的动作状态
 MoveSway => 控制运动时的晃动
+ChangeCollider => 改变Collider的高度以匹配玩家的运动状态
+WallRun => 贴墙跑（in progress）
+
+///以下文件只为了消除玩家运动时观察物体会乱抖的bug而创建///
+SimulationOfHead
+MoveMouse
+原理简单的来说就是把相机摘出来然后用Empty Object占住原来的位置当替身
