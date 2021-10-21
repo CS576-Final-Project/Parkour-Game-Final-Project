@@ -93,20 +93,20 @@ public class MoveSway : MonoBehaviour
                 theta += 0.002f;
                 this.transform.Translate(this.transform.up * Mathf.Sin(swingCycle * 2f * theta) * 0.001f);
             }
+        }
 
-            // If player is sliding, set camera offset.
-            if (playerMovement.isSliding) {
-                canSlide = false;
-                transform.localPosition = Vector3.Lerp(transform.localPosition, slidingPosition, Time.deltaTime * 4f);
-                if (!goBack) {
-                    transform.localRotation = Quaternion.Lerp(transform.localRotation, middleRotation, Time.deltaTime * 8f);
-                } else {
-                    transform.localRotation = Quaternion.Lerp(transform.localRotation, finalRotation, Time.deltaTime * 10f);
-                }
+        // If player is sliding, set camera offset.
+        if (playerMovement.isSliding) {
+            canSlide = false;
+            transform.localPosition = Vector3.Lerp(transform.localPosition, slidingPosition, Time.deltaTime * 4f);
+            if (!goBack) {
+                transform.localRotation = Quaternion.Lerp(transform.localRotation, middleRotation, Time.deltaTime * 8f);
+            } else {
+                transform.localRotation = Quaternion.Lerp(transform.localRotation, finalRotation, Time.deltaTime * 10f);
+            }
 
-                if (transform.localRotation.eulerAngles.z <= 348.5f) {
-                    goBack = true;
-                }
+            if (transform.localRotation.eulerAngles.z <= 348.5f) {
+                goBack = true;
             }
         }
     }
