@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class MoveSway : MonoBehaviour
 {
+    public Transform orientation;
+    public float wallDistance;
+
     public float swingCycle;
 
     private PlayerMove playerMovement;
@@ -36,6 +39,7 @@ public class MoveSway : MonoBehaviour
         theta = 0f;
         smoothAmount = 6f;
         swingCycle = 4f;
+        wallDistance = 1f;
     }
 
     // Update is called once per frame
@@ -65,43 +69,49 @@ public class MoveSway : MonoBehaviour
             canSlide = true;
         }
 
-        // If player is walking, then begin sway.
-        if (playerMovement.isWalking() && playerMovement.isGrounded() && !playerMovement.isCrouchWalking() && !playerMovement.isSliding) {
-            //Limits on swing range. Cannot exceed the initional local Y.
-            transform.localPosition = new Vector3(0f, Mathf.Clamp(transform.localPosition.y, -Mathf.Infinity, initionalLocalY), 0f);
+        if(!isWallAhead()) {
+            // If player is walking, then begin sway.
+            if (playerMovement.isWalking() && playerMovement.isGrounded() && !playerMovement.isCrouchWalking() && !playerMovement.isSliding) {
+                //Limits on swing range. Cannot exceed the initional local Y.
+                transform.localPosition = new Vector3(0f, Mathf.Clamp(transform.localPosition.y, -Mathf.Infinity, initionalLocalY), 0f);
 
-            theta += 0.003f;
-            this.transform.Translate(this.transform.up * Mathf.Sin(swingCycle * 2f * theta) * 0.003f);
-        }
-
-        // If player is running, then begin sway.
-        if (playerMovement.isRunning() && playerMovement.isGrounded() && !playerMovement.isSliding) {
-            //Limits on swing range. Cannot exceed the initional local Y.
-            transform.localPosition = new Vector3(0f, Mathf.Clamp(transform.localPosition.y, -Mathf.Infinity, initionalLocalY), 0f);
-
-            theta += 0.003f;
-            this.transform.Translate(this.transform.up * Mathf.Sin(swingCycle * 3f * theta) * 0.006f);
-        }
-
-        // If player is crouch walking, then begin sway.
-        if (playerMovement.isCrouchWalking() && playerMovement.isGrounded() && !playerMovement.isSliding) {
-            theta += 0.002f;
-            this.transform.Translate(this.transform.up * Mathf.Sin(swingCycle * 2f * theta) * 0.001f);
-        }
-
-        // If player is sliding, set camera offset.
-        if (playerMovement.isSliding) {
-            canSlide = false;
-            transform.localPosition = Vector3.Lerp(transform.localPosition, slidingPosition, Time.deltaTime * 4f);
-            if (!goBack) {
-                transform.localRotation = Quaternion.Lerp(transform.localRotation, middleRotation, Time.deltaTime * 8f);
-            } else {
-                transform.localRotation = Quaternion.Lerp(transform.localRotation, finalRotation, Time.deltaTime * 10f);
+                theta += 0.003f;
+                this.transform.Translate(this.transform.up * Mathf.Sin(swingCycle * 2f * theta) * 0.003f);
             }
 
-            if (transform.localRotation.eulerAngles.z <= 348.5f) {
-                goBack = true;
+            // If player is running, then begin sway.
+            if (playerMovement.isRunning() && playerMovement.isGrounded() && !playerMovement.isSliding) {
+                //Limits on swing range. Cannot exceed the initional local Y.
+                transform.localPosition = new Vector3(0f, Mathf.Clamp(transform.localPosition.y, -Mathf.Infinity, initionalLocalY), 0f);
+
+                theta += 0.003f;
+                this.transform.Translate(this.transform.up * Mathf.Sin(swingCycle * 3f * theta) * 0.006f);
+            }
+
+            // If player is crouch walking, then begin sway.
+            if (playerMovement.isCrouchWalking() && playerMovement.isGrounded() && !playerMovement.isSliding) {
+                theta += 0.002f;
+                this.transform.Translate(this.transform.up * Mathf.Sin(swingCycle * 2f * theta) * 0.001f);
+            }
+
+            // If player is sliding, set camera offset.
+            if (playerMovement.isSliding) {
+                canSlide = false;
+                transform.localPosition = Vector3.Lerp(transform.localPosition, slidingPosition, Time.deltaTime * 4f);
+                if (!goBack) {
+                    transform.localRotation = Quaternion.Lerp(transform.localRotation, middleRotation, Time.deltaTime * 8f);
+                } else {
+                    transform.localRotation = Quaternion.Lerp(transform.localRotation, finalRotation, Time.deltaTime * 10f);
+                }
+
+                if (transform.localRotation.eulerAngles.z <= 348.5f) {
+                    goBack = true;
+                }
             }
         }
+    }
+
+    private bool isWallAhead() {
+        return Physics.Raycast(transform.position, orientation.forward, wallDistance);
     }
 }

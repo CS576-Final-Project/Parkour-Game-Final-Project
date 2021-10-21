@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerMove : MonoBehaviour
 {
     [Header("Ground Check")]
+    public Transform groundCheck;
     public float groundDistance;
     public LayerMask groundMask;
     private MoveSway sway;
@@ -107,7 +108,6 @@ public class PlayerMove : MonoBehaviour
         }
 
         slopeMoveDirection = Vector3.ProjectOnPlane(moveDirection, slopeHit.normal);
-        print(onSlope());
     }
 
     private void Inputs() {
@@ -170,7 +170,7 @@ public class PlayerMove : MonoBehaviour
     }
 
     public bool isGrounded() {  
-        return Physics.CheckSphere(transform.position - Vector3.up, groundDistance, groundMask);
+        return Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
     } 
 
     public bool onSlope() {
@@ -185,6 +185,9 @@ public class PlayerMove : MonoBehaviour
     }
 
     private void Jump() {
+        if(isGrounded()) {
+            rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+        }
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
     }
 
@@ -201,7 +204,7 @@ public class PlayerMove : MonoBehaviour
 
     // Stand part.
     public bool isWalking() {
-        if((Input.GetKey(walkForwardKey) || Input.GetKey(walkLeftKey) || Input.GetKey(walkRightKey)) && !Input.GetKey(runKey) && !Input.GetKey(crouchKey) || Input.GetKey(walkBackwardKey)) {
+        if((Input.GetKey(walkForwardKey) || Input.GetKey(walkLeftKey) || Input.GetKey(walkRightKey) || Input.GetKey(walkBackwardKey)) && !Input.GetKey(runKey) && !Input.GetKey(crouchKey)) {
             return true;
         }
         return false;

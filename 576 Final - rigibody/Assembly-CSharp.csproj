@@ -43,6 +43,7 @@
      <Compile Include="Assets\Scripts\MoveMouse.cs" />
      <Compile Include="Assets\Scripts\PlayerMove.cs" />
      <Compile Include="Assets\Scripts\MouseLook.cs" />
+     <Compile Include="Assets\WallRun.cs" />
     <Reference Include="UnityEngine">
         <HintPath>C:/Program Files/2020.3.17f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>
