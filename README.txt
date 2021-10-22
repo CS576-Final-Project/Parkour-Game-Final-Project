@@ -5,7 +5,7 @@
 4.代码注释完善
 
 大目标：
-1.贴墙跑 - 完成中
+1.贴墙跑 - 已初步完成
 2.制作钩锁，让玩家可以摆荡
 
 可选要修复的BUG：滑铲速度在不同屏幕size下表现差异巨大，修不掉就算了
@@ -35,7 +35,7 @@ MouseLook => 用鼠标控制视角
 PlayerMove => 控制玩家的运动部分，包括速度，移动方向以及判定玩家当前的动作状态
 MoveSway => 控制运动时的晃动
 ChangeCollider => 改变Collider的高度以匹配玩家的运动状态
-WallRun => 贴墙跑（in progress）
+WallRun => 贴墙跑
 
 ///以下文件只为了消除玩家运动时观察物体会乱抖的bug而创建///
 SimulationOfHead
