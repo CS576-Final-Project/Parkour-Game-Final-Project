@@ -23,11 +23,11 @@ public class ChangeCollider : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(playerMovement.isCrouchWalking() || playerMovement.isCrouchStationary()) {
+        if (playerMovement.isCrouchWalking() || playerMovement.isCrouchStationary()) {
             playerCollider.center = crouchHeight;
             playerCollider.radius = 0.7f;
             playerCollider.height = 1.6f;
-        } else if(playerMovement.isSliding) {
+        } else if (playerMovement.isSliding) {
             playerCollider.center = slideHeight;
             playerCollider.radius = 0.6f;
             playerCollider.height = 1.2f;

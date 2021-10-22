@@ -10,6 +10,7 @@ public class MoveSway : MonoBehaviour
     public float swingCycle;
 
     private PlayerMove playerMovement;
+    private WallRun wallRun;
     private float initionalLocalY;
     private float theta;
     private float smoothAmount;
@@ -18,24 +19,32 @@ public class MoveSway : MonoBehaviour
     private Vector3 slidingPosition;
 
     public Quaternion initionalRotation;
-    private Vector3 middleRotationVector = new Vector3(0f, 0f, -12f);
+    private Vector3 middleRotationVector = new Vector3(0f, 0f, -13f);
     private Quaternion middleRotation;
     private Vector3 finalRotationVector = new Vector3(0f, 0f, 5f);
     private Quaternion finalRotation;
     private bool goBack = false;
     public bool canSlide = true;
 
+    private Vector3 wallRunLeftRotationVector = new Vector3(0f, 0f, -20f);
+    private Vector3 wallRunRightRotationVector = new Vector3(0f, 0f, 20f);
+    private Quaternion wallRunLeftRotation;
+    private Quaternion wallRunRightRotation;
+
     // Start is called before the first frame update
     void Start()
     {
         playerMovement = GameObject.FindWithTag("Player").GetComponent<PlayerMove>();
+        wallRun = GameObject.FindWithTag("Player").GetComponent<WallRun>();
         initionalLocalY = transform.localPosition.y;
         initionalWalkingPosition = new Vector3(0f, initionalLocalY + 0.0001f, 0f);
         initionalCrouchingPosition = new Vector3(0f, 0.55f * initionalLocalY + 0.0001f, 0f);
-        slidingPosition = new Vector3(0f, 0.2f * initionalLocalY + 0.0001f, 0f);
+        slidingPosition = new Vector3(0f, 0.15f * initionalLocalY + 0.0001f, 0f);
         initionalRotation = transform.localRotation;
         middleRotation = Quaternion.Euler(middleRotationVector);
         finalRotation = Quaternion.Euler(finalRotationVector);
+        wallRunLeftRotation = Quaternion.Euler(wallRunLeftRotationVector);
+        wallRunRightRotation = Quaternion.Euler(wallRunRightRotationVector);
         theta = 0f;
         smoothAmount = 6f;
         swingCycle = 4f;
@@ -105,9 +114,24 @@ public class MoveSway : MonoBehaviour
                 transform.localRotation = Quaternion.Lerp(transform.localRotation, finalRotation, Time.deltaTime * 10f);
             }
 
-            if (transform.localRotation.eulerAngles.z <= 348.5f) {
+            if (transform.localRotation.eulerAngles.z <= (360.5 + middleRotationVector.z)) {
                 goBack = true;
             }
+        }
+
+        // If player is wall running, set the camera offset.
+        if (wallRun.isWallLeft) {
+            transform.localPosition = new Vector3(0f, Mathf.Clamp(transform.localPosition.y, -Mathf.Infinity, initionalLocalY), 0f);
+
+            theta += 0.003f;
+            this.transform.Translate(this.transform.up * Mathf.Sin(swingCycle * 2.6f * theta) * 0.006f);
+            transform.localRotation = Quaternion.Lerp(transform.localRotation, wallRunLeftRotation, Time.deltaTime * 8f);
+        } else if (wallRun.isWallRight) {
+            transform.localPosition = new Vector3(0f, Mathf.Clamp(transform.localPosition.y, -Mathf.Infinity, initionalLocalY), 0f);
+
+            theta += 0.003f;
+            this.transform.Translate(this.transform.up * Mathf.Sin(swingCycle * 2.6f * theta) * 0.006f);
+            transform.localRotation = Quaternion.Lerp(transform.localRotation, wallRunRightRotation, Time.deltaTime * 8f);
         }
     }
 

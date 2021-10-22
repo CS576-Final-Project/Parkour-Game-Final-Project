@@ -19,7 +19,7 @@ public class AdjustFOVWhenSliding : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(playerMovement.isSliding) {
+        if (playerMovement.isSliding) {
             playerCamera.fieldOfView = Mathf.Lerp(playerCamera.fieldOfView, finalFOV, Time.deltaTime * 1f);
         } else {
             playerCamera.fieldOfView = Mathf.Lerp(playerCamera.fieldOfView, initionalFOV, Time.deltaTime * 3f);
