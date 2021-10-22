@@ -7,6 +7,7 @@ public class AdjustFOVWhenSliding : MonoBehaviour
     private Camera playerCamera;
     private PlayerMove playerMovement;
     private float initionalFOV, finalFOV;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,6 +20,7 @@ public class AdjustFOVWhenSliding : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // When sliding, extend the FOV of camera.
         if (playerMovement.isSliding) {
             playerCamera.fieldOfView = Mathf.Lerp(playerCamera.fieldOfView, finalFOV, Time.deltaTime * 1f);
         } else {

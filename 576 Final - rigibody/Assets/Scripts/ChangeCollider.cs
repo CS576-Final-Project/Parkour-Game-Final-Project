@@ -16,22 +16,25 @@ public class ChangeCollider : MonoBehaviour
         playerMovement = GameObject.FindWithTag("Player").GetComponent<PlayerMove>();
         playerCollider = GetComponent<CapsuleCollider>();
 
-        crouchHeight = new Vector3(0f,-0.2f,0f);
-        slideHeight = new Vector3(0f,-0.3f,0f);
+        crouchHeight = new Vector3(0f, -0.2f, 0f);
+        slideHeight = new Vector3(0f, -0.3f, 0f);
     }
 
     // Update is called once per frame
     void Update()
     {
         if (playerMovement.isCrouchWalking() || playerMovement.isCrouchStationary()) {
+            // Collider when crouching.
             playerCollider.center = crouchHeight;
             playerCollider.radius = 0.7f;
-            playerCollider.height = 1.6f;
+            playerCollider.height = 1.7f;
         } else if (playerMovement.isSliding) {
+            // Collider when sliding.
             playerCollider.center = slideHeight;
             playerCollider.radius = 0.6f;
             playerCollider.height = 1.2f;
         } else {
+            // Collider when normal.
             playerCollider.center = Vector3.zero;
             playerCollider.radius = 0.6f;
             playerCollider.height = 2f;

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class MouseLook : MonoBehaviour
 {
-
     public float mouseSensitivity;
     public Transform playerHead;
     
@@ -14,11 +13,10 @@ public class MouseLook : MonoBehaviour
 
     // Start is called before the first frame update
     void Start() {
-        //player_head = GameObject.FindWithTag("Player").transform;
-
         mouseSensitivity = 10f;
         xRotation = 0f;
 
+        // Hide the mouse cursor.
         Cursor.lockState = CursorLockMode.Locked;
     }
 
@@ -30,13 +28,14 @@ public class MouseLook : MonoBehaviour
         xRotation -= mouseY;
         yRotation = mouseX;
 
-        //Limits on view range of Y axis.
+        // Limits on view range of Y axis.
         xRotation = Mathf.Clamp(xRotation, -70f, 70f);
 
-        //The camera rotates up and down, indicating head up and head down.
+        // The camera rotates up and down, indicating head up and head down.
         transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
 
-        //Player game object rotates left and right, indicating the head is turned left and right.
+        // Player game object rotates left and right, indicating the head is turned left and right.
+        // playerHead is set manually in unity.
         playerHead.Rotate(Vector3.up * mouseX);
 
     }
