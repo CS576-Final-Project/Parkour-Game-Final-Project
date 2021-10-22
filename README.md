@@ -2,13 +2,9 @@
 ## **<font size=5>游戏类型</font>**
 <font size=3> 在3D世界中的第一人称跑酷，射击。</font> <br>
 
----
-
 ## **<font size=5>游戏玩法</font>**
 <font size=3>通过各种跑酷的技巧到达终点，中间会发生与NPC的战斗。</font> <br>
 <font size=3>可能会有一个BOSS在后方追逐玩家（待定）</font> <br>
-
----
 
 ## **<font size=5>开发日志</font>**
 - ### **当前主要冲刺目标**
