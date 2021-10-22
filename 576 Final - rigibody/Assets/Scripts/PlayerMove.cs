@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
+    public Transform orientation; // orientation is set manually in unity.
+    private MoveSway sway;
+
     [Header("Ground Check")]
     public Transform groundCheck;
     public float groundDistance;
     public LayerMask groundMask;
-    private MoveSway sway;
-
-    public Transform orientation;
 
     [Header("Movement")]
     public float walkingVelocity;
@@ -19,8 +19,8 @@ public class PlayerMove : MonoBehaviour
     public float wallRunningVelocity;
     public float slidingMultiplier;
     public float movementMultiplier;
+    public float airMultiplier;
     public float gravity;
-    [SerializeField] private float airMultiplier;
 
     [Header("Jump")]
     [SerializeField] private float jumpForce;
@@ -90,6 +90,7 @@ public class PlayerMove : MonoBehaviour
 
         print(isWallRunningStationary());
         
+        // Sliding and jumping can only begin on the ground.
         if (isGrounded()) {
             if (Input.GetKeyDown(jumpKey) && !isCrouchWalking() && !isCrouchStationary() && !isSliding) {
                 Jump();
@@ -117,13 +118,16 @@ public class PlayerMove : MonoBehaviour
             isSliding = false;
         }
         
+        // If player is in the air and not wallrunning, use the normal gravity.
         if (!isGrounded() && wallRun.StopWallRun()) {
             rb.AddForce(Vector3.down * gravity, ForceMode.Force);
         }
 
+        // Set slope direction.
         slopeMoveDirection = Vector3.ProjectOnPlane(moveDirection, slopeHit.normal);
     }
 
+    // Get mouse input, set move direction.
     private void Inputs() {
         horizontalMovement = Input.GetAxisRaw("Horizontal");
         verticalMovement = Input.GetAxisRaw("Vertical");

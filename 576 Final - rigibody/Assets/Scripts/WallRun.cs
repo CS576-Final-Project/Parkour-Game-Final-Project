@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WallRun : MonoBehaviour
 {
-    public Transform orientation;
+    public Transform orientation; // orientation is set manually in unity.
     private PlayerMove playerMovement;
 
     [Header("Wall Running")]
@@ -13,6 +13,7 @@ public class WallRun : MonoBehaviour
     [SerializeField] private float wallRunGravity;
     [SerializeField] private float wallRunJumpForce; 
 
+    // Check if the player is on wall.
     public bool isWallLeft = false;
     public bool isWallRight = false;
 
@@ -24,13 +25,13 @@ public class WallRun : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        playerMovement = GetComponent<PlayerMove>();
+
         wallDistance = 0.8f;
         minimumJumpHeight = 1.5f;
         wallRunGravity = 0.1f;
         wallRunJumpForce = 18f;
 
-        playerMovement = GetComponent<PlayerMove>();
-        
         rb = GetComponent<Rigidbody>();
     }
 
@@ -47,6 +48,7 @@ public class WallRun : MonoBehaviour
     }
 
     private void CheckWall() {
+        // The wallrun state is true only when player is in the air.
         isWallLeft = (Physics.Raycast(transform.position, -orientation.right, out leftWallHit, wallDistance) && !playerMovement.isGrounded());
         isWallRight = (Physics.Raycast(transform.position, orientation.right, out rightWallHit, wallDistance) && !playerMovement.isGrounded());
     }
@@ -56,12 +58,14 @@ public class WallRun : MonoBehaviour
     }
 
     private void StartWallRun() {
+        // When player is stationary on the wall, then drop faster.
         if (playerMovement.isWallRunningStationary()) {
             rb.AddForce(Vector3.down * wallRunGravity * 15f, ForceMode.Force);
         } else {
             rb.AddForce(Vector3.down * wallRunGravity, ForceMode.Force);
         }
         
+        // Press the space to leave the wall.
         if (Input.GetKeyDown(KeyCode.Space)) {
             if (isWallLeft) {
                 Vector3 wallRunJumpDirection = transform.up + leftWallHit.normal * 2f;

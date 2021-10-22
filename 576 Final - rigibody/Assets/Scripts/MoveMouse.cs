@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MoveMouse : MonoBehaviour
 {
+    // cameraPosition is set manually in unity.
     public Transform cameraPosition;
 
     // Start is called before the first frame update
@@ -15,6 +16,7 @@ public class MoveMouse : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // THIS object's position is always same as cameraPosition's position.
         transform.position = cameraPosition.position;
     }
 }
