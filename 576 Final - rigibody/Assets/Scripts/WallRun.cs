@@ -27,10 +27,10 @@ public class WallRun : MonoBehaviour
     {
         playerMovement = GetComponent<PlayerMove>();
 
-        wallDistance = 0.8f;
+        wallDistance = 1.2f;
         minimumJumpHeight = 1.5f;
         wallRunGravity = 0.1f;
-        wallRunJumpForce = 18f;
+        wallRunJumpForce = 14f;
 
         rb = GetComponent<Rigidbody>();
     }
@@ -42,6 +42,7 @@ public class WallRun : MonoBehaviour
 
         if (CanWallRun()) {
             if(isWallLeft || isWallRight) {
+                rb.useGravity = false;
                 StartWallRun();
             }
         }

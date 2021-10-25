@@ -69,13 +69,12 @@ public class PlayerMove : MonoBehaviour
         walkingVelocity = 7f;
         crouchingVelocity = 3f;
         runningVelocity = 15f;
-        wallRunningVelocity = 12f;
+        wallRunningVelocity = 10f;
         slidingMultiplier = 0.8f; // Use multiplier because of ForceMode.VelocityChange.
-        movementMultiplier = 8f;
+        movementMultiplier = 10.5f;
         airMultiplier = 0.4f;
-        gravity = 6.5f;
 
-        jumpForce = 70f;
+        jumpForce = 55f;
 
         slideDuration = 0.88f;
 
@@ -88,8 +87,6 @@ public class PlayerMove : MonoBehaviour
         Inputs();
         ControlDrag();
 
-        print(isWallRunningStationary());
-        
         // Sliding and jumping can only begin on the ground.
         if (isGrounded()) {
             if (Input.GetKeyDown(jumpKey) && !isCrouchWalking() && !isCrouchStationary() && !isSliding) {
@@ -116,11 +113,6 @@ public class PlayerMove : MonoBehaviour
             }
         } else if (!isGrounded()) {
             isSliding = false;
-        }
-        
-        // If player is in the air and not wallrunning, use the normal gravity.
-        if (!isGrounded() && wallRun.StopWallRun()) {
-            rb.AddForce(Vector3.down * gravity, ForceMode.Force);
         }
 
         // Set slope direction.
@@ -160,6 +152,11 @@ public class PlayerMove : MonoBehaviour
             if (isCrouchWalking()) {
                 PlayerCrouchWalking();
             }
+        }
+
+        // If player is in the air and not wallrunning, use the normal gravity.
+        if (!isGrounded() && wallRun.StopWallRun()) {
+            rb.useGravity = true;
         }
     }
 
