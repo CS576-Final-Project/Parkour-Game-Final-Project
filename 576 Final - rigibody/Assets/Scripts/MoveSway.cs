@@ -8,7 +8,10 @@ public class MoveSway : MonoBehaviour
 
     // Wall-check part.
     public Transform orientation;
-    public Transform wallCheck;
+    public Transform wallForwardCheck;
+    public Transform wallLeftCheck;
+    public Transform wallRightCheck;
+    public LayerMask wallMask;
     public float wallDistance;
 
     // Walking sway related parameters.
@@ -28,7 +31,7 @@ public class MoveSway : MonoBehaviour
     private Quaternion middleRotation;
     private Vector3 finalRotationVector = new Vector3(0f, 0f, 5f);
     private Quaternion finalRotation;
-    private bool goBack = false; // Rightward turn must reach the maximum value before starting to turn back.
+    private bool slidingRotationGoBack = false; // Rightward turn must reach the maximum value before starting to turn back.
     public bool canSlide = true; // When sliding is completely completed, only then can the next slide begin.
 
     // Wallrunning camera rotation.
@@ -45,7 +48,7 @@ public class MoveSway : MonoBehaviour
         
         // Wall-check part.
         // orientation & wallCheck are set manually in unity.
-        wallDistance = 1f;
+        wallDistance = 0.25f;
 
         // Walking sway related parameters.
         smoothAmount = 6f;
@@ -88,7 +91,7 @@ public class MoveSway : MonoBehaviour
 
         // If not sliding, back to normal.
         if (!playerMovement.isSliding) {
-            goBack = false;
+            slidingRotationGoBack = false;
             transform.localRotation = Quaternion.Lerp(transform.localRotation, initionalRotation, Time.deltaTime * 7f);
         }
 
@@ -120,7 +123,7 @@ public class MoveSway : MonoBehaviour
             SlidingSway();
         }
 
-        // If player is wall running, set the camera offset.
+        // If player is wallrunning, set the camera offset.
         if (wallRun.isWallLeft) {
             WallRunningLeftSway();
         } else if (wallRun.isWallRight) {
@@ -128,8 +131,16 @@ public class MoveSway : MonoBehaviour
         }
     }
 
-    private bool isWallAhead() {
-        return Physics.Raycast(wallCheck.position, orientation.forward, wallDistance);
+    public bool isWallAhead() {
+        return Physics.CheckSphere(wallForwardCheck.position, wallDistance, wallMask);
+    }
+
+    public bool isWallLeft() {
+        return Physics.CheckSphere(wallLeftCheck.position, wallDistance, wallMask);
+    }
+
+    public bool isWallRight() {
+        return Physics.CheckSphere(wallRightCheck.position, wallDistance, wallMask);
     }
 
     private void WalkingSway() {
@@ -158,7 +169,7 @@ public class MoveSway : MonoBehaviour
         canSlide = false;
 
         transform.localPosition = Vector3.Lerp(transform.localPosition, slidingPosition, Time.deltaTime * 4f);
-        if (!goBack) {
+        if (!slidingRotationGoBack) {
             transform.localRotation = Quaternion.Lerp(transform.localRotation, middleRotation, Time.deltaTime * 8f);
         } else {
             transform.localRotation = Quaternion.Lerp(transform.localRotation, finalRotation, Time.deltaTime * 10f);
@@ -166,7 +177,7 @@ public class MoveSway : MonoBehaviour
 
         // When reaching the maximum value of the rightward turn, going back.
         if (transform.localRotation.eulerAngles.z <= (360.5 + middleRotationVector.z)) {
-            goBack = true;
+            slidingRotationGoBack = true;
         }
     }
     
