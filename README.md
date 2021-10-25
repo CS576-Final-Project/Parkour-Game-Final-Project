@@ -65,6 +65,7 @@
 |AdjustFOVWhenSliding.cs|在玩家滑铲的过程中调整相机FOV以增强速度感|
 |MoveMouse.cs|为了消除玩家运动时观察物体会乱抖的BUG而创建 <br> 将摄像机安插至头部的位置 <br> 让摄像机能够按照头部的晃动完成镜头晃动|
 |SimulationOfHead.cs|为了消除玩家运动时观察物体会乱抖的BUG而创建 <br> 让摄像机能够按照头部的晃动完成镜头晃动|
+|SwitchWeaponPlace.cs|改变持枪姿势以符合各种情况|
 
 ---
 
