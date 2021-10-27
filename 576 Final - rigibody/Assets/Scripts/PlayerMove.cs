@@ -5,7 +5,10 @@ using UnityEngine;
 public class PlayerMove : MonoBehaviour
 {
     public Transform orientation; // orientation is set manually in unity.
+
     private MoveSway sway;
+    private WallRun wallRun;
+    private GrapplingHook playerHook;
 
     [Header("Ground Check")]
     public Transform groundCheck;
@@ -20,7 +23,7 @@ public class PlayerMove : MonoBehaviour
     public float slidingMultiplier;
     public float movementMultiplier;
     public float airMultiplier;
-    public float gravity;
+    public float hookMultiplier;
 
     [Header("Jump")]
     [SerializeField] private float jumpForce;
@@ -57,7 +60,12 @@ public class PlayerMove : MonoBehaviour
     private RaycastHit slopeHit;
     private float playerHeight = 2f;
 
-    private WallRun wallRun;
+    public bool isRopeCut = false;
+    private Collider selfCollider;
+    private Collider hookTriggerCollider;
+    private Collider HUDTriggerCollider;
+    public bool stopCapture = false;
+    public Vector3 hookCurrentDirection = Vector3.zero;
 
     // Start is called before the first frame update
     void Start() {
@@ -70,22 +78,36 @@ public class PlayerMove : MonoBehaviour
         crouchingVelocity = 3f;
         runningVelocity = 15f;
         wallRunningVelocity = 10f;
-        slidingMultiplier = 0.8f; // Use multiplier because of ForceMode.VelocityChange.
+        slidingMultiplier = 0.9f; // Use multiplier because of ForceMode.VelocityChange.
         movementMultiplier = 10.5f;
         airMultiplier = 0.4f;
+        hookMultiplier = 180f;
 
-        jumpForce = 55f;
+        jumpForce = 60f;
 
         slideDuration = 0.88f;
 
         sway = GameObject.Find("Head").GetComponent<MoveSway>();
 
-        wallRun = GetComponent<WallRun>();
+        wallRun = GetComponent<WallRun>();  
+        playerHook = GetComponent<GrapplingHook>();
+
+        selfCollider = GameObject.Find("body").GetComponent<CapsuleCollider>();
     }
 
     void Update() {
         Inputs();
         ControlDrag();
+
+        hookTriggerCollider = playerHook.hookHit.collider;
+        if (hookTriggerCollider != null) {
+            Physics.IgnoreCollision(selfCollider, hookTriggerCollider, true);
+        }
+
+        HUDTriggerCollider = playerHook.HUDHit.collider;
+        if (HUDTriggerCollider != null) {
+            Physics.IgnoreCollision(selfCollider, HUDTriggerCollider, true);
+        }
 
         // Sliding and jumping can only begin on the ground.
         if (isGrounded()) {
@@ -111,9 +133,13 @@ public class PlayerMove : MonoBehaviour
                 // When sliding end, reset the time.
                 slideTime = 0f;
             }
+
+            playerHook.fired = false;
         } else if (!isGrounded()) {
             isSliding = false;
         }
+
+        hookAcc();
 
         // Set slope direction.
         slopeMoveDirection = Vector3.ProjectOnPlane(moveDirection, slopeHit.normal);
@@ -155,7 +181,7 @@ public class PlayerMove : MonoBehaviour
         }
 
         // If player is in the air and not wallrunning, use the normal gravity.
-        if (!isGrounded() && wallRun.StopWallRun()) {
+        if (!isGrounded() && wallRun.StopWallRun() && !playerHook.hooked) {
             rb.useGravity = true;
         }
     }
@@ -171,9 +197,8 @@ public class PlayerMove : MonoBehaviour
     private void PlayerWalking() {
         if (isGrounded() && !onSlope()) {
             rb.AddForce(moveDirection.normalized * walkingVelocity * movementMultiplier, ForceMode.Acceleration);
-        } else if (!isGrounded()){
-            Vector3 leftAndRight= new Vector3(moveDirection.x, 0f, moveDirection.z);
-            rb.AddForce(orientation.forward * walkingVelocity * movementMultiplier * airMultiplier + leftAndRight * walkingVelocity * 2f, ForceMode.Acceleration);
+        } else if (!isGrounded()) {
+            rb.AddForce(moveDirection.normalized * walkingVelocity * movementMultiplier * airMultiplier, ForceMode.Acceleration);
         } else if (onSlope()) {
             rb.AddForce(slopeMoveDirection.normalized * walkingVelocity * movementMultiplier, ForceMode.Acceleration);
         }
@@ -182,9 +207,8 @@ public class PlayerMove : MonoBehaviour
     private void PlayerRunning() {
         if (isGrounded() && !onSlope()) {
             rb.AddForce(moveDirection.normalized * runningVelocity * movementMultiplier, ForceMode.Acceleration);
-        } else if (!isGrounded()){
-            Vector3 leftAndRight= new Vector3(moveDirection.x, 0f, moveDirection.z);
-            rb.AddForce(orientation.forward * runningVelocity * movementMultiplier * airMultiplier + leftAndRight * runningVelocity * 1.5f, ForceMode.Acceleration);
+        } else if (!isGrounded()) {
+            rb.AddForce(moveDirection.normalized * runningVelocity * movementMultiplier * airMultiplier, ForceMode.Acceleration);
         } else if (onSlope()) {
             rb.AddForce(slopeMoveDirection.normalized * runningVelocity * movementMultiplier, ForceMode.Acceleration);
         }
@@ -273,5 +297,13 @@ public class PlayerMove : MonoBehaviour
         } else {
             return false;
         }
+    }
+
+    public void hookAcc() {
+        if (isRopeCut) {
+            rb.AddForce(Vector3.up * 10f, ForceMode.Impulse);
+            rb.AddForce(orientation.forward * hookMultiplier, ForceMode.Impulse);
+        }
+        isRopeCut = false;
     }
 }

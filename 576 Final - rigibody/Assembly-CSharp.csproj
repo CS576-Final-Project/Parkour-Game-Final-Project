@@ -36,15 +36,21 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\Grappling.cs" />
+     <Compile Include="Assets\Scripts\SwitchWeaponPlace.cs" />
      <Compile Include="Assets\Scripts\AdjustFOVWhenSliding.cs" />
      <Compile Include="Assets\Scripts\ChangeCollider.cs" />
      <Compile Include="Assets\Scripts\SimulationOfHead.cs" />
      <Compile Include="Assets\Scripts\MoveSway.cs" />
      <Compile Include="Assets\Scripts\MoveMouse.cs" />
+     <Compile Include="Assets\Scripts\GrapplingHook.cs" />
      <Compile Include="Assets\Scripts\WallRun.cs" />
+     <Compile Include="Assets\Several Swords With Scabbards\Demo(delete)\Scripts\Demo_switch.cs" />
      <Compile Include="Assets\Scripts\PlayerMove.cs" />
      <Compile Include="Assets\Scripts\MouseLook.cs" />
-     <Compile Include="Assets\SwitchWeaponPlace.cs" />
+     <Compile Include="Assets\ChangeImagePosition.cs" />
+     <Compile Include="Assets\M1911AnimatorControl.cs" />
+     <None Include="Assets\Several Swords With Scabbards\README.txt" />
     <Reference Include="UnityEngine">
         <HintPath>C:/Program Files/2020.3.17f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>
