@@ -6,6 +6,7 @@ public class WallRun : MonoBehaviour
 {
     public Transform orientation; // orientation is set manually in unity.
     private PlayerMove playerMovement;
+    public LayerMask wallLayer;
 
     [Header("Wall Running")]
     [SerializeField] private float wallDistance;
@@ -27,10 +28,10 @@ public class WallRun : MonoBehaviour
     {
         playerMovement = GetComponent<PlayerMove>();
 
-        wallDistance = 1.2f;
+        wallDistance = 1.5f;
         minimumJumpHeight = 1.5f;
         wallRunGravity = 0.1f;
-        wallRunJumpForce = 14f;
+        wallRunJumpForce = 12f;
 
         rb = GetComponent<Rigidbody>();
     }
@@ -50,8 +51,8 @@ public class WallRun : MonoBehaviour
 
     private void CheckWall() {
         // The wallrun state is true only when player is in the air.
-        isWallLeft = (Physics.Raycast(transform.position, -orientation.right, out leftWallHit, wallDistance) && !playerMovement.isGrounded());
-        isWallRight = (Physics.Raycast(transform.position, orientation.right, out rightWallHit, wallDistance) && !playerMovement.isGrounded());
+        isWallLeft = (Physics.Raycast(transform.position, -orientation.right, out leftWallHit, wallDistance, wallLayer) && !playerMovement.isGrounded());
+        isWallRight = (Physics.Raycast(transform.position, orientation.right, out rightWallHit, wallDistance, wallLayer) && !playerMovement.isGrounded());
     }
 
     private bool CanWallRun() {
