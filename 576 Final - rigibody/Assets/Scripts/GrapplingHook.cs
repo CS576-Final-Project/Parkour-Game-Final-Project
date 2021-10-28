@@ -16,12 +16,15 @@ public class GrapplingHook : MonoBehaviour
     public bool fired = false;
     public bool hooked = false;
     public bool play = false;
+    public bool isWallHooking = false;
 
     private Vector3 hookPoint;
 
     public float maxDistance;
+    public float wallMaxDistance;
     private float currentDistance;
     private float HUDMaxDistance;
+    private float wallHUDMaxDistance;
     
     Rigidbody rb;
 
@@ -30,16 +33,19 @@ public class GrapplingHook : MonoBehaviour
     public Camera fpsCam;
     private GameObject hookTriggerObj;
     private GameObject HUDTriggerObj;
+    private GameObject wallHookTriggerObj;
     public GameObject triggerPoint;
     private GameObject HUDTriggerPoint;
     public Transform orentation;
     public LayerMask hookable;
-    public LayerMask hookTrigger;    
+    public LayerMask hookTrigger;
+    public LayerMask wallHookTrigger;    
 
     public LayerMask HUDTrigger;
 
     public RaycastHit hookHit;
     public RaycastHit HUDHit;
+    public RaycastHit wallHookHit;
 
     void Awake() {
         lr = GameObject.Find("M1911").GetComponent<LineRenderer>();
@@ -49,9 +55,11 @@ public class GrapplingHook : MonoBehaviour
     void Start()
     {
         hookTravelSpeed = 30f;
-        playerTravelSpeed = 45f;
+        playerTravelSpeed = 40f;
         maxDistance = 60f;
+        wallMaxDistance = 60f;
         HUDMaxDistance = maxDistance - 10f;
+        wallHUDMaxDistance = wallMaxDistance -5f;
 
         rb = GetComponent<Rigidbody>(); 
 
@@ -100,6 +108,34 @@ public class GrapplingHook : MonoBehaviour
                 StartHooking();
             }
         }
+
+        if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out wallHookHit, wallMaxDistance, wallHookTrigger)) {
+            wallHookTriggerObj = wallHookHit.collider.gameObject;
+            triggerPoint = wallHookTriggerObj.transform.GetChild(0).gameObject;
+            
+            hookPoint = triggerPoint.transform.position;
+
+            if (Input.GetKeyDown(KeyCode.E) && !fired) {
+                playerMovement.hookCurrentDirection = wallHookHit.point - this.transform.position;
+                fired = true;
+                play = true;
+                isWallHooking = true;
+                animatorControl.animation_controller.Play("M1911 Hook Ready");
+                if (HUDTriggerPoint != null) {
+                    HUDTriggerPoint.SetActive(false);
+                }
+            }
+
+            if (animatorControl.animation_controller.GetCurrentAnimatorStateInfo(0).IsName("M1911 Hook Ready") && animatorControl.animation_controller.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f) {
+                animatorControl.animation_controller.Play("M1911");
+                play = false;
+                hooked = true; 
+            }   
+
+            if (hooked) {
+                StartHooking();
+            }
+        }
     }
 
     void LateUpdate() {
@@ -113,8 +149,10 @@ public class GrapplingHook : MonoBehaviour
 
         lr.positionCount = 2;
 
-        if (currentDistance < 10f) {
+        if (currentDistance < 10f && !isWallHooking) {
             StopHooking();
+        } else if (currentDistance < 3f && isWallHooking) {
+            WallStopHooking();
         }
     }
 
@@ -124,6 +162,14 @@ public class GrapplingHook : MonoBehaviour
         rb.useGravity = true;
         hooked = false;
         fired = false;
+    }
+    
+    private void WallStopHooking() {
+        lr.positionCount = 0;
+        rb.useGravity = true;
+        hooked = false;
+        fired = false;
+        isWallHooking = false;
     }
 
     private void DrawRope() {

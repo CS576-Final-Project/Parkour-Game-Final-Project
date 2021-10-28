@@ -39,22 +39,19 @@ public class SwitchWeaponPlace : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (sway.isWallRight() && !wallRun.isWallRight) {
+        if (sway.isWallRight() || wallRun.isWallRight) {
             transform.localPosition = Vector3.Lerp(transform.localPosition, leftHandPosition, Time.deltaTime * 5f);
             transform.localRotation = Quaternion.Lerp(transform.localRotation, initionalRotation, Time.deltaTime * 6f);
-        } else if ((sway.isWallRight() && wallRun.isWallRight) || (sway.isWallLeft() && wallRun.isWallLeft)) {
-            transform.localPosition = Vector3.Lerp(transform.localPosition, awayPosition, Time.deltaTime * 10f);
-            transform.localRotation = Quaternion.Lerp(transform.localRotation, awayRotation, Time.deltaTime * 6f);
         }
-
+        
         if (sway.isWallAhead()) {
             transform.localPosition = Vector3.Lerp(transform.localPosition, awayPosition, Time.deltaTime * 10f);
-            transform.localRotation = Quaternion.Lerp(transform.localRotation, awayRotation, Time.deltaTime * 6f);
+            transform.localRotation = Quaternion.Lerp(transform.localRotation, awayRotation, Time.deltaTime * 8f);
         }
 
-        if (!sway.isWallAhead() && !sway.isWallRight() && !wallRun.isWallLeft && !playerHook.play) {
-            transform.localPosition = Vector3.Lerp(transform.localPosition, initionalPosition, Time.deltaTime * 6f);
-            transform.localRotation = Quaternion.Lerp(transform.localRotation, initionalRotation, Time.deltaTime * 6f);
+        if (!sway.isWallAhead() && !sway.isWallRight() && !wallRun.isWallRight && !playerHook.play) {
+            transform.localPosition = Vector3.Lerp(transform.localPosition, initionalPosition, Time.deltaTime * 8f);
+            transform.localRotation = Quaternion.Lerp(transform.localRotation, initionalRotation, Time.deltaTime * 10f);
         }
     }
 }
