@@ -64,7 +64,7 @@ public class PlayerMove : MonoBehaviour
     private Collider selfCollider;
     private Collider hookTriggerCollider;
     private Collider HUDTriggerCollider;
-    public bool stopCapture = false;
+    private Collider wallHookTriggerCollider;
     public Vector3 hookCurrentDirection = Vector3.zero;
 
     // Start is called before the first frame update
@@ -77,11 +77,11 @@ public class PlayerMove : MonoBehaviour
         walkingVelocity = 7f;
         crouchingVelocity = 3f;
         runningVelocity = 15f;
-        wallRunningVelocity = 10f;
-        slidingMultiplier = 0.9f; // Use multiplier because of ForceMode.VelocityChange.
+        wallRunningVelocity = 14f;
+        slidingMultiplier = 1f; // Use multiplier because of ForceMode.VelocityChange.
         movementMultiplier = 10.5f;
         airMultiplier = 0.4f;
-        hookMultiplier = 180f;
+        hookMultiplier = 175f;
 
         jumpForce = 60f;
 
@@ -99,9 +99,15 @@ public class PlayerMove : MonoBehaviour
         Inputs();
         ControlDrag();
 
+        // Ignore all the trigger collider.
         hookTriggerCollider = playerHook.hookHit.collider;
         if (hookTriggerCollider != null) {
             Physics.IgnoreCollision(selfCollider, hookTriggerCollider, true);
+        }
+
+        wallHookTriggerCollider = playerHook.wallHookHit.collider;
+        if (wallHookTriggerCollider != null) {
+            Physics.IgnoreCollision(selfCollider, wallHookTriggerCollider, true);
         }
 
         HUDTriggerCollider = playerHook.HUDHit.collider;
@@ -188,9 +194,9 @@ public class PlayerMove : MonoBehaviour
 
     private void PlayerWallRunning() {
         if (wallRun.isWallLeft) {
-            rb.AddForce(orientation.forward * wallRunningVelocity * movementMultiplier - orientation.right * 10f, ForceMode.Acceleration);
+            rb.AddForce(orientation.forward * wallRunningVelocity * movementMultiplier - orientation.right * 30f, ForceMode.Acceleration);
         } else if (wallRun.isWallRight) {
-            rb.AddForce(orientation.forward * wallRunningVelocity * movementMultiplier + orientation.right * 10f, ForceMode.Acceleration);
+            rb.AddForce(orientation.forward * wallRunningVelocity * movementMultiplier + orientation.right * 40f, ForceMode.Acceleration);
         } 
     }
 
@@ -301,7 +307,7 @@ public class PlayerMove : MonoBehaviour
 
     public void hookAcc() {
         if (isRopeCut) {
-            rb.AddForce(Vector3.up * 10f, ForceMode.Impulse);
+            rb.AddForce(Vector3.up * 12f, ForceMode.Impulse);
             rb.AddForce(orientation.forward * hookMultiplier, ForceMode.Impulse);
         }
         isRopeCut = false;

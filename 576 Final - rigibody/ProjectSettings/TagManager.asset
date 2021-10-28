@@ -17,8 +17,8 @@ TagManager:
   - Hookable
   - Hook Trigger
   - HUD Trigger
-  - 
-  - 
+  - PostProcessing
+  - Wall Hook Trigger
   - 
   - 
   - 

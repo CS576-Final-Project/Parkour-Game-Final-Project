@@ -28,7 +28,7 @@ public class WallRun : MonoBehaviour
     {
         playerMovement = GetComponent<PlayerMove>();
 
-        wallDistance = 1.5f;
+        wallDistance = 1.4f;
         minimumJumpHeight = 1.5f;
         wallRunGravity = 0.1f;
         wallRunJumpForce = 12f;
@@ -62,7 +62,7 @@ public class WallRun : MonoBehaviour
     private void StartWallRun() {
         // When player is stationary on the wall, then drop faster.
         if (playerMovement.isWallRunningStationary()) {
-            rb.AddForce(Vector3.down * wallRunGravity * 15f, ForceMode.Force);
+            rb.AddForce(Vector3.down * wallRunGravity * 25f, ForceMode.Force);
         } else {
             rb.AddForce(Vector3.down * wallRunGravity, ForceMode.Force);
         }
