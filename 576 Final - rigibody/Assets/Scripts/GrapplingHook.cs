@@ -16,7 +16,6 @@ public class GrapplingHook : MonoBehaviour
     public bool fired = false;
     public bool hooked = false;
     public bool play = false;
-    public bool isWallHooking = false;
 
     private Vector3 hookPoint;
 
@@ -27,8 +26,6 @@ public class GrapplingHook : MonoBehaviour
     private float wallHUDMaxDistance;
     
     Rigidbody rb;
-
-    private Vector3 hookInitionalScale;
 
     public Camera fpsCam;
     private GameObject hookTriggerObj;
@@ -55,11 +52,10 @@ public class GrapplingHook : MonoBehaviour
     void Start()
     {
         hookTravelSpeed = 30f;
-        playerTravelSpeed = 40f;
+        playerTravelSpeed = 45f;
         maxDistance = 60f;
         wallMaxDistance = 60f;
         HUDMaxDistance = maxDistance - 10f;
-        wallHUDMaxDistance = wallMaxDistance -5f;
 
         rb = GetComponent<Rigidbody>(); 
 
@@ -70,18 +66,6 @@ public class GrapplingHook : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out HUDHit, HUDMaxDistance, HUDTrigger)) {
-            HUDTriggerObj = HUDHit.collider.gameObject;
-            HUDTriggerPoint = HUDTriggerObj.transform.GetChild(0).gameObject;
-            if (HUDTriggerPoint != null) {
-                HUDTriggerPoint.SetActive(true);
-            }
-        } else {
-            if (HUDTriggerPoint != null) {
-                HUDTriggerPoint.SetActive(false);
-            }
-        }
-
         if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hookHit, maxDistance, hookTrigger)) {
             hookTriggerObj = hookHit.collider.gameObject;
             triggerPoint = hookTriggerObj.transform.GetChild(0).gameObject;
@@ -93,37 +77,6 @@ public class GrapplingHook : MonoBehaviour
                 fired = true;
                 play = true;
                 animatorControl.animation_controller.Play("M1911 Hook Ready");
-                if (HUDTriggerPoint != null) {
-                    HUDTriggerPoint.SetActive(false);
-                }
-            }
-
-            if (animatorControl.animation_controller.GetCurrentAnimatorStateInfo(0).IsName("M1911 Hook Ready") && animatorControl.animation_controller.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f) {
-                animatorControl.animation_controller.Play("M1911");
-                play = false;
-                hooked = true; 
-            }   
-
-            if (hooked) {
-                StartHooking();
-            }
-        }
-
-        if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out wallHookHit, wallMaxDistance, wallHookTrigger)) {
-            wallHookTriggerObj = wallHookHit.collider.gameObject;
-            triggerPoint = wallHookTriggerObj.transform.GetChild(0).gameObject;
-            
-            hookPoint = triggerPoint.transform.position;
-
-            if (Input.GetKeyDown(KeyCode.E) && !fired) {
-                playerMovement.hookCurrentDirection = wallHookHit.point - this.transform.position;
-                fired = true;
-                play = true;
-                isWallHooking = true;
-                animatorControl.animation_controller.Play("M1911 Hook Ready");
-                if (HUDTriggerPoint != null) {
-                    HUDTriggerPoint.SetActive(false);
-                }
             }
 
             if (animatorControl.animation_controller.GetCurrentAnimatorStateInfo(0).IsName("M1911 Hook Ready") && animatorControl.animation_controller.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f) {
@@ -149,10 +102,8 @@ public class GrapplingHook : MonoBehaviour
 
         lr.positionCount = 2;
 
-        if (currentDistance < 10f && !isWallHooking) {
+        if (currentDistance < 10f) {
             StopHooking();
-        } else if (currentDistance < 3f && isWallHooking) {
-            WallStopHooking();
         }
     }
 
@@ -162,14 +113,6 @@ public class GrapplingHook : MonoBehaviour
         rb.useGravity = true;
         hooked = false;
         fired = false;
-    }
-    
-    private void WallStopHooking() {
-        lr.positionCount = 0;
-        rb.useGravity = true;
-        hooked = false;
-        fired = false;
-        isWallHooking = false;
     }
 
     private void DrawRope() {

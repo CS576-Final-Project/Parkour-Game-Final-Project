@@ -17,8 +17,6 @@ public class SwitchWeaponPlace : MonoBehaviour
     private Vector3 awayRotationVector;
     private Quaternion awayRotation;
 
-    private float hookRotateSpeed = 10f;
-
     // Start is called before the first frame update
     void Start()
     {

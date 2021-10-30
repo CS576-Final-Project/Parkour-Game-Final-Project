@@ -15,11 +15,11 @@ TagManager:
   - Wall
   - Gappleable
   - Hookable
-  - Hook Trigger
-  - HUD Trigger
+  - HookTrigger
+  - HUDTrigger
   - PostProcessing
-  - Wall Hook Trigger
-  - 
+  - WallHookTrigger
+  - WallHUDTrigger
   - 
   - 
   - 
