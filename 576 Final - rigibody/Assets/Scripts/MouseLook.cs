@@ -12,6 +12,7 @@ public class MouseLook : MonoBehaviour
     private float mouseY;
 
     private GrapplingHook playerHook;
+    private WallGrapplingHook playerWallHook;
 
     // Start is called before the first frame update
     void Start() {
@@ -22,6 +23,7 @@ public class MouseLook : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
 
         playerHook = GameObject.FindWithTag("Player").GetComponent<GrapplingHook>();
+        playerWallHook = GameObject.FindWithTag("Player").GetComponent<WallGrapplingHook>();
     }
 
     // Update is called once per frame
@@ -34,7 +36,7 @@ public class MouseLook : MonoBehaviour
         // Limits on view range of Y axis.
         xRotation = Mathf.Clamp(xRotation, -70f, 70f);
 
-        if (!playerHook.hooked) {
+        if (!playerHook.hooked && !playerWallHook.hooked) {
             // The camera rotates up and down, indicating head up and head down.
             transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
 

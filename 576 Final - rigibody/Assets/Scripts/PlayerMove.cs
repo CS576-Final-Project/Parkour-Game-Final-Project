@@ -24,6 +24,7 @@ public class PlayerMove : MonoBehaviour
     public float movementMultiplier;
     public float airMultiplier;
     public float hookMultiplier;
+    public float wallHookMultiplier;
 
     [Header("Jump")]
     [SerializeField] private float jumpForce;
@@ -61,10 +62,8 @@ public class PlayerMove : MonoBehaviour
     private float playerHeight = 2f;
 
     public bool isRopeCut = false;
-    private Collider selfCollider;
-    private Collider hookTriggerCollider;
-    private Collider HUDTriggerCollider;
-    private Collider wallHookTriggerCollider;
+    public bool isWallRopeCut = false;
+    public Collider selfCollider;
     public Vector3 hookCurrentDirection = Vector3.zero;
 
     // Start is called before the first frame update
@@ -81,7 +80,7 @@ public class PlayerMove : MonoBehaviour
         slidingMultiplier = 1f; // Use multiplier because of ForceMode.VelocityChange.
         movementMultiplier = 10.5f;
         airMultiplier = 0.4f;
-        hookMultiplier = 175f;
+        hookMultiplier = 250f;
 
         jumpForce = 60f;
 
@@ -100,20 +99,10 @@ public class PlayerMove : MonoBehaviour
         ControlDrag();
 
         // Ignore all the trigger collider.
-        hookTriggerCollider = playerHook.hookHit.collider;
-        if (hookTriggerCollider != null) {
-            Physics.IgnoreCollision(selfCollider, hookTriggerCollider, true);
-        }
-
-        wallHookTriggerCollider = playerHook.wallHookHit.collider;
-        if (wallHookTriggerCollider != null) {
-            Physics.IgnoreCollision(selfCollider, wallHookTriggerCollider, true);
-        }
-
-        HUDTriggerCollider = playerHook.HUDHit.collider;
-        if (HUDTriggerCollider != null) {
-            Physics.IgnoreCollision(selfCollider, HUDTriggerCollider, true);
-        }
+        Physics.IgnoreLayerCollision(0, 9);
+        Physics.IgnoreLayerCollision(0, 10);
+        Physics.IgnoreLayerCollision(0, 12);
+        Physics.IgnoreLayerCollision(0, 13);
 
         // Sliding and jumping can only begin on the ground.
         if (isGrounded()) {
@@ -145,7 +134,7 @@ public class PlayerMove : MonoBehaviour
             isSliding = false;
         }
 
-        hookAcc();
+        HookAcc();
 
         // Set slope direction.
         slopeMoveDirection = Vector3.ProjectOnPlane(moveDirection, slopeHit.normal);
@@ -305,7 +294,7 @@ public class PlayerMove : MonoBehaviour
         }
     }
 
-    public void hookAcc() {
+    private void HookAcc() {
         if (isRopeCut) {
             rb.AddForce(Vector3.up * 12f, ForceMode.Impulse);
             rb.AddForce(orientation.forward * hookMultiplier, ForceMode.Impulse);
