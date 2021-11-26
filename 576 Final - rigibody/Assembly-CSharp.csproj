@@ -38,16 +38,19 @@
   <ItemGroup>
      <Compile Include="Assets\Yuponic\YuME\Scripts\YuME_Preferences.cs" />
      <Compile Include="Assets\Yuponic\YuME\Scripts\YuME_tilesetData.cs" />
+     <Compile Include="Assets\BulletTime\ColorAdjustEffect\ColorAdjustEffect.cs" />
      <Compile Include="Assets\Scripts\Grappling.cs" />
      <Compile Include="Assets\Yuponic\YuME\Scripts\YuME_importerSettings.cs" />
      <Compile Include="Assets\Scripts\GrapplingHUD.cs" />
      <Compile Include="Assets\Scripts\WallGrapplingHook.cs" />
      <Compile Include="Assets\Scripts\SwitchWeaponPlace.cs" />
+     <Compile Include="Assets\BulletTime\ColorAdjustEffect\PostEffectBase.cs" />
      <Compile Include="Assets\Yuponic\YuME\Scripts\YuME_prefabSamplerData.cs" />
      <Compile Include="Assets\Yuponic\YuME\Scripts\YuME_tileGizmo.cs" />
      <Compile Include="Assets\Scripts\M1911AnimatorControl.cs" />
      <Compile Include="Assets\Scripts\DeactivateHookHUD.cs" />
      <Compile Include="Assets\Scripts\AdjustFOVWhenSliding.cs" />
+     <Compile Include="Assets\Scripts\HUDFade.cs" />
      <Compile Include="Assets\Scripts\ChangeCollider.cs" />
      <Compile Include="Assets\Yuponic\YuME\Scripts\YuME_editorPreferences.cs" />
      <Compile Include="Assets\Scripts\SimulationOfHead.cs" />
@@ -56,14 +59,17 @@
      <Compile Include="Assets\Yuponic\YuME\Scripts\YuME_editorData.cs" />
      <Compile Include="Assets\Yuponic\YuME\Scripts\YuME_GizmoGrid.cs" />
      <Compile Include="Assets\Scripts\MoveMouse.cs" />
+     <Compile Include="Assets\BulletTime\Blur\RadiaBlur.cs" />
      <Compile Include="Assets\Scripts\GrapplingHook.cs" />
+     <Compile Include="Assets\Scripts\LaunchBulletTime.cs" />
      <Compile Include="Assets\Scripts\WallRun.cs" />
      <Compile Include="Assets\Scripts\ChangeImagePosition.cs" />
      <Compile Include="Assets\Several Swords With Scabbards\Demo(delete)\Scripts\Demo_switch.cs" />
      <Compile Include="Assets\Scripts\PlayerMove.cs" />
      <Compile Include="Assets\Scripts\MouseLook.cs" />
-     <Compile Include="Assets\Scripts\HUDFade.cs" />
      <None Include="Assets\Several Swords With Scabbards\README.txt" />
+     <None Include="Assets\BulletTime\ColorAdjustEffect\ColorAdjustEffect.shader" />
+     <None Include="Assets\BulletTime\Blur\RadiaBlur.shader" />
     <Reference Include="UnityEngine">
         <HintPath>C:/Program Files/2020.3.17f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>

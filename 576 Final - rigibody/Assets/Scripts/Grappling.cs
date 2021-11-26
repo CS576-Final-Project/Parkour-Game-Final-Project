@@ -8,7 +8,7 @@ public class Grappling : MonoBehaviour
     private Vector3 grapplePoint;
     public LayerMask whatIsGrappleable;
     public Transform gunTip;
-    public Transform camera;
+    public Transform fpsCam;
     public Transform player;
     public Transform grappleCheck;
     private float maxDistance = 1000f;

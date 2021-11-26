@@ -36,10 +36,16 @@ public class MoveSway : MonoBehaviour
 
     // Wallrunning camera rotation.
     private WallRun wallRun;
-    private Vector3 wallRunLeftRotationVector = new Vector3(0f, 0f, -20f);
-    private Vector3 wallRunRightRotationVector = new Vector3(0f, 0f, 20f);
+    private Vector3 wallRunLeftRotationVector = new Vector3(0f, 0f, -14f);
+    private Vector3 wallRunRightRotationVector = new Vector3(0f, 0f, 14f);
     private Quaternion wallRunLeftRotation;
     private Quaternion wallRunRightRotation;
+
+    // Bullet time camera rotation.
+    private Vector3 bulletTimeLeftRotationVector = new Vector3(0f, 0f, 15f);
+    private Vector3 bulletTimeRightRotationVector = new Vector3(0f, 0f, -15f);
+    private Quaternion bulletTimeLeftRotation;
+    private Quaternion bulletTimeRightRotation;
 
     // Start is called before the first frame update
     void Start()
@@ -70,6 +76,10 @@ public class MoveSway : MonoBehaviour
         wallRun = GameObject.FindWithTag("Player").GetComponent<WallRun>();
         wallRunLeftRotation = Quaternion.Euler(wallRunLeftRotationVector);
         wallRunRightRotation = Quaternion.Euler(wallRunRightRotationVector);
+
+        // Bullet time camera rotation.
+        bulletTimeLeftRotation = Quaternion.Euler(bulletTimeLeftRotationVector);
+        bulletTimeRightRotation = Quaternion.Euler(bulletTimeRightRotationVector);
     }
 
     // Update is called once per frame
@@ -80,6 +90,12 @@ public class MoveSway : MonoBehaviour
             theta = 0f;
         }
 
+        // If not sliding nor bullett moving, back to normal.
+        if (!playerMovement.isSliding && !playerMovement.isBulletTimeLeft() && !playerMovement.isBulletTimeRight() && !wallRun.isWallLeft && !wallRun.isWallRight) {
+            slidingRotationGoBack = false;
+            transform.localRotation = Quaternion.Lerp(transform.localRotation, initionalRotation, Time.fixedDeltaTime);
+        }
+
         // Control the height of the camera according to the pose.
         if (playerMovement.isGrounded() && !playerMovement.isSliding) {
             if (playerMovement.isCrouchStationary() || playerMovement.isCrouchWalking()) {
@@ -87,12 +103,6 @@ public class MoveSway : MonoBehaviour
             } else if (playerMovement.isStationary() || playerMovement.isWalking() || playerMovement.isRunning()) {
                 transform.localPosition = Vector3.Lerp(transform.localPosition, initionalWalkingPosition, Time.deltaTime * smoothAmount);
             }
-        }
-
-        // If not sliding, back to normal.
-        if (!playerMovement.isSliding) {
-            slidingRotationGoBack = false;
-            transform.localRotation = Quaternion.Lerp(transform.localRotation, initionalRotation, Time.deltaTime * 7f);
         }
 
         // When sliding is completely completed, allow next sliding.
@@ -129,6 +139,16 @@ public class MoveSway : MonoBehaviour
         } else if (wallRun.isWallRight) {
             WallRunningRightSway();
         }
+
+        if (playerMovement.isBulletTimeLeft()) {
+            BulletTimeLeftSway();
+        } else if (playerMovement.isBulletTimeRight()) {
+            BulletTimeRightSway();
+        }
+    }
+
+    void FixedUpdate() {
+
     }
 
     public bool isWallAhead() {
@@ -186,7 +206,7 @@ public class MoveSway : MonoBehaviour
         transform.localPosition = new Vector3(0f, Mathf.Clamp(transform.localPosition.y, -Mathf.Infinity, initionalLocalY), 0f);
 
         theta += 0.003f;
-        this.transform.Translate(this.transform.up * Mathf.Cos(swingCycle * 2.6f * theta) * 0.006f);
+        this.transform.Translate(this.transform.up * Mathf.Cos(swingCycle * 3f * theta) * 0.006f);
         transform.localRotation = Quaternion.Lerp(transform.localRotation, wallRunLeftRotation, Time.deltaTime * 8f);
     }
 
@@ -195,7 +215,15 @@ public class MoveSway : MonoBehaviour
         transform.localPosition = new Vector3(0f, Mathf.Clamp(transform.localPosition.y, -Mathf.Infinity, initionalLocalY), 0f);
 
         theta += 0.003f;
-        this.transform.Translate(this.transform.up * Mathf.Cos(swingCycle * 2.6f * theta) * 0.006f);
+        this.transform.Translate(this.transform.up * Mathf.Cos(swingCycle * 3f * theta) * 0.006f);
         transform.localRotation = Quaternion.Lerp(transform.localRotation, wallRunRightRotation, Time.deltaTime * 8f);
+    }
+
+    private void BulletTimeLeftSway() {
+        transform.localRotation = Quaternion.Lerp(transform.localRotation, bulletTimeLeftRotation, Time.fixedDeltaTime * 0.3f);
+    }
+
+    private void BulletTimeRightSway() {
+        transform.localRotation = Quaternion.Lerp(transform.localRotation, bulletTimeRightRotation, Time.fixedDeltaTime * 0.3f);
     }
 }
