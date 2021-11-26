@@ -79,6 +79,7 @@
      <Compile Include="Assets\Several Swords With Scabbards\Demo(delete)\Scripts\Demo_switch.cs" />
      <Compile Include="Assets\Scripts\PlayerMove.cs" />
      <Compile Include="Assets\Scripts\MouseLook.cs" />
+     <Compile Include="Assets\Scripts\Shooting.cs" />
      <None Include="Assets\Several Swords With Scabbards\README.txt" />
  <Reference Include="UnityEngine">
  <HintPath>/Applications/Unity/Hub/Editor/2020.3.18f1/Unity.app/Contents/Managed/UnityEngine/UnityEngine.dll</HintPath>
