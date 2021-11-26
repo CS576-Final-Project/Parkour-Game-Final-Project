@@ -65,6 +65,12 @@ public class PlayerMove : MonoBehaviour
     public bool isWallRopeCut = false;
     public Collider selfCollider;
     public Vector3 hookCurrentDirection = Vector3.zero;
+    
+    public float bulletTimer = 0f;
+    public float bulletDuration = 0.55f;
+    public bool isBulleting = false;
+    public GameObject left;
+    public GameObject right;
 
     // Start is called before the first frame update
     void Start() {
@@ -76,13 +82,13 @@ public class PlayerMove : MonoBehaviour
         walkingVelocity = 7f;
         crouchingVelocity = 3f;
         runningVelocity = 15f;
-        wallRunningVelocity = 14f;
-        slidingMultiplier = 1f; // Use multiplier because of ForceMode.VelocityChange.
+        wallRunningVelocity = 12f;
+        //slidingMultiplier = 1f; // Use multiplier because of ForceMode.VelocityChange.
         movementMultiplier = 10.5f;
         airMultiplier = 0.4f;
         hookMultiplier = 250f;
 
-        jumpForce = 60f;
+        //jumpForce = 60f;
 
         slideDuration = 0.88f;
 
@@ -138,6 +144,20 @@ public class PlayerMove : MonoBehaviour
 
         // Set slope direction.
         slopeMoveDirection = Vector3.ProjectOnPlane(moveDirection, slopeHit.normal);
+
+        if (isBulleting) {
+            bulletTimer += Time.deltaTime * 2.5f;
+            print(bulletTimer - bulletDuration);
+            if (bulletTimer >= bulletDuration) {
+                isBulleting = false;
+            }
+        }
+
+        if (isBulletTimeLeft()) {
+            BulletLeftMove();
+        } else if (isBulletTimeRight()) {
+            BulletRightMove();
+        }
     }
 
     // Get mouse input, set move direction.
@@ -234,7 +254,8 @@ public class PlayerMove : MonoBehaviour
         if(isGrounded()) {
             rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
         }
-        rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+        rb.velocity = new Vector3(currentDirection.x, currentDirection.y + 40f, currentDirection.z);
+        //rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
     }
 
     private void Slide() {
@@ -245,19 +266,19 @@ public class PlayerMove : MonoBehaviour
             isSliding = true;
         }
         captureDirection = false;
-        rb.AddForce(currentDirection.normalized * slidingMultiplier, ForceMode.VelocityChange);
+        rb.velocity = new Vector3(currentDirection.x * 35, currentDirection.y, currentDirection.z * 35);
     }
 
     // Stand part.
     public bool isWalking() {
-        if ((Input.GetKey(walkForwardKey) || Input.GetKey(walkLeftKey) || Input.GetKey(walkRightKey) || Input.GetKey(walkBackwardKey)) && !Input.GetKey(runKey) && !Input.GetKey(crouchKey) && !wallRun.isWallLeft && !wallRun.isWallRight) {
+        if ((Input.GetKey(walkForwardKey) || Input.GetKey(walkLeftKey) || Input.GetKey(walkRightKey) || Input.GetKey(walkBackwardKey)) && !Input.GetKey(runKey) && !Input.GetKey(crouchKey) && !wallRun.isWallLeft && !wallRun.isWallRight && !isBulleting) {
             return true;
         }
         return false;
     }
 
     public bool isRunning() {
-        if ((Input.GetKey(walkForwardKey) || Input.GetKey(walkLeftKey) || Input.GetKey(walkRightKey)) && Input.GetKey(runKey) && !isSliding) {
+        if ((Input.GetKey(walkForwardKey) || Input.GetKey(walkLeftKey) || Input.GetKey(walkRightKey)) && Input.GetKey(runKey) && !isSliding && !isBulleting) {
             return true;
         }
         return false;
@@ -292,6 +313,28 @@ public class PlayerMove : MonoBehaviour
         } else {
             return false;
         }
+    }
+
+    public bool isBulletTimeLeft() {
+        if (Input.GetKey(walkLeftKey) && isBulleting) {
+            return true;
+        }
+        return false;
+    }
+
+    public bool isBulletTimeRight() {
+        if (Input.GetKey(walkRightKey) && isBulleting) {
+            return true;
+        }
+        return false;
+    }
+
+    private void BulletLeftMove() {
+         this.transform.position = Vector3.MoveTowards(this.transform.position, left.transform.position, 30 * Time.deltaTime);
+    }
+    
+    private void BulletRightMove() {
+        this.transform.position = Vector3.MoveTowards(this.transform.position, right.transform.position, 30 * Time.deltaTime);
     }
 
     private void HookAcc() {
