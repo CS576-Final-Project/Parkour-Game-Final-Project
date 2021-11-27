@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.61116576, g: 0.5547334, b: 0.6512325, a: 1}
+  m_IndirectSpecularColor: {r: 0.611164, g: 0.5547317, b: 0.6512291, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -311,7 +311,7 @@ GameObject:
   - component: {fileID: 108088237}
   - component: {fileID: 108088238}
   - component: {fileID: 108088239}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1800,7 +1800,7 @@ GameObject:
   - component: {fileID: 649471594}
   - component: {fileID: 649471592}
   - component: {fileID: 649471591}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Head
   m_TagString: Head
   m_Icon: {fileID: 0}
@@ -2660,7 +2660,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 860752261}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Ground Check
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4037,7 +4037,7 @@ GameObject:
   - component: {fileID: 1178724975}
   - component: {fileID: 1178724974}
   - component: {fileID: 1178724973}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4535,7 +4535,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1466881194}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Camera Position
   m_TagString: Untagged
   m_Icon: {fileID: 0}

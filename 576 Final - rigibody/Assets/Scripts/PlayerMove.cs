@@ -106,10 +106,10 @@ public class PlayerMove : MonoBehaviour
         ControlDrag();
 
         // Ignore all the trigger collider.
-        Physics.IgnoreLayerCollision(0, 9);
-        Physics.IgnoreLayerCollision(0, 10);
-        Physics.IgnoreLayerCollision(0, 12);
-        Physics.IgnoreLayerCollision(0, 13);
+        Physics.IgnoreLayerCollision(14, 9);
+        Physics.IgnoreLayerCollision(14, 10);
+        Physics.IgnoreLayerCollision(14, 12);
+        Physics.IgnoreLayerCollision(14, 13);
 
         // Sliding and jumping can only begin on the ground.
         if (isGrounded()) {
