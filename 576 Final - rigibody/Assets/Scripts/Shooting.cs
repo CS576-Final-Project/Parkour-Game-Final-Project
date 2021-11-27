@@ -39,6 +39,8 @@ public class Shooting : MonoBehaviour
         {
             // reset timer
             timer = 0;
+            // fire effect at gun tip
+            // Instantiate(fireEffect, gunTip.position, gunTip.rotation);
             Shoot();
         }
     }
@@ -49,7 +51,6 @@ public class Shooting : MonoBehaviour
         RaycastHit hit;  // store info of object hit by raycast 
         if (Physics.Raycast(fpsCamera.transform.position, fpsCamera.transform.forward, out hit, range))
         {
-            
             // if we hit an enemy
             Target enemy = hit.transform.GetComponent<Target>();
             if (enemy != null)
@@ -60,7 +61,7 @@ public class Shooting : MonoBehaviour
             // if we hit an target with rigidbody (eg. enemy), repel it a little bit
             if (hit.rigidbody != null)
             {
-                hit.rigidbody.AddForce(-hit.normal * impactForce);
+                hit.rigidbody.AddForce(-hit.normal * impactForce, ForceMode.Impulse);
             }
 
             // explode the hit object
