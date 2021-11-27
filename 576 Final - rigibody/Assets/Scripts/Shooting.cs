@@ -49,7 +49,10 @@ public class Shooting : MonoBehaviour
     void Shoot()
     {
         RaycastHit hit;  // store info of object hit by raycast 
-        if (Physics.Raycast(fpsCamera.transform.position, fpsCamera.transform.forward, out hit, range))
+        int layerMask = (1 << 7) | (1 << 8) | (1 << 9) | (1 << 10) | (1 << 11) | (1 << 12) | (1 << 13) | (1 << 14);
+        layerMask = ~layerMask;
+
+        if (Physics.Raycast(fpsCamera.transform.position, fpsCamera.transform.forward, out hit, range, layerMask))
         {
             // if we hit an enemy
             Target enemy = hit.transform.GetComponent<Target>();

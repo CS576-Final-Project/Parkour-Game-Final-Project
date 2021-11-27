@@ -93,7 +93,7 @@ public class WallGrapplingHook : MonoBehaviour
 
         lr.positionCount = 2;
 
-        if (currentDistance < 5f) {
+        if (currentDistance < 7f) {
             StopHooking();
         }
     }
