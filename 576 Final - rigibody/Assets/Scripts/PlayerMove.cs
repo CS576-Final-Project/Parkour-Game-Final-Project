@@ -349,7 +349,7 @@ public class PlayerMove : MonoBehaviour
 
     private void WallHookAcc() {
         if (isWallRopeCut) {
-            rb.AddForce(orientation.forward * 5f, ForceMode.Impulse);
+            rb.AddForce(hookCurrentDirection.normalized * 35f, ForceMode.Impulse);
         }
         isWallRopeCut = false;
     }
