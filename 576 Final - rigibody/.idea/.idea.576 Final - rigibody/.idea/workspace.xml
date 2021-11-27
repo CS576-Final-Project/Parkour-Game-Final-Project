@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="40106889-e711-48dd-a1d5-7900678fad81" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.576 Final - rigibody/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.576 Final - rigibody/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene_Profiles/Main Camera Profile 1.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SampleScene_Profiles/Main Camera Profile 1.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Shooting.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Shooting.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -16,6 +15,7 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/explosionDestroy.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.postprocessing@3.1.1/PostProcessing/Runtime/PostProcessLayer.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Target.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProjectId" id="21RLjpm4mTB4i30vw7N0ofoUXTE" />
@@ -67,7 +67,7 @@
       <workItem from="1637915251454" duration="59000" />
       <workItem from="1637915321954" duration="586000" />
       <workItem from="1637995033316" duration="147000" />
-      <workItem from="1637995580450" duration="8565000" />
+      <workItem from="1637995580450" duration="10734000" />
     </task>
     <servers />
   </component>
