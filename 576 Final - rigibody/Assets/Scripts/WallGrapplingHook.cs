@@ -93,13 +93,14 @@ public class WallGrapplingHook : MonoBehaviour
 
         lr.positionCount = 2;
 
-        if (currentDistance < 2f) {
+        if (currentDistance < 5f) {
             StopHooking();
         }
     }
 
     private void StopHooking() {
         lr.positionCount = 0;
+        playerMovement.isWallRopeCut = true;
         rb.useGravity = true;
         hooked = false;
         fired = false;
