@@ -142,6 +142,7 @@ public class PlayerMove : MonoBehaviour
         }
 
         HookAcc();
+        WallHookAcc();
 
         // Set slope direction.
         slopeMoveDirection = Vector3.ProjectOnPlane(moveDirection, slopeHit.normal);
@@ -344,5 +345,12 @@ public class PlayerMove : MonoBehaviour
             rb.AddForce(orientation.forward * hookMultiplier, ForceMode.Impulse);
         }
         isRopeCut = false;
+    }
+
+    private void WallHookAcc() {
+        if (isWallRopeCut) {
+            rb.AddForce(orientation.forward * 5f, ForceMode.Impulse);
+        }
+        isWallRopeCut = false;
     }
 }

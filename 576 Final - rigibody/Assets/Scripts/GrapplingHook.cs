@@ -73,7 +73,7 @@ public class GrapplingHook : MonoBehaviour
             hookPoint = new Vector3(triggerPoint.transform.position.x, triggerPoint.transform.position.y - 8f, triggerPoint.transform.position.z);
 
             if (Input.GetKeyDown(KeyCode.E) && !fired) {
-                playerMovement.hookCurrentDirection = hookHit.point - this.transform.position;
+                //playerMovement.hookCurrentDirection = hookHit.point - this.transform.position;
                 fired = true;
                 play = true;
                 animatorControl.animation_controller.Play("M1911 Hook Ready");
