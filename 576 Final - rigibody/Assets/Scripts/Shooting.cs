@@ -5,17 +5,21 @@ using UnityEngine;
 public class Shooting : MonoBehaviour
 {
     // damage to enemy
-    public float damage = 10f; 
-    // range
+    public float damage = 10f;
+    // shooting range
     public float range = 100f; 
+    // impact force to the enemy
+    public float impactForce = 30f;
     // Player Camera
     public Camera fpsCamera;
     // explosion effect
     public ParticleSystem explosionEffect; 
+    // fire effect 
+    public ParticleSystem fireEffect;
     // gun tip
     public Transform gunTip;
     
-    // cd of each fire 
+    // fire rate
     private float cd = 0.2f;
     // timer 
     private float timer = 0;
@@ -45,7 +49,20 @@ public class Shooting : MonoBehaviour
         RaycastHit hit;  // store info of object hit by raycast 
         if (Physics.Raycast(fpsCamera.transform.position, fpsCamera.transform.forward, out hit, range))
         {
-            Debug.Log(hit.transform.name);
+            
+            // if we hit an enemy
+            Target enemy = hit.transform.GetComponent<Target>();
+            if (enemy != null)
+            {
+                enemy.TakeDamage(damage);
+            }
+            
+            // if we hit an target with rigidbody (eg. enemy), repel it a little bit
+            if (hit.rigidbody != null)
+            {
+                hit.rigidbody.AddForce(-hit.normal * impactForce);
+            }
+
             // explode the hit object
             Instantiate(explosionEffect, hit.point, Quaternion.LookRotation(hit.normal));
         }
