@@ -15,6 +15,7 @@ public class WallGrapplingHook : MonoBehaviour
     public bool fired = false;
     public bool hooked = false;
     public bool play = false;
+    private bool captureObj = false;
 
     private Vector3 hookPoint;
 
@@ -69,16 +70,13 @@ public class WallGrapplingHook : MonoBehaviour
                 play = true;
                 animatorControl.animation_controller.Play("M1911 Hook Ready");
             }
-
-            if (animatorControl.animation_controller.GetCurrentAnimatorStateInfo(0).IsName("M1911 Hook Ready") && animatorControl.animation_controller.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f) {
-                animatorControl.animation_controller.Play("M1911");
-                play = false;
-                hooked = true; 
-            }   
-
-            if (hooked) {
-                StartHooking();
-            }
+        }
+        if (animatorControl.animation_controller.GetCurrentAnimatorStateInfo(0).IsName("M1911 Hook Ready") && animatorControl.animation_controller.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f && fired) {
+            animatorControl.animation_controller.Play("M1911");
+            hooked = true; 
+        }   
+        if (hooked) {
+            StartHooking();
         }
     }
 
@@ -104,6 +102,8 @@ public class WallGrapplingHook : MonoBehaviour
         rb.useGravity = true;
         hooked = false;
         fired = false;
+        play = false;
+        captureObj = false;
     }
 
     private void DrawRope() {

@@ -16,6 +16,7 @@ public class GrapplingHook : MonoBehaviour
     public bool fired = false;
     public bool hooked = false;
     public bool play = false;
+    private bool captureObj = false;
 
     private Vector3 hookPoint;
 
@@ -67,7 +68,16 @@ public class GrapplingHook : MonoBehaviour
     void Update()
     {
         if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hookHit, maxDistance, hookTrigger)) {
-            hookTriggerObj = hookHit.collider.gameObject;
+            if (!captureObj) {
+                hookTriggerObj = hookHit.collider.gameObject;
+                captureObj = true;
+            }
+
+            GameObject currObj = hookHit.collider.gameObject;
+            if (currObj != hookTriggerObj && currObj != null) {
+                captureObj = false;
+            }
+
             triggerPoint = hookTriggerObj.transform.GetChild(0).gameObject;
             
             hookPoint = new Vector3(triggerPoint.transform.position.x, triggerPoint.transform.position.y - 8f, triggerPoint.transform.position.z);
@@ -78,16 +88,13 @@ public class GrapplingHook : MonoBehaviour
                 play = true;
                 animatorControl.animation_controller.Play("M1911 Hook Ready");
             }
-
-            if (animatorControl.animation_controller.GetCurrentAnimatorStateInfo(0).IsName("M1911 Hook Ready") && animatorControl.animation_controller.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f) {
-                animatorControl.animation_controller.Play("M1911");
-                play = false;
-                hooked = true; 
-            }   
-
-            if (hooked) {
-                StartHooking();
-            }
+        }
+        if (animatorControl.animation_controller.GetCurrentAnimatorStateInfo(0).IsName("M1911 Hook Ready") && animatorControl.animation_controller.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f && fired) {
+            animatorControl.animation_controller.Play("M1911");
+            hooked = true; 
+        }   
+        if (hooked) {
+            StartHooking();
         }
     }
 
@@ -113,6 +120,8 @@ public class GrapplingHook : MonoBehaviour
         rb.useGravity = true;
         hooked = false;
         fired = false;
+        play = false;
+        captureObj = false;
     }
 
     private void DrawRope() {
