@@ -9,7 +9,7 @@ public class Shooting : MonoBehaviour
     // shooting range
     public float range = 100f; 
     // impact force to the enemy
-    public float impactForce = 30f;
+    public float impactForce = 0.3f;
     // Player Camera
     public Camera fpsCamera;
     // explosion effect

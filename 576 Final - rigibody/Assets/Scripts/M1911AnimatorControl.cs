@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class M1911AnimatorControl : MonoBehaviour
 {
-    public Animator animation_controller;
+    public Animator animationController;
     private GrapplingHook playerHook;
 
     // Start is called before the first frame update
     void Start()
     {
-        animation_controller = GetComponent<Animator>();
+        animationController = GetComponent<Animator>();
         playerHook = GameObject.FindWithTag("Player").GetComponent<GrapplingHook>();
     }
 
