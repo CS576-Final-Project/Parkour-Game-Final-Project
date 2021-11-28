@@ -37,8 +37,8 @@ public class LaunchBulletTime : MonoBehaviour
             {
                 t += Time.deltaTime;
                 Time.timeScale = Mathf.Lerp(Time.timeScale, 0.25f, t);
-                radiaBlue.Level = Mathf.Lerp(radiaBlue.Level, 15, t);
-                cae.saturation = Mathf.Lerp(cae.saturation, 0.5f, t);
+                radiaBlue.Level = Mathf.Lerp(radiaBlue.Level, 10, t);
+                cae.saturation = Mathf.Lerp(cae.saturation, 0.65f, t);
             }
             if (Input.GetMouseButtonUp(1) || !playerMovement.isBulleting)
             {

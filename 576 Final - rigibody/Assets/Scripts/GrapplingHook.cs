@@ -87,12 +87,12 @@ public class GrapplingHook : MonoBehaviour
                 print(play);
                 hookFired = true;
                 play = true;
-                animatorControl.animation_controller.Play("M1911 Hook Ready");
+                animatorControl.animationController.Play("M1911 Hook Ready");
             }
         }
         
-        if (animatorControl.animation_controller.GetCurrentAnimatorStateInfo(0).IsName("M1911 Hook Ready") && animatorControl.animation_controller.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f && hookFired) {
-            animatorControl.animation_controller.Play("M1911");
+        if (animatorControl.animationController.GetCurrentAnimatorStateInfo(0).IsName("M1911 Hook Ready") && animatorControl.animationController.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f && hookFired) {
+            animatorControl.animationController.Play("M1911");
             hooked = true; 
         }   
         if (hooked) {
