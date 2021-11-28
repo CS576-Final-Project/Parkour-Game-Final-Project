@@ -13,7 +13,7 @@ public class GrapplingHook : MonoBehaviour
     public float hookTravelSpeed;
     public float playerTravelSpeed;
 
-    public bool fired = false;
+    public bool hookFired = false;
     public bool hooked = false;
     public bool play = false;
     private bool captureObj = false;
@@ -82,14 +82,16 @@ public class GrapplingHook : MonoBehaviour
             
             hookPoint = new Vector3(triggerPoint.transform.position.x, triggerPoint.transform.position.y - 8f, triggerPoint.transform.position.z);
 
-            if (Input.GetKeyDown(KeyCode.E) && !fired) {
+            if (Input.GetKeyDown(KeyCode.E) && !hookFired) {
                 //playerMovement.hookCurrentDirection = hookHit.point - this.transform.position;
-                fired = true;
+                print(play);
+                hookFired = true;
                 play = true;
                 animatorControl.animation_controller.Play("M1911 Hook Ready");
             }
         }
-        if (animatorControl.animation_controller.GetCurrentAnimatorStateInfo(0).IsName("M1911 Hook Ready") && animatorControl.animation_controller.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f && fired) {
+        
+        if (animatorControl.animation_controller.GetCurrentAnimatorStateInfo(0).IsName("M1911 Hook Ready") && animatorControl.animation_controller.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f && hookFired) {
             animatorControl.animation_controller.Play("M1911");
             hooked = true; 
         }   
@@ -119,7 +121,7 @@ public class GrapplingHook : MonoBehaviour
         playerMovement.isRopeCut = true;
         rb.useGravity = true;
         hooked = false;
-        fired = false;
+        hookFired = false;
         play = false;
         captureObj = false;
     }

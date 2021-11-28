@@ -135,8 +135,6 @@ public class PlayerMove : MonoBehaviour
                 // When sliding end, reset the time.
                 slideTime = 0f;
             }
-
-            playerHook.fired = false;
         } else if (!isGrounded()) {
             isSliding = false;
         }
