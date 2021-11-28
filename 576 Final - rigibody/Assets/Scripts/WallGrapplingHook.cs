@@ -12,7 +12,7 @@ public class WallGrapplingHook : MonoBehaviour
 
     public float playerTravelSpeed;
 
-    public bool fired = false;
+    public bool wallHookFired = false;
     public bool hooked = false;
     public bool play = false;
     private bool captureObj = false;
@@ -64,14 +64,14 @@ public class WallGrapplingHook : MonoBehaviour
             
             hookPoint = triggerPoint.transform.position;
 
-            if (Input.GetKeyDown(KeyCode.E) && !fired) {
+            if (Input.GetKeyDown(KeyCode.E) && !wallHookFired) {
                 playerMovement.hookCurrentDirection = wallHookHit.point - this.transform.position;
-                fired = true;
+                wallHookFired = true;
                 play = true;
                 animatorControl.animation_controller.Play("M1911 Hook Ready");
             }
         }
-        if (animatorControl.animation_controller.GetCurrentAnimatorStateInfo(0).IsName("M1911 Hook Ready") && animatorControl.animation_controller.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f && fired) {
+        if (animatorControl.animation_controller.GetCurrentAnimatorStateInfo(0).IsName("M1911 Hook Ready") && animatorControl.animation_controller.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f && wallHookFired) {
             animatorControl.animation_controller.Play("M1911");
             hooked = true; 
         }   
@@ -101,7 +101,7 @@ public class WallGrapplingHook : MonoBehaviour
         playerMovement.isWallRopeCut = true;
         rb.useGravity = true;
         hooked = false;
-        fired = false;
+        wallHookFired = false;
         play = false;
         captureObj = false;
     }
