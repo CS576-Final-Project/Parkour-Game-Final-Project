@@ -1,54 +1,47 @@
-# 跑酷游戏（魔女-机器人混合版）
-### 游戏类型
-在3D世界中的第一人称跑酷，射击。 <br>
+# ParkourGame
+### Game Type
+First-person parkour and shooting in a 3D world. <br>
 
 ---
 
-### 游戏玩法
-通过各种跑酷的技巧到达终点，中间会发生与NPC的战斗。 <br>
-可能会有一个BOSS在后方追逐玩家（待定） <br>
+### Gameplay
+Through a variety of parkour skills to reach the end, and there will be battles with NPCs on the way. <br>
 
 ---
 
-### 键位/操作
-|动作|键位/操作|说明|
+### Key Arrangement/Operation
+|Action|Key Arrangement/Operation|Instrustion|
 |-|-|-|
-|向前走|W|-|
-|向左走|A|-|
-|向后走|S|-|
-|向右走|D|-|
-|跳跃|Space|-|
-|跑步|WAD + Shift|不能向后跑|
-|蹲下|C|-|
-|蹲走|WASD + C|-|
-|滑铲|WAD + Shift + C|跑步的时候按C <br> 滑铲期间转动鼠标不会改变玩家行进方向|
-|左贴墙跑|WA + Shift|保持奔跑状态时才能生效 <br> 贴墙跑仅在空中判定生效 <br> 保持运动可以使坠落的速度大幅降低 <br> 视角可以略向外侧 <br> **正在考虑是否改为贴墙时自动奔跑**|
-|右贴墙跑|WD + Shift|保持奔跑状态时才能生效 <br> 贴墙跑仅在空中判定生效 <br> 保持运动可以使坠落的速度大幅降低 <br> 视角可以略向外侧 <br> **正在考虑是否改为贴墙时自动奔跑**|
-|发射钩锁|E|能够接受勾索的地点会有UI提示，走进勾索使用范围内即可看到|
-|武器开火|鼠标左键||
-|子弹时间|鼠标右键||
+|Walk Forward|W|-|
+|Walk Left|A|-|
+|Walk Backward|S|-|
+|Walk Right|D|-|
+|Jump|Space|-|
+|Run|WAD + Shift|Cannot run backward|
+|Crouch|C|-|
+|Crouch Walk|WASD + C|-|
+|Slide|WAD + Shift + C|Press **Crouch** when running <br> Turning the mouse during sliding does not change the player's direction of moving|
+|Wall Run Left|WA + Shift|Only in effect when: <br> Running <br> Not on the ground <br> Keeping the moving can make the speed of the fall significantly reduced <br> **Considering whether to change to automatic running when the wall**|
+|Wall Run Right|WD + Shift|Only in effect when: <br> Running <br> Not on the ground <br> Keeping the moving can make the speed of the fall significantly reduced <br> **Considering whether to change to automatic running when the wall**|
+|Fire|Left mouse click||
+|Bullet Time|Right mouse click (Hold)||
 
 ---
 
-### 开发进程
-目前决定用 rigibody, 但也保留 character controller。
->**注： 斜体为可选目标，如 无法完成 或 认为不合适 或 认为没必要 可以放弃。**
-- #### 当前主要冲刺目标
-  1. 为玩家制作钩锁，钩锁应当具备三种工作模式：<br>
-     - >**注：** 以下所有的高低均以 **Y轴坐标** 为基准。
-     - 如果目标是 **比自身低** 或 **同样高** 或 **高一丢丢** 且 **不能是自己所处于的地面** 的位置，那么玩家将利用钩锁将自己拉到目标位置。
-        - 目前的想法是可以将目标设定为符合条件的任一点。
-        - 另一个可行的方案是同样设置专用点用于该模式。
-        - **该功能可以在地面和空中使用**。
-     - _如果目标是 **敌方NPC** ，将利用钩锁将自己拉至敌方NPC的位置并击杀该NPC。_
-  2. 敌方NPC应当开始制作，使用rigibody，具备基本移动功能。
-  3. 玩家的攻击功能应当开始制作。
+### Development Process
+The current decision is to use rigibody, but also to keep the character controller.
+>**Note: Italicized are optional objectives that can be dropped if they cannot be completed or are deemed inappropriate or unnecessary.**
+- #### Major Sprint Goals.
+  1. AI part.
+     - AI should have a patrol function.
+     - AI should know where the player was last seen and search after noticing the player disappear.
+     - ... TBC
 
-- #### 当前次要冲刺目标
-   1. 斜坡上的移动需要改进，当前玩家在斜坡上的移动与在平地上的移动一样，现在希望能够让玩家在以奔跑状态下坡时，可以以一个 **加速的过程** 滑下去并在终点依然可以以之前的速度滑出。
-   2. 重力在下落时的表现有些奇怪，需要找到较为合适的参数/调整方法。
-   3. _可以为跳跃的过程添加一个镜头晃动。_
-   4. 为该README同步制作一个英文版。
+- #### Minor Sprint Goals.
+   1. The movement on the slope needs to be improved, the current player movement on the slope is the same as the movement on flat ground, now want to be able to let the player in a running state down the slope, can be a **acceleration process** slide down.
+   2. _Make a head bob for jumping._
+   3. Make progress bars for the corresponding skills.
+   4. Make health bar.
 
 ---
 
