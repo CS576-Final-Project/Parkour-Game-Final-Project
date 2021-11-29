@@ -15,7 +15,7 @@ public class WallGrapplingHook : MonoBehaviour
     public bool wallHookFired = false;
     public bool hooked = false;
     public bool play = false;
-    private bool captureObj = false;
+    // private bool captureObj = false;
 
     private Vector3 hookPoint;
 
@@ -103,7 +103,7 @@ public class WallGrapplingHook : MonoBehaviour
         hooked = false;
         wallHookFired = false;
         play = false;
-        captureObj = false;
+        //captureObj = false;
     }
 
     private void DrawRope() {
