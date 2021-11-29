@@ -26,6 +26,8 @@ public class EnemyRifleman : MonoBehaviour
     public Transform Head;
     public GameObject bullet;
 
+    public bool die = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -46,24 +48,26 @@ public class EnemyRifleman : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        AnimatorStateInfo currInfo = animationController.GetCurrentAnimatorStateInfo(0);
+        if (!die) {
+            AnimatorStateInfo currInfo = animationController.GetCurrentAnimatorStateInfo(0);
 
-        Vector3 optimizedPlayerPosition = new Vector3(player.transform.position.x, player.transform.position.y + 0.3f, player.transform.position.z);
-        shootingDirection = (optimizedPlayerPosition - gunTip.transform.position).normalized;
+            Vector3 optimizedPlayerPosition = new Vector3(player.transform.position.x, player.transform.position.y + 0.3f, player.transform.position.z);
+            shootingDirection = (optimizedPlayerPosition - gunTip.transform.position).normalized;
 
-        if (canSeePlayer) {
-            if (optimizedPlayerPosition.y <= gunTip.transform.position.y) {
-                float angleToRotate = Mathf.Rad2Deg * Mathf.Atan2(shootingDirection.x, shootingDirection.z);
-                transform.eulerAngles = new Vector3(0.0f, angleToRotate, 0.0f);
+            if (canSeePlayer) {
+                if (optimizedPlayerPosition.y <= gunTip.transform.position.y) {
+                    float angleToRotate = Mathf.Rad2Deg * Mathf.Atan2(shootingDirection.x, shootingDirection.z);
+                    transform.eulerAngles = new Vector3(0.0f, angleToRotate, 0.0f);
+                } else {
+                    Quaternion desiredRotation = Quaternion.LookRotation(optimizedPlayerPosition - gunTip.transform.position);
+                    transform.rotation = Quaternion.Lerp(transform.rotation, desiredRotation, Time.deltaTime * 10f);
+                }
+
+                animationController.SetBool(singleShootingHash, true);
+
             } else {
-                Quaternion desiredRotation = Quaternion.LookRotation(optimizedPlayerPosition - gunTip.transform.position);
-                transform.rotation = Quaternion.Lerp(transform.rotation, desiredRotation, Time.deltaTime * 10f);
+                animationController.SetBool(singleShootingHash, false);
             }
-
-            animationController.SetBool(singleShootingHash, true);
-
-        } else {
-            animationController.SetBool(singleShootingHash, false);
         }
     }
 
@@ -83,7 +87,7 @@ public class EnemyRifleman : MonoBehaviour
             float shootingDelay = 0.5f;
             WaitForSeconds wait = new WaitForSeconds(shootingDelay);
 
-            if (canSeePlayer)
+            if (canSeePlayer && !die)
             {
                 GameObject newObject = Instantiate(bullet, gunTip.position, gunTip.rotation);
                 newObject.GetComponent<Bullet>().shootingDirection = shootingDirection;

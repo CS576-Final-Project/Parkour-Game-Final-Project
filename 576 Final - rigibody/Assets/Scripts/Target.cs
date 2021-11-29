@@ -25,11 +25,18 @@ public class Target : MonoBehaviour
     // destroy the game object if it "die"
     void Die()
     {
+        GetComponent<EnemyRifleman>().die = true;
         animationController.SetBool("Die", true);
-        animationController.SetBool("NoDieLoop", false);
-        if (animationController.GetCurrentAnimatorStateInfo(0).IsName("Die") && animationController.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.95f) {
-            animationController.speed = 0;
-        }
         //Destroy(gameObject);
+    }
+
+    void Update() 
+    {
+        if (animationController.GetCurrentAnimatorStateInfo(0).IsName("Die")) {
+            animationController.SetBool("NoDieLoop", false);
+            if (animationController.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.95f) {
+                animationController.speed = 0;
+            }
+        }
     }
 }
