@@ -82,7 +82,7 @@ public class PlayerMove : MonoBehaviour
 
         walkingVelocity = 7f;
         crouchingVelocity = 3f;
-        runningVelocity = 15f;
+        runningVelocity = 10.5f;
         wallRunningVelocity = 12f;
         //slidingMultiplier = 1f; // Use multiplier because of ForceMode.VelocityChange.
         movementMultiplier = 10.5f;
