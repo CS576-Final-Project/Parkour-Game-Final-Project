@@ -40,7 +40,7 @@ public class Shooting : MonoBehaviour
             // reset timer
             timer = 0;
             // fire effect at gun tip
-            // Instantiate(fireEffect, gunTip.position, gunTip.rotation);
+            Instantiate(fireEffect, gunTip);
             Shoot();
         }
     }

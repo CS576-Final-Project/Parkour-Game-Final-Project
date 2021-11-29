@@ -3,6 +3,14 @@
   <component name="ChangeListManager">
     <list default="true" id="40106889-e711-48dd-a1d5-7900678fad81" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.576 Final - rigibody/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.576 Final - rigibody/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/SciFiWarriorPBRHPPolyart/Animations/AvatarMask.mask" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/SciFiWarriorPBRHPPolyart/Animations/AvatarMask.mask" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/SciFiWarriorPBRHPPolyart/Materials/HP.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/SciFiWarriorPBRHPPolyart/Materials/HP.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/SciFiWarriorPBRHPPolyart/Materials/PBR.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/SciFiWarriorPBRHPPolyart/Materials/PBR.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/SciFiWarriorPBRHPPolyart/Materials/Polyart.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/SciFiWarriorPBRHPPolyart/Materials/Polyart.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/SciFiWarriorPBRHPPolyart/Materials/Stage.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/SciFiWarriorPBRHPPolyart/Materials/Stage.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/SciFiWarriorPBRHPPolyart/Prefabs/PBRCharacter.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/SciFiWarriorPBRHPPolyart/Prefabs/PBRCharacter.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/SciFiWarriorPBRHPPolyart/Prefabs/PolyartCharacter.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/SciFiWarriorPBRHPPolyart/Prefabs/PolyartCharacter.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/SciFiWarriorPBRHPPolyart/Scene/DemoScene01.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/SciFiWarriorPBRHPPolyart/Scene/DemoScene01.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Shooting.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Shooting.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -68,6 +76,7 @@
       <workItem from="1637915321954" duration="586000" />
       <workItem from="1637995033316" duration="147000" />
       <workItem from="1637995580450" duration="10734000" />
+      <workItem from="1638165491460" duration="634000" />
     </task>
     <servers />
   </component>
