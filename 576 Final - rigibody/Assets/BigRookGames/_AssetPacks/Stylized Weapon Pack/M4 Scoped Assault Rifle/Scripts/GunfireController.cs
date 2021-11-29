@@ -6,7 +6,9 @@ namespace BigRookGames.Weapons
     {
         // --- Audio ---
         public AudioClip GunShotClip;
+        public AudioClip ReloadClip;
         public AudioSource source;
+        public AudioSource reloadSource;
         public Vector2 audioPitch = new Vector2(.9f, 1.1f);
 
         // --- Muzzle ---
@@ -126,6 +128,7 @@ namespace BigRookGames.Weapons
 
         private void ReEnableDisabledProjectile()
         {
+            reloadSource.Play();
             projectileToDisableOnFire.SetActive(true);
         }
     }
