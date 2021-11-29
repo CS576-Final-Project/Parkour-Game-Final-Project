@@ -5,6 +5,11 @@ using UnityEngine;
 public class Target : MonoBehaviour
 {
     public float health = 100f;
+    public Animator animationController;
+
+    void Start() {
+        animationController = GetComponent<Animator>();
+    }
 
     // reflection of the target when hitting by player
     public void TakeDamage(float damage)
@@ -20,7 +25,18 @@ public class Target : MonoBehaviour
     // destroy the game object if it "die"
     void Die()
     {
-        Destroy(gameObject);
+        GetComponent<EnemyRifleman>().die = true;
+        animationController.SetBool("Die", true);
+        //Destroy(gameObject);
     }
-    
+
+    void Update() 
+    {
+        if (animationController.GetCurrentAnimatorStateInfo(0).IsName("Die")) {
+            animationController.SetBool("NoDieLoop", false);
+            if (animationController.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.95f) {
+                animationController.speed = 0;
+            }
+        }
+    }
 }

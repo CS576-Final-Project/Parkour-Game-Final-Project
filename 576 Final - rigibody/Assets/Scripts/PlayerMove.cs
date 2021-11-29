@@ -15,6 +15,7 @@ public class PlayerMove : MonoBehaviour
     public Transform groundCheck;
     public float groundDistance;
     public LayerMask groundMask;
+    public LayerMask wallMask;
 
     [Header("Movement")]
     public float walkingVelocity;
@@ -236,7 +237,7 @@ public class PlayerMove : MonoBehaviour
     }
 
     public bool isGrounded() {  
-        return Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+        return Physics.CheckSphere(groundCheck.position, groundDistance, groundMask) || Physics.CheckSphere(groundCheck.position, groundDistance, wallMask);;
     }
 
     public bool onSlope() {
