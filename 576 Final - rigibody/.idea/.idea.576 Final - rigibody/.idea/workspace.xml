@@ -3,7 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="40106889-e711-48dd-a1d5-7900678fad81" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.576 Final - rigibody/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.576 Final - rigibody/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Shooting.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Shooting.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefebs/bullet2.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefebs/bullet2.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Bullet.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Bullet.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/explosionDestroy.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/explosionDestroy.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,6 +19,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/explosionDestroy.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Bullet.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.postprocessing@3.1.1/PostProcessing/Runtime/PostProcessLayer.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../CS576_Project3/CS576_Project3/Assets/Resources/Apple/Prefab/Apple.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Target.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProjectId" id="21RLjpm4mTB4i30vw7N0ofoUXTE" />
@@ -69,7 +72,8 @@
       <workItem from="1637915321954" duration="586000" />
       <workItem from="1637995033316" duration="147000" />
       <workItem from="1637995580450" duration="10734000" />
-      <workItem from="1638165491460" duration="2735000" />
+      <workItem from="1638165491460" duration="3423000" />
+      <workItem from="1638176597018" duration="3772000" />
     </task>
     <servers />
   </component>
