@@ -587,7 +587,7 @@ MonoBehaviour:
     m_Bits: 128
   gunTip: {fileID: 5915244886609393431}
   fpsCam: {fileID: 8858845742329413614}
-  player: {fileID: 3253475090975762509, guid: b09fb1833a1164f6f80332016f1efff0, type: 3}
+  player: {fileID: 1672118161097370718}
   grappleCheck: {fileID: 5476197691928610082}
 --- !u!95 &8250507070917133357
 Animator:
@@ -638,7 +638,7 @@ MonoBehaviour:
   impactForce: 30
   fpsCamera: {fileID: 3220846855334105422}
   explosionEffect: {fileID: 4878251603490039697, guid: 5ef71650fdcddc547bdb02a008d329ba, type: 3}
-  fireEffect: {fileID: 0}
+  fireEffect: {fileID: 3455546569803195081, guid: b09fb1833a1164f6f80332016f1efff0, type: 3}
   gunTip: {fileID: 5915244886609393431}
 --- !u!1 &1576323117737106962
 GameObject:
