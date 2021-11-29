@@ -267,7 +267,7 @@ public class PlayerMove : MonoBehaviour
             isSliding = true;
         }
         captureDirection = false;
-        rb.velocity = new Vector3(currentDirection.x * 21, currentDirection.y, currentDirection.z * 21);
+        rb.velocity = new Vector3(currentDirection.x * 24, currentDirection.y, currentDirection.z * 24);
     }
 
     // Stand part.

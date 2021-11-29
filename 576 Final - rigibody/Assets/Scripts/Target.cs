@@ -27,6 +27,8 @@ public class Target : MonoBehaviour
     {
         GetComponent<EnemyRifleman>().die = true;
         animationController.SetBool("Die", true);
+        Destroy(GetComponent<Rigidbody>());
+        Destroy(GetComponent<CapsuleCollider>());
         //Destroy(gameObject);
     }
 
@@ -34,7 +36,8 @@ public class Target : MonoBehaviour
     {
         if (animationController.GetCurrentAnimatorStateInfo(0).IsName("Die")) {
             animationController.SetBool("NoDieLoop", false);
-            if (animationController.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.95f) {
+            animationController.speed = 0.6f;
+            if (animationController.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.99f) {
                 animationController.speed = 0;
             }
         }
