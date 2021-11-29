@@ -19,6 +19,9 @@ public class Shooting : MonoBehaviour
     // gun tip
     public Transform gunTip;
     
+    // TODO: delete
+    public GameObject bullet;
+    
     // fire rate
     private float cd = 0.2f;
     // timer 
@@ -42,6 +45,8 @@ public class Shooting : MonoBehaviour
             // fire effect at gun tip
             Instantiate(fireEffect, gunTip);
             Shoot();
+            // TODO: delete
+            Instantiate(bullet, gunTip.position, gunTip.rotation);
         }
     }
 
