@@ -640,7 +640,7 @@ MonoBehaviour:
   explosionEffect: {fileID: 4878251603490039697, guid: 5ef71650fdcddc547bdb02a008d329ba, type: 3}
   fireEffect: {fileID: 3455546569803195081, guid: b09fb1833a1164f6f80332016f1efff0, type: 3}
   gunTip: {fileID: 5915244886609393431}
-  bullet: {fileID: 4082231721795801801, guid: 9674447956a13954b84d9b1d6ce7acd5, type: 3}
+  bullet: {fileID: 3800457752633751148, guid: 290ba71f69ee64c27a7ad056aecf4c0f, type: 3}
 --- !u!1 &1576323117737106962
 GameObject:
   m_ObjectHideFlags: 0

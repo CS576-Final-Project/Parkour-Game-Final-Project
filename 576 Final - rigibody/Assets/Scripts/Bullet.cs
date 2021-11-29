@@ -7,10 +7,10 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public Vector3 shootingDirection;
-    public float speed = 0.002f;  // projectile speed
+    public Vector3 shootingDirection;  // shooting direction
+    public float speed = 10f;  // projectile speed
     public GameObject explosionEffect;  // projectile explosion effect
-    // public AudioSource inFlightAudioSource;  // audio of the projectile when in flight
+    public AudioSource inFlightAudioSource;  // audio of the projectile when in flight
     public ParticleSystem inFlightEffect;  // projectile in flight effect
 
     private float lifeTime = 5f;  // lift time of the projectile
@@ -34,6 +34,7 @@ public class Bullet : MonoBehaviour
             Destroy(gameObject);
         }
 
+        // shoot bullet
         GetComponent<Rigidbody>().AddForce(shootingDirection * speed, ForceMode.Acceleration);
     }
 
@@ -45,7 +46,7 @@ public class Bullet : MonoBehaviour
         // explode when hitting an object
         Explode();
         // stop in flight audio
-        // inFlightAudioSource.Stop();
+        inFlightAudioSource.Stop();
         foreach(Collider col in GetComponents<Collider>())
         {
             col.enabled = false;
