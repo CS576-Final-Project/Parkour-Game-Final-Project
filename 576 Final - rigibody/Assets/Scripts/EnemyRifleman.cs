@@ -5,17 +5,15 @@ using UnityEngine;
 public class EnemyRifleman : MonoBehaviour
 {
     public Animator animationController;
-
-    public float radius;
-    public float angle;
-
     private GameObject player;
 
+    // For detecting player
+    public float radius;
+    public float angle;
     public LayerMask playerMask;
     public LayerMask obstructionMask;
 
     private bool canSeePlayer;
-    private bool canFire = false;
 
     private float walkingVelocity;
     private float runningVelocity;
@@ -46,8 +44,7 @@ public class EnemyRifleman : MonoBehaviour
     {
         AnimatorStateInfo currInfo = animationController.GetCurrentAnimatorStateInfo(0);
 
-        Vector3 revisedThisPosition = new Vector3(transform.position.x, transform.position.y + 2f, transform.position.z);
-        shootingDirection = (player.transform.position - revisedThisPosition).normalized;
+        shootingDirection = (player.transform.position - gunTip.transform.position).normalized;
 
         if (canSeePlayer) {
             float angleToRotate = Mathf.Rad2Deg * Mathf.Atan2(shootingDirection.x, shootingDirection.z);
@@ -55,12 +52,8 @@ public class EnemyRifleman : MonoBehaviour
 
             animationController.SetBool(singleShootingHash, true);
 
-            if (currInfo.IsName("Shoot_SingleShoot_AR") && currInfo.normalizedTime >= 0.91f)
-                canFire = true;
-
         } else {
             animationController.SetBool(singleShootingHash, false);
-            canFire = true;
         }
     }
 
@@ -80,7 +73,7 @@ public class EnemyRifleman : MonoBehaviour
             float shootingDelay = 0.5f;
             WaitForSeconds wait = new WaitForSeconds(shootingDelay);
 
-            if (canSeePlayer && canFire)
+            if (canSeePlayer)
             {
                 GameObject newObject = Instantiate(bullet, gunTip.position, gunTip.rotation);
                 newObject.GetComponent<Bullet>().shootingDirection = shootingDirection;
