@@ -6,6 +6,7 @@ public class EnemyRifleman : MonoBehaviour
 {
     public Animator animationController;
     private GameObject player;
+    private PlayerMove playerMove;
 
     // For detecting player
     public float radius;
@@ -22,6 +23,7 @@ public class EnemyRifleman : MonoBehaviour
     private int singleShootingHash;
 
     public Transform gunTip;
+    public Transform Head;
     public GameObject bullet;
 
     // Start is called before the first frame update
@@ -30,6 +32,8 @@ public class EnemyRifleman : MonoBehaviour
         animationController = GetComponent<Animator>();
 
         player = GameObject.FindWithTag("Player");
+        playerMove = player.GetComponent<PlayerMove>();
+
         StartCoroutine(FOVRoutine());
         StartCoroutine(SingleShoot());
 
@@ -44,11 +48,17 @@ public class EnemyRifleman : MonoBehaviour
     {
         AnimatorStateInfo currInfo = animationController.GetCurrentAnimatorStateInfo(0);
 
-        shootingDirection = (player.transform.position - gunTip.transform.position).normalized;
+        Vector3 optimizedPlayerPosition = new Vector3(player.transform.position.x, player.transform.position.y + 0.3f, player.transform.position.z);
+        shootingDirection = (optimizedPlayerPosition - gunTip.transform.position).normalized;
 
         if (canSeePlayer) {
-            float angleToRotate = Mathf.Rad2Deg * Mathf.Atan2(shootingDirection.x, shootingDirection.z);
-            transform.eulerAngles = new Vector3(0.0f, angleToRotate, 0.0f);
+            if (optimizedPlayerPosition.y <= gunTip.transform.position.y) {
+                float angleToRotate = Mathf.Rad2Deg * Mathf.Atan2(shootingDirection.x, shootingDirection.z);
+                transform.eulerAngles = new Vector3(0.0f, angleToRotate, 0.0f);
+            } else {
+                Quaternion desiredRotation = Quaternion.LookRotation(optimizedPlayerPosition - gunTip.transform.position);
+                transform.rotation = Quaternion.Lerp(transform.rotation, desiredRotation, Time.deltaTime * 10f);
+            }
 
             animationController.SetBool(singleShootingHash, true);
 
@@ -83,16 +93,16 @@ public class EnemyRifleman : MonoBehaviour
     }
 
     private void FieldOfViewCheck() {
-        Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radius, playerMask);
+        Collider[] rangeChecks = Physics.OverlapSphere(Head.position, radius, playerMask);
 
         if (rangeChecks.Length != 0) {
             Transform target = rangeChecks[0].transform;
-            Vector3 directionToTarget = (target.position - transform.position).normalized;
+            Vector3 directionToTarget = (target.position - Head.position).normalized;
 
             if (Vector3.Angle(transform.forward, directionToTarget) < angle / 2) {
                 float distanceToTarget = Vector3.Distance(transform.position, target.position);
 
-                if (!Physics.Raycast(transform.position, directionToTarget, distanceToTarget, obstructionMask)) {
+                if (!Physics.Raycast(Head.position, directionToTarget, distanceToTarget, obstructionMask)) {
                     canSeePlayer = true;
                 } else {
                     canSeePlayer = false;
