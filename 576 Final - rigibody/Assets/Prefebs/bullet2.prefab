@@ -218,7 +218,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49a7fd0ded54d4b7b8f8eaa79dfd4762, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3000
+  shootingDirection: {x: 0, y: 0, z: 0}
+  speed: 10
   explosionEffect: {fileID: 1764654978243476, guid: a98b15aa948478849b54661e4d9a317e, type: 3}
   inFlightEffect: {fileID: 84075549433690351}
 --- !u!54 &6283108491352843417
