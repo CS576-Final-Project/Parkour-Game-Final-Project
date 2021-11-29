@@ -7,18 +7,20 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public float speed = 1000f;
+    public float speed = 3f;
+    public Vector3 shootingDirection;
+
     // Start is called before the first frame update
     void Start()
     {
         // shoot bullet
-        GetComponent<Rigidbody>().AddForce(transform.right * speed);
+        // GetComponent<Rigidbody>().AddForce(transform.right * speed);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        GetComponent<Rigidbody>().AddForce(shootingDirection * speed);
     }
 
     public void OnCollisionEnter(Collision other)
