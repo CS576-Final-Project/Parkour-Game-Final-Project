@@ -6,6 +6,10 @@ First-person parkour and shooting in a 3D world. <br>
 
 ### Gameplay
 Through a variety of parkour skills to reach the end, and there will be battles with NPCs on the way. <br>
+What we are trying to do: <br>
+- There will be 2 parts - parkour part and battle part. However player can use parkour skill to win the battle.
+- We will make multiple levels with different difficulty settings.
+- We consider making all the maps manually, or randomly generating pre-made map components and stitching them together.
 
 ---
 
