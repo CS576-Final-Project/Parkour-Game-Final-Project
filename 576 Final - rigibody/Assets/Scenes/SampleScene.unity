@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.61116576, g: 0.5547334, b: 0.6512325, a: 1}
+  m_IndirectSpecularColor: {r: 0.611164, g: 0.5547317, b: 0.6512291, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -6919,7 +6919,7 @@ MonoBehaviour:
   explosionEffect: {fileID: 4878251603490039697, guid: 5ef71650fdcddc547bdb02a008d329ba, type: 3}
   fireEffect: {fileID: 3455546569803195081, guid: b09fb1833a1164f6f80332016f1efff0, type: 3}
   gunTip: {fileID: 224487584}
-  bullet: {fileID: 356182100673978637, guid: 9674447956a13954b84d9b1d6ce7acd5, type: 3}
+  bullet: {fileID: 4082231721795801801, guid: b09ce285b66d8f84098d1bc86dc67a5a, type: 3}
 --- !u!23 &2730010420509294502
 MeshRenderer:
   m_ObjectHideFlags: 0
