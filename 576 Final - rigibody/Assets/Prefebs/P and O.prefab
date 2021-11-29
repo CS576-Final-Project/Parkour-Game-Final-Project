@@ -587,7 +587,7 @@ MonoBehaviour:
     m_Bits: 128
   gunTip: {fileID: 5915244886609393431}
   fpsCam: {fileID: 8858845742329413614}
-  player: {fileID: 0}
+  player: {fileID: 3253475090975762509, guid: b09fb1833a1164f6f80332016f1efff0, type: 3}
   grappleCheck: {fileID: 5476197691928610082}
 --- !u!95 &8250507070917133357
 Animator:
