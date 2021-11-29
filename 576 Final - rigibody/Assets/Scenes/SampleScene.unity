@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.611164, g: 0.5547317, b: 0.6512291, a: 1}
+  m_IndirectSpecularColor: {r: 0.61116576, g: 0.5547334, b: 0.6512325, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -434,7 +434,7 @@ MonoBehaviour:
   gunTip: {fileID: 224487584}
   hookTravelSpeed: 0
   playerTravelSpeed: 0
-  fired: 0
+  hookFired: 0
   hooked: 0
   play: 0
   maxDistance: 0
@@ -468,7 +468,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gunTip: {fileID: 224487584}
   playerTravelSpeed: 0
-  fired: 0
+  wallHookFired: 0
   hooked: 0
   play: 0
   wallMaxDistance: 0
@@ -670,13 +670,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 224487583}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0.0244, z: -0.144}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1441032611827380169}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1 &230025846
 GameObject:
   m_ObjectHideFlags: 0
@@ -6842,7 +6842,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7214f56fd7828dd4b868809e8d11fa39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animation_controller: {fileID: 0}
+  animationController: {fileID: 0}
 --- !u!114 &1441032611827741682
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6860,7 +6860,7 @@ MonoBehaviour:
   impactForce: 30
   fpsCamera: {fileID: 963194227}
   explosionEffect: {fileID: 4878251603490039697, guid: 5ef71650fdcddc547bdb02a008d329ba, type: 3}
-  fireEffect: {fileID: 0}
+  fireEffect: {fileID: 3455546569803195081, guid: b09fb1833a1164f6f80332016f1efff0, type: 3}
   gunTip: {fileID: 224487584}
 --- !u!23 &2730010420509294502
 MeshRenderer:
