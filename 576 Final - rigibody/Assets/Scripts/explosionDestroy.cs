@@ -5,7 +5,7 @@ using UnityEngine;
 public class explosionDestroy : MonoBehaviour
 {
     // explosion last
-    private float lifeTime = 3.0f;
+    private float lifeTime = 1f;
     // timer 
     private float timer = 0;
 
