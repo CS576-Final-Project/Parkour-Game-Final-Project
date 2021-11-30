@@ -53,7 +53,7 @@ public class PlayerMove : MonoBehaviour
     private float horizontalMovement;
     private float verticalMovement;
 
-    Rigidbody rb;
+    public Rigidbody rb;
 
     private bool captureDirection = false;
     public bool isSliding = false;
@@ -83,8 +83,8 @@ public class PlayerMove : MonoBehaviour
 
         walkingVelocity = 7f;
         crouchingVelocity = 3f;
-        runningVelocity = 10.5f;
-        wallRunningVelocity = 12f;
+        runningVelocity = 12.5f;
+        wallRunningVelocity = 12.5f;
         //slidingMultiplier = 1f; // Use multiplier because of ForceMode.VelocityChange.
         movementMultiplier = 10.5f;
         airMultiplier = 0.4f;
