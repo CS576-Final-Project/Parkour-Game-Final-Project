@@ -38,8 +38,8 @@ public class EnemyRifleman : MonoBehaviour
     private float selfExplodeTimer = 0f;
     private float timeToExplode = 3f;
 
-    private int MAX_ITERATIONS = 10;
-    private float EPSILON = 0.05f;
+    private int MAX_ITERATIONS = 1000;
+    private float EPSILON = 0.005f;
 
     // Start is called before the first frame update
     void Start()
@@ -63,31 +63,33 @@ public class EnemyRifleman : MonoBehaviour
     {
         AnimatorStateInfo currInfo = animationController.GetCurrentAnimatorStateInfo(0);
         Quaternion desiredRotation = new Quaternion();
+        Vector3 playerCentroid = player.transform.GetChild(0).GetComponent<CapsuleCollider>().bounds.center;
 
         if (!die) {
-            Vector3 optimizedPlayerPosition = new Vector3(player.transform.position.x, player.transform.position.y + 0.3f, player.transform.position.z);
-            //optimizedPlayerPosition.Normalize();
-            shootingDirection = (optimizedPlayerPosition - gunTip.transform.position).normalized;
+            Vector3 optimizedPlayerPosition = iterativeApproximation(playerCentroid, playerMove.rb.velocity, 29f);
+            optimizedPlayerPosition.Normalize();
+            // Vector3 optimizedPlayerPosition = new Vector3();
+            // shootingDirection = (playerCentroid - gunTip.transform.position).normalized;
+            shootingDirection = optimizedPlayerPosition;
 
             if (canSeePlayer) {
                 capturePlayerPostition = false;
-                desiredRotation = Quaternion.LookRotation(optimizedPlayerPosition - gunTip.transform.position);
+                desiredRotation = Quaternion.LookRotation(playerCentroid - gunTip.transform.position);
                 transform.rotation = Quaternion.Lerp(transform.rotation, desiredRotation, Time.deltaTime * 10f);
 
                 animationController.SetBool(singleShootingHash, true);
 
             } else {
                 // Cannot see player but know player's last position
-
+                animationController.SetBool(singleShootingHash, false);
                 // Make NPCs have the correct rotation when they lose the player's position
                 if (knowPlayerLastPosition) {
                     if (!capturePlayerPostition) {
-                        playerLastPosition = player.transform.position;
+                        playerLastPosition = playerCentroid;
                         capturePlayerPostition = true;
                     }
                     desiredRotation = Quaternion.LookRotation(new Vector3(playerLastPosition.x, gunTip.transform.position.y, playerLastPosition.z) - gunTip.transform.position);
                     transform.rotation = Quaternion.Lerp(transform.rotation, desiredRotation, Time.deltaTime * 10f);
-                    animationController.SetBool(singleShootingHash, false);
                 } else {
                     // Cannot see player and don't know player's position
 
@@ -154,6 +156,7 @@ public class EnemyRifleman : MonoBehaviour
 
                 if (!Physics.Raycast(head.position, directionToTarget, distanceToTarget, obstructionMask)) {
                     canSeePlayer = true;
+                    knowPlayerLastPosition = true;
                 } else {
                     canSeePlayer = false;
                 }
