@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.61116576, g: 0.5547334, b: 0.6512325, a: 1}
+  m_IndirectSpecularColor: {r: 0.611164, g: 0.5547317, b: 0.6512291, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -338,7 +338,7 @@ MonoBehaviour:
     m_Bits: 8
   wallMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   walkingVelocity: 0
   crouchingVelocity: 0
   runningVelocity: 0
@@ -357,6 +357,7 @@ MonoBehaviour:
   walkRightKey: 100
   crouchKey: 99
   runKey: 304
+  rb: {fileID: 0}
   isSliding: 0
   slideTime: 0
   isRopeCut: 0

@@ -5,7 +5,7 @@ using UnityEngine;
 public class Shooting : MonoBehaviour
 {
     // damage to enemy
-    public float damage = 10f;
+    public float damage = 25f;
     // shooting range
     public float range = 100f; 
     // impact force to the enemy

@@ -1008,6 +1008,10 @@ PrefabInstance:
       propertyPath: bullet
       value: 
       objectReference: {fileID: 4082231721795801801, guid: b09ce285b66d8f84098d1bc86dc67a5a, type: 3}
+    - target: {fileID: 5156757648226165553, guid: cae4d1657a74a0f44afdd89bb6f812f4, type: 3}
+      propertyPath: damage
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 5401700971110426137, guid: cae4d1657a74a0f44afdd89bb6f812f4, type: 3}
       propertyPath: orientation
       value: 

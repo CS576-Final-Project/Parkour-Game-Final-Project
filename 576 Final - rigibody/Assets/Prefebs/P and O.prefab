@@ -634,7 +634,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c87fb84449224e50b274b61479729eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
+  damage: 25
   range: 100
   impactForce: 30
   fpsCamera: {fileID: 3220846855334105422}
@@ -1142,6 +1142,7 @@ MonoBehaviour:
   walkRightKey: 100
   crouchKey: 99
   runKey: 304
+  rb: {fileID: 0}
   isSliding: 0
   slideTime: 0
   isRopeCut: 0

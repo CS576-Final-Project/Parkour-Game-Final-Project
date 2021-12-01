@@ -7,6 +7,7 @@ public class EnemyRifleman : MonoBehaviour
     public Animator animationController;
     private GameObject player;
     private PlayerMove playerMove;
+    private WallRun wallRun;
 
     // For detecting player
     public float radius;
@@ -49,6 +50,7 @@ public class EnemyRifleman : MonoBehaviour
 
         player = GameObject.FindWithTag("Player");
         playerMove = player.GetComponent<PlayerMove>();
+        wallRun = player.GetComponent<WallRun>();
 
         StartCoroutine(FOVRoutine());
         StartCoroutine(SingleShoot());
@@ -71,7 +73,7 @@ public class EnemyRifleman : MonoBehaviour
             optimizedPlayerPosition.Normalize();
             // Vector3 optimizedPlayerPosition = new Vector3();
             // shootingDirection = (playerCentroid - gunTip.transform.position).normalized;
-            if (playerMove.isGrounded())
+            if (playerMove.isGrounded() || !wallRun.StopWallRun())
                 shootingDirection = optimizedPlayerPosition;
             else
                 shootingDirection = (playerCentroid - gunTip.transform.position).normalized;
@@ -79,7 +81,7 @@ public class EnemyRifleman : MonoBehaviour
             if (canSeePlayer) {
                 capturePlayerPostition = false;
                 desiredRotation = Quaternion.LookRotation(playerCentroid - gunTip.transform.position);
-                transform.rotation = Quaternion.Lerp(transform.rotation, desiredRotation, Time.deltaTime * 10f);
+                transform.rotation = Quaternion.Lerp(transform.rotation, desiredRotation, Time.deltaTime * 3f);
 
                 animationController.SetBool(singleShootingHash, true);
 
@@ -93,7 +95,7 @@ public class EnemyRifleman : MonoBehaviour
                         capturePlayerPostition = true;
                     }
                     desiredRotation = Quaternion.LookRotation(new Vector3(playerLastPosition.x, gunTip.transform.position.y, playerLastPosition.z) - gunTip.transform.position);
-                    transform.rotation = Quaternion.Lerp(transform.rotation, desiredRotation, Time.deltaTime * 10f);
+                    transform.rotation = Quaternion.Lerp(transform.rotation, desiredRotation, Time.deltaTime * 3f);
                 } else {
                     // Cannot see player and don't know player's position
 
@@ -111,7 +113,7 @@ public class EnemyRifleman : MonoBehaviour
             // Make NPCs have the correct rotation when they die
             if (canSeePlayer) {
                 desiredRotation = Quaternion.LookRotation(diePlayerPosition - gunTip.transform.position);
-                transform.rotation = Quaternion.Lerp(transform.rotation, desiredRotation, Time.deltaTime * 10f);
+                transform.rotation = Quaternion.Lerp(transform.rotation, desiredRotation, Time.deltaTime * 3f);
             }
 
             SelfExplode();
