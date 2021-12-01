@@ -26,7 +26,7 @@ public class LaunchBulletTime : MonoBehaviour
 
     void Update()
     {
-        if (!playerMovement.isGrounded() && !wallRun.isWallLeft && !wallRun.isWallRight) {
+        if ((!playerMovement.isGrounded() || playerMovement.isSliding) && !wallRun.isWallLeft && !wallRun.isWallRight) {
             if (Input.GetMouseButtonDown(1))
             {
                 playerMovement.isBulleting = true;

@@ -8,6 +8,7 @@ public class EnemyRifleman : MonoBehaviour
     private GameObject player;
     private PlayerMove playerMove;
     private WallRun wallRun;
+    private MoveSway sway;
 
     // For detecting player
     public float radius;
@@ -51,6 +52,7 @@ public class EnemyRifleman : MonoBehaviour
         player = GameObject.FindWithTag("Player");
         playerMove = player.GetComponent<PlayerMove>();
         wallRun = player.GetComponent<WallRun>();
+        sway = GameObject.FindWithTag("Head").GetComponent<MoveSway>();
 
         StartCoroutine(FOVRoutine());
         StartCoroutine(SingleShoot());
@@ -73,14 +75,15 @@ public class EnemyRifleman : MonoBehaviour
             optimizedPlayerPosition.Normalize();
             // Vector3 optimizedPlayerPosition = new Vector3();
             // shootingDirection = (playerCentroid - gunTip.transform.position).normalized;
-            if (playerMove.isGrounded() || !wallRun.StopWallRun())
+            if ((playerMove.isGrounded() || !wallRun.StopWallRun())) {
                 shootingDirection = optimizedPlayerPosition;
-            else
+            } else {
                 shootingDirection = (playerCentroid - gunTip.transform.position).normalized;
+            }
 
             if (canSeePlayer) {
                 capturePlayerPostition = false;
-                desiredRotation = Quaternion.LookRotation(playerCentroid - gunTip.transform.position);
+                desiredRotation = Quaternion.LookRotation(shootingDirection - Vector3.zero);
                 transform.rotation = Quaternion.Lerp(transform.rotation, desiredRotation, Time.deltaTime * 3f);
 
                 animationController.SetBool(singleShootingHash, true);
@@ -192,6 +195,9 @@ public class EnemyRifleman : MonoBehaviour
 
     private Vector3 iterativeApproximation(Vector3 targetPosition, Vector3 targetVelocity, float projectileSpeed) 
     { 
+        if (playerMove.isSliding || !sway.canSlide) {
+            projectileSpeed *= 20;
+        }
         float t = 0.0f; 
         for (int iteration = 0; iteration < MAX_ITERATIONS; ++iteration) 
         { 

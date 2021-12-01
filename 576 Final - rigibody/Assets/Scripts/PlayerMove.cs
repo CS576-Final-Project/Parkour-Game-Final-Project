@@ -69,7 +69,7 @@ public class PlayerMove : MonoBehaviour
     public Vector3 hookCurrentDirection = Vector3.zero;
     
     public float bulletTimer = 0f;
-    public float bulletDuration = 0.55f;
+    public float bulletDuration = 8f;
     public bool isBulleting = false;
     public GameObject left;
     public GameObject right;
@@ -147,7 +147,7 @@ public class PlayerMove : MonoBehaviour
         slopeMoveDirection = Vector3.ProjectOnPlane(moveDirection, slopeHit.normal);
 
         if (isBulleting) {
-            bulletTimer += Time.deltaTime * 2.5f;
+            bulletTimer += Time.deltaTime * 4f;
             print(bulletTimer - bulletDuration);
             if (bulletTimer >= bulletDuration) {
                 isBulleting = false;
@@ -317,14 +317,14 @@ public class PlayerMove : MonoBehaviour
     }
 
     public bool isBulletTimeLeft() {
-        if (Input.GetKey(walkLeftKey) && isBulleting) {
+        if (Input.GetKey(walkLeftKey) && isBulleting && !isGrounded()) {
             return true;
         }
         return false;
     }
 
     public bool isBulletTimeRight() {
-        if (Input.GetKey(walkRightKey) && isBulleting) {
+        if (Input.GetKey(walkRightKey) && isBulleting && !isGrounded()) {
             return true;
         }
         return false;
