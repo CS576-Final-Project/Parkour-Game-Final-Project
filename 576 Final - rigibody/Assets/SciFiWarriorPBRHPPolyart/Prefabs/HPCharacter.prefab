@@ -1318,7 +1318,7 @@ MonoBehaviour:
     m_Bits: 72
   gunTip: {fileID: 8106330532328239310}
   head: {fileID: 8106330533267306342}
-  bullet: {fileID: 3800457752633751148, guid: 290ba71f69ee64c27a7ad056aecf4c0f, type: 3}
+  bullet: {fileID: 7889175462699665568, guid: e427a97ab20182d41b0d74bbc2307f7d, type: 3}
   die: 0
   diePlayerPosition: {x: 0, y: 0, z: 0}
   explosionPoint: {fileID: 8862192904029011906}
@@ -2796,7 +2796,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8106330532328239311}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.155, y: 1.523, z: 1.263}
+  m_LocalPosition: {x: 0.217, y: 1.523, z: 1.263}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1874283958645125873}

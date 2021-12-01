@@ -8,8 +8,9 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     public Vector3 shootingDirection;  // shooting direction
-    public float speed = 10f;  // projectile speed
+    public float speed;  // projectile speed
     public GameObject explosionEffect;  // projectile explosion effect
+    public GameObject rocketFire;
     public AudioSource inFlightAudioSource;  // audio of the projectile when in flight
     public ParticleSystem inFlightEffect;  // projectile in flight effect
 
@@ -31,11 +32,14 @@ public class Bullet : MonoBehaviour
         // destroy after 5 sec of not hitting anything
         if (timer > lifeTime)
         {
-            Destroy(gameObject);
+            GameObject parent = transform.parent.gameObject;
+            Destroy(parent, 5f);
         }
 
         // shoot bullet
-        GetComponent<Rigidbody>().AddForce(shootingDirection * speed, ForceMode.Acceleration);
+        transform.position += shootingDirection * speed * Time.deltaTime;
+        rocketFire.transform.position += shootingDirection * speed * Time.deltaTime;
+        //GetComponent<Rigidbody>().AddForce(shootingDirection * speed, ForceMode.Acceleration);
     }
 
     public void OnCollisionEnter(Collision other)
@@ -54,7 +58,9 @@ public class Bullet : MonoBehaviour
         inFlightEffect.Stop();
         
         //  Destroy the projectile after 2 seconds. Using a delay because the particle system needs to finish
-        Destroy(gameObject, 5f);
+        GameObject parent = transform.parent.gameObject;
+        Destroy(parent, 5f);
+        Destroy(rocketFire, 5f);
     }
     
     private void Explode()
