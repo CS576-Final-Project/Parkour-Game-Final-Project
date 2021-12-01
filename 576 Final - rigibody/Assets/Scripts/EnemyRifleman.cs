@@ -23,13 +23,14 @@ public class EnemyRifleman : MonoBehaviour
 
     private float walkingVelocity;
     private float runningVelocity;
-    private Vector3 shootingDirection;
 
     private int singleShootingHash;
 
     public Transform gunTip;
     public Transform head;
     public GameObject bullet;
+    private Vector3 shootingDirection;
+    private float bulletSpeed = 30f;
 
     public bool die = false;
     public Vector3 diePlayerPosition;
@@ -38,8 +39,8 @@ public class EnemyRifleman : MonoBehaviour
     private float selfExplodeTimer = 0f;
     private float timeToExplode = 3f;
 
-    private int MAX_ITERATIONS = 1000;
-    private float EPSILON = 0.005f;
+    private int MAX_ITERATIONS = 10;
+    private float EPSILON = 0.08f;
 
     // Start is called before the first frame update
     void Start()
@@ -66,11 +67,14 @@ public class EnemyRifleman : MonoBehaviour
         Vector3 playerCentroid = player.transform.GetChild(0).GetComponent<CapsuleCollider>().bounds.center;
 
         if (!die) {
-            Vector3 optimizedPlayerPosition = iterativeApproximation(playerCentroid, playerMove.rb.velocity, 29f);
+            Vector3 optimizedPlayerPosition = iterativeApproximation(playerCentroid, playerMove.rb.velocity, bulletSpeed);
             optimizedPlayerPosition.Normalize();
             // Vector3 optimizedPlayerPosition = new Vector3();
             // shootingDirection = (playerCentroid - gunTip.transform.position).normalized;
-            shootingDirection = optimizedPlayerPosition;
+            if (playerMove.isGrounded())
+                shootingDirection = optimizedPlayerPosition;
+            else
+                shootingDirection = (playerCentroid - gunTip.transform.position).normalized;
 
             if (canSeePlayer) {
                 capturePlayerPostition = false;
@@ -136,7 +140,8 @@ public class EnemyRifleman : MonoBehaviour
             if (canSeePlayer && !die)
             {
                 GameObject newObject = Instantiate(bullet, gunTip.position, gunTip.rotation);
-                newObject.GetComponent<Bullet>().shootingDirection = shootingDirection;
+                newObject.transform.GetChild(0).GetComponent<Bullet>().shootingDirection = shootingDirection;
+                newObject.transform.GetChild(0).GetComponent<Bullet>().speed = bulletSpeed;
             }
             yield return wait; // next shot will be shot after this delay
         }
