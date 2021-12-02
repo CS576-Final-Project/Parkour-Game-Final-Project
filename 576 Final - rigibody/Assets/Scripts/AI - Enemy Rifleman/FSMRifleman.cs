@@ -46,7 +46,7 @@ public class EnemyRiflemanParameter
     public float bulletSpeed = 30f;
 
     public bool die = false;
-    public Vector3 diePlayerPosition;
+    public Quaternion diePlayerRotation;
     public Transform explosionPoint;
     public GameObject deathExplosionEffect;
     public float selfExplodeTimer = 0f;
@@ -87,7 +87,7 @@ public class FSMRifleman : MonoBehaviour
     void Update()
     {
         parameter.playerCentroid = parameter.player.transform.GetChild(0).GetComponent<CapsuleCollider>().bounds.center;
-        
+
         parameter.optimizedPlayerPosition = IterativeApproximation(parameter.playerCentroid, parameter.playerMove.rb.velocity, parameter.bulletSpeed);
         parameter.optimizedPlayerPosition.Normalize();
 
@@ -124,7 +124,7 @@ public class FSMRifleman : MonoBehaviour
 
     
     // Single shooting part
-    private IEnumerator SingleShoot() {
+    public IEnumerator SingleShoot() {
         while (true)
         {   
             float shootingDelay = 0.5f;

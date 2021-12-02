@@ -84,7 +84,6 @@ public class GrapplingHook : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.E) && !hookFired) {
                 //playerMovement.hookCurrentDirection = hookHit.point - this.transform.position;
-                print(play);
                 hookFired = true;
                 play = true;
                 animatorControl.animationController.Play("M1911 Hook Ready");
@@ -97,6 +96,7 @@ public class GrapplingHook : MonoBehaviour
         }   
         if (hooked) {
             StartHooking();
+            gunTip.parent.transform.rotation = Quaternion.LookRotation(triggerPoint.transform.position - gunTip.position) * Quaternion.LookRotation(gunTip.parent.GetComponent<SwitchWeaponPlace>().initialForward, Vector3.up);
         }
     }
 

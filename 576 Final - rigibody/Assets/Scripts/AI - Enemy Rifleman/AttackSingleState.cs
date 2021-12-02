@@ -27,6 +27,7 @@ public class AttackSingleState : FSMState
         }
 
         if (parameter.health <= 0) {
+            parameter.die = true;
             manager.TransitionState(StateType.Die);
         }
 
@@ -42,11 +43,13 @@ public class AttackSingleState : FSMState
 
     public void OnExit()
     {
-        if (!parameter.capturePlayerPostition) {
-            parameter.playerLastPosition = parameter.playerCentroid;
-            parameter.capturePlayerPostition = true;
+        if (!parameter.die) {
+            if (!parameter.capturePlayerPostition) {
+                parameter.playerLastPosition = parameter.playerCentroid;
+                parameter.capturePlayerPostition = true;
+            }
+            desiredRotation = Quaternion.LookRotation(new Vector3(parameter.playerLastPosition.x, parameter.gunTip.transform.position.y, parameter.playerLastPosition.z) - parameter.gunTip.transform.position);
+            manager.transform.rotation = desiredRotation;
         }
-        desiredRotation = Quaternion.LookRotation(new Vector3(parameter.playerLastPosition.x, parameter.gunTip.transform.position.y, parameter.playerLastPosition.z) - parameter.gunTip.transform.position);
-        manager.transform.rotation = desiredRotation;
     }
 }

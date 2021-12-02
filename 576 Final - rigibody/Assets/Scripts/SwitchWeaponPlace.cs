@@ -17,10 +17,15 @@ public class SwitchWeaponPlace : MonoBehaviour
     private Vector3 awayRotationVector;
     private Quaternion awayRotation;
 
-    private Vector3 initialForward;
+    public Vector3 initialForward;
 
     private float smooth = 8f;
     private float swayMultiplier = 20f;
+
+    public bool doRecoil = false;
+    private float recoilTimer = 0f;
+    private Vector3 recoilVector;
+    private Quaternion recoilRotation;
 
     // Start is called before the first frame update
     void Start()
@@ -39,6 +44,9 @@ public class SwitchWeaponPlace : MonoBehaviour
         awayRotation = Quaternion.Euler(awayRotationVector);
 
         initialForward = transform.forward;
+
+        recoilVector = new Vector3(100f, 180f, 0f);
+        recoilRotation = Quaternion.Euler(recoilVector);
     }
 
     // Update is called once per frame
@@ -67,7 +75,17 @@ public class SwitchWeaponPlace : MonoBehaviour
             transform.localPosition = Vector3.Lerp(transform.localPosition, initialPosition, Time.deltaTime * 8f);
             //transform.localRotation = Quaternion.Lerp(transform.localRotation, initialRotation, Time.deltaTime * 10f);
 
-            transform.localRotation = Quaternion.Slerp(transform.localRotation, targetRotation, smooth * Time.deltaTime);
+            if (!doRecoil)
+                transform.localRotation = Quaternion.Slerp(transform.localRotation, targetRotation, smooth * Time.deltaTime);
+        }
+
+        if (doRecoil) {
+            transform.localRotation = Quaternion.Lerp(transform.localRotation, recoilRotation, Time.deltaTime * 20f);
+            recoilTimer += Time.deltaTime;
+            if (recoilTimer >= 0.07f) {
+                recoilTimer = 0f;
+                doRecoil = false;
+            }
         }
     }
 }
