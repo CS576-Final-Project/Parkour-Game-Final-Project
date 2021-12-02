@@ -26,6 +26,7 @@ public class IdleState : FSMState
         }
 
         if (parameter.health <= 0) {
+            parameter.die = true;
             manager.TransitionState(StateType.Die);
         }
 

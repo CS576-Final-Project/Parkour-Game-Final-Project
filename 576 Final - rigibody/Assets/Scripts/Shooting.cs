@@ -47,6 +47,10 @@ public class Shooting : MonoBehaviour
             timer = 0;
             // fire effect at gun tip
             Instantiate(fireEffect, gunTip);
+
+            // recoil
+            GetComponent<SwitchWeaponPlace>().doRecoil = true;
+
             // --- Handle Audio ---
             if (source != null)
             {
