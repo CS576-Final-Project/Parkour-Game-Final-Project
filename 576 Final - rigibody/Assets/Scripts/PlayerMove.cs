@@ -69,7 +69,7 @@ public class PlayerMove : MonoBehaviour
     public Vector3 hookCurrentDirection = Vector3.zero;
     
     public float bulletTimer = 0f;
-    public float bulletDuration = 8f;
+    private float bulletDuration = 2f;
     public bool isBulleting = false;
     public GameObject left;
     public GameObject right;
@@ -148,7 +148,6 @@ public class PlayerMove : MonoBehaviour
 
         if (isBulleting) {
             bulletTimer += Time.deltaTime * 4f;
-            print(bulletTimer - bulletDuration);
             if (bulletTimer >= bulletDuration) {
                 isBulleting = false;
             }

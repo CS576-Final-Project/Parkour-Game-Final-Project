@@ -92,7 +92,7 @@ public class Shooting : MonoBehaviour
         if (Physics.Raycast(fpsCamera.transform.position, fpsCamera.transform.forward, out hit, range, layerMask))
         {
             // if we hit an enemy
-            Target enemy = hit.transform.GetComponent<Target>();
+            FSMRifleman enemy = hit.transform.GetComponent<FSMRifleman>();
             if (enemy != null)
             {
                 enemy.TakeDamage(damage);

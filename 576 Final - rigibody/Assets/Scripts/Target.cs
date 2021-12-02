@@ -45,8 +45,6 @@ public class Target : MonoBehaviour
             animationController.speed = 0.6f;
             if (animationController.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.99f) {
                 animationController.speed = 0;
-                GetComponent<Rigidbody>().useGravity = false;
-                Destroy(GetComponent<CapsuleCollider>());
             }
         }
     }
