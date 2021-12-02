@@ -39,7 +39,7 @@ public class EnemyRifleman : MonoBehaviour
     public Transform explosionPoint;
     public GameObject deathExplosionEffect;
     private float selfExplodeTimer = 0f;
-    private float timeToExplode = 3f;
+    private float timeToExplode = 2.5f;
 
     private int MAX_ITERATIONS = 10;
     private float EPSILON = 0.08f;
@@ -71,7 +71,7 @@ public class EnemyRifleman : MonoBehaviour
         Vector3 playerCentroid = player.transform.GetChild(0).GetComponent<CapsuleCollider>().bounds.center;
 
         if (!die) {
-            Vector3 optimizedPlayerPosition = iterativeApproximation(playerCentroid, playerMove.rb.velocity, bulletSpeed);
+            Vector3 optimizedPlayerPosition = IterativeApproximation(playerCentroid, playerMove.rb.velocity, bulletSpeed);
             optimizedPlayerPosition.Normalize();
             // Vector3 optimizedPlayerPosition = new Vector3();
             // shootingDirection = (playerCentroid - gunTip.transform.position).normalized;
@@ -193,7 +193,7 @@ public class EnemyRifleman : MonoBehaviour
         }
     }
 
-    private Vector3 iterativeApproximation(Vector3 targetPosition, Vector3 targetVelocity, float projectileSpeed) 
+    private Vector3 IterativeApproximation(Vector3 targetPosition, Vector3 targetVelocity, float projectileSpeed) 
     { 
         if (playerMove.isSliding || !sway.canSlide) {
             projectileSpeed *= 20;

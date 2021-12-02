@@ -9,13 +9,18 @@ public class SwitchWeaponPlace : MonoBehaviour
     private WallRun wallRun;
     public GrapplingHook playerHook;
 
-    private Vector3 initionalPosition;
+    private Vector3 initialPosition;
     private Vector3 leftHandPosition;
     private Vector3 awayPosition;
 
-    private Quaternion initionalRotation;
+    private Quaternion initialRotation;
     private Vector3 awayRotationVector;
     private Quaternion awayRotation;
+
+    private Vector3 initialForward;
+
+    private float smooth = 8f;
+    private float swayMultiplier = 20f;
 
     // Start is called before the first frame update
     void Start()
@@ -25,21 +30,32 @@ public class SwitchWeaponPlace : MonoBehaviour
         wallRun = GameObject.FindWithTag("Player").GetComponent<WallRun>();
         playerHook = GameObject.FindWithTag("Player").GetComponent<GrapplingHook>();
 
-        initionalPosition = transform.localPosition;
-        leftHandPosition = new Vector3(initionalPosition.x - 0.3f, initionalPosition.y, initionalPosition.z);
-        awayPosition = new Vector3(transform.localPosition.x - 0.4f, initionalPosition.y - 0.1f, initionalPosition.z - 0.6f);
+        initialPosition = transform.localPosition;
+        leftHandPosition = new Vector3(initialPosition.x - 0.3f, initialPosition.y, initialPosition.z);
+        awayPosition = new Vector3(transform.localPosition.x - 0.4f, initialPosition.y - 0.1f, initialPosition.z - 0.6f);
 
-        initionalRotation = transform.localRotation;
+        initialRotation = transform.localRotation;
         awayRotationVector = new Vector3(-10f, 90f, 0f);
         awayRotation = Quaternion.Euler(awayRotationVector);
+
+        initialForward = transform.forward;
     }
 
     // Update is called once per frame
     void Update()
     {
+        // Gun sway
+        float mouseX = Input.GetAxisRaw("Mouse X") * swayMultiplier;
+        float mouseY = Input.GetAxisRaw("Mouse Y") * swayMultiplier;
+
+        Quaternion rotationX = Quaternion.AngleAxis(-mouseY, Vector3.right);
+        Quaternion rotationY = Quaternion.AngleAxis(mouseX, Vector3.up) * Quaternion.LookRotation(initialForward, Vector3.up);
+
+        Quaternion targetRotation = rotationX * rotationY;
+
         if (sway.isWallRight() || wallRun.isWallRight) {
             transform.localPosition = Vector3.Lerp(transform.localPosition, leftHandPosition, Time.deltaTime * 5f);
-            transform.localRotation = Quaternion.Lerp(transform.localRotation, initionalRotation, Time.deltaTime * 6f);
+            transform.localRotation = Quaternion.Lerp(transform.localRotation, initialRotation, Time.deltaTime * 6f);
         }
         
         if (sway.isWallAhead()) {
@@ -48,8 +64,10 @@ public class SwitchWeaponPlace : MonoBehaviour
         }
 
         if (!sway.isWallAhead() && !sway.isWallRight() && !wallRun.isWallRight && !playerHook.play) {
-            transform.localPosition = Vector3.Lerp(transform.localPosition, initionalPosition, Time.deltaTime * 8f);
-            transform.localRotation = Quaternion.Lerp(transform.localRotation, initionalRotation, Time.deltaTime * 10f);
+            transform.localPosition = Vector3.Lerp(transform.localPosition, initialPosition, Time.deltaTime * 8f);
+            //transform.localRotation = Quaternion.Lerp(transform.localRotation, initialRotation, Time.deltaTime * 10f);
+
+            transform.localRotation = Quaternion.Slerp(transform.localRotation, targetRotation, smooth * Time.deltaTime);
         }
     }
 }

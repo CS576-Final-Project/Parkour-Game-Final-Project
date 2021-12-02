@@ -1201,6 +1201,7 @@ GameObject:
   - component: {fileID: 8106330534192131904}
   - component: {fileID: 8106330534192131935}
   - component: {fileID: 1874283958645485264}
+  - component: {fileID: 3117040426639714588}
   m_Layer: 0
   m_Name: HPCharacter
   m_TagString: Untagged
@@ -1288,7 +1289,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1874283958645485265}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ee594dfa6fb2d4ceea959f7d8028e43b, type: 3}
   m_Name: 
@@ -1302,7 +1303,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1874283958645485265}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: be93fb84bd9085f46a7e9b714d17027a, type: 3}
   m_Name: 
@@ -1323,6 +1324,56 @@ MonoBehaviour:
   diePlayerPosition: {x: 0, y: 0, z: 0}
   explosionPoint: {fileID: 8862192904029011906}
   deathExplosionEffect: {fileID: 6504964975964043690, guid: 5f6b1b3aff415a041a1e9f0c9d56f193, type: 3}
+--- !u!114 &3117040426639714588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1874283958645485265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12febec3a532bc44b9cd87599b9d6da9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parameter:
+    animationController: {fileID: 0}
+    player: {fileID: 0}
+    playerMove: {fileID: 0}
+    wallRun: {fileID: 0}
+    sway: {fileID: 0}
+    health: 100
+    playerCentroid: {x: 0, y: 0, z: 0}
+    radius: 80
+    angle: 120
+    playerMask:
+      serializedVersion: 2
+      m_Bits: 16384
+    obstructionMask:
+      serializedVersion: 2
+      m_Bits: 72
+    canSeePlayer: 0
+    capturePlayerPostition: 0
+    knowPlayerLastPosition: 0
+    playerLastPosition: {x: 0, y: 0, z: 0}
+    lostPlayerTimer: 0
+    timeToLost: 10
+    walkingVelocity: 0
+    runningVelocity: 0
+    singleShootingHash: 0
+    gunTip: {fileID: 8106330532328239310}
+    head: {fileID: 8106330533267306342}
+    bullet: {fileID: 7889175462699665568, guid: e427a97ab20182d41b0d74bbc2307f7d, type: 3}
+    shootingDirection: {x: 0, y: 0, z: 0}
+    bulletSpeed: 30
+    die: 0
+    diePlayerPosition: {x: 0, y: 0, z: 0}
+    explosionPoint: {fileID: 8862192904029011906}
+    deathExplosionEffect: {fileID: 6504964975964043690, guid: 5f6b1b3aff415a041a1e9f0c9d56f193, type: 3}
+    selfExplodeTimer: 0
+    timeToExplode: 2.5
+    MAX_ITERATIONS: 10
+    EPSILON: 0.08
 --- !u!1 &1874283958645485267
 GameObject:
   m_ObjectHideFlags: 0
@@ -2766,7 +2817,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7052933343249370529}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.617, z: -1.308}
+  m_LocalPosition: {x: 0, y: 0.763, z: -1.308}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1874283958645125873}

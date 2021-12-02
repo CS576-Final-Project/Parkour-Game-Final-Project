@@ -31,7 +31,7 @@ public class WallRun : MonoBehaviour
         wallDistance = 1.4f;
         minimumJumpHeight = 1.5f;
         wallRunGravity = 0.1f;
-        wallRunJumpForce = 15f;
+        wallRunJumpForce = 12f;
 
         rb = GetComponent<Rigidbody>();
     }
