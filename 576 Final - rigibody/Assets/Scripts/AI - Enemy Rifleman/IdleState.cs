@@ -15,13 +15,13 @@ public class IdleState : FSMState
 
     public void OnEnter()
     {
+        parameter.lights.gameObject.SetActive(false);
         parameter.capturePlayerPostition = false;
     }
 
     public void OnUpdate()
     {
         if (parameter.canSeePlayer) {
-            parameter.animationController.SetBool(parameter.singleShootingHash, true);
             manager.TransitionState(StateType.AttackSingle);
         }
 

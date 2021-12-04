@@ -7,6 +7,10 @@ public class AttackSingleState : FSMState
     private FSMRifleman manager;
     private EnemyRiflemanParameter parameter;
     private Quaternion desiredRotation = new Quaternion();
+    private float promptTimer = 0f;
+    private bool activatePrompt = false;
+    private float activateTimer = 0f;
+    private bool coroutineActive = false;
 
     public AttackSingleState(FSMRifleman manager)
     {
@@ -16,13 +20,18 @@ public class AttackSingleState : FSMState
 
     public void OnEnter()
     {
+        if (!coroutineActive) {
+            manager.StartCoroutine(manager.SingleShoot());
+            coroutineActive = true;
+        }
+        parameter.animationController.SetBool(parameter.singleShotReadyHash, true);
+        activatePrompt = true;
         parameter.capturePlayerPostition = false;
     }
 
     public void OnUpdate()
     {
         if (!parameter.canSeePlayer) {
-            parameter.animationController.SetBool(parameter.singleShootingHash, false);
             manager.TransitionState(StateType.Idle);
         }
 
@@ -31,11 +40,20 @@ public class AttackSingleState : FSMState
             manager.TransitionState(StateType.Die);
         }
 
-        if ((parameter.playerMove.isGrounded() || !parameter.wallRun.StopWallRun())) {
-            parameter.shootingDirection = parameter.optimizedPlayerPosition;
-        } else {
-            parameter.shootingDirection = (parameter.playerCentroid - parameter.gunTip.transform.position).normalized;
+        if (activatePrompt) {
+            activateTimer += Time.deltaTime;
+            if (activateTimer >= 0.5f) {
+                parameter.lights.gameObject.SetActive(true);
+                activatePrompt = false;
+                activateTimer = 0f;
+            }
         }
+
+        resumePrompt();
+        if (parameter.animationController.GetBool(parameter.singleShootingHash))
+            parameter.animationController.SetBool(parameter.singleShootingHash, false);
+
+        parameter.shootingDirection = parameter.optimizedPlayerPosition;
         
         desiredRotation = Quaternion.LookRotation(parameter.shootingDirection - Vector3.zero);
         manager.OrientationTo(desiredRotation);
@@ -43,6 +61,10 @@ public class AttackSingleState : FSMState
 
     public void OnExit()
     {
+        manager.StopAllCoroutines();
+        coroutineActive = false;
+        manager.coroutineActive = false;
+        parameter.animationController.SetBool(parameter.singleShotReadyHash, false);
         if (!parameter.die) {
             if (!parameter.capturePlayerPostition) {
                 parameter.playerLastPosition = parameter.playerCentroid;
@@ -52,4 +74,33 @@ public class AttackSingleState : FSMState
             manager.transform.rotation = desiredRotation;
         }
     }
+
+    private void resumePrompt()
+    {
+        if (!parameter.lights.gameObject.activeInHierarchy) {
+            promptTimer += Time.deltaTime;
+            if (promptTimer >= 1.5f) {
+                parameter.lights.gameObject.SetActive(true);
+                promptTimer = 0f;
+            }
+        }
+    }
+
+    // public IEnumerator SingleShoot() {
+    //     while (true)
+    //     {   
+    //         float shootingDelay = 3f;
+    //         WaitForSeconds wait = new WaitForSeconds(shootingDelay);
+
+    //         if (parameter.canSeePlayer && !parameter.die) {
+    //             parameter.lights.gameObject.SetActive(false);
+    //             parameter.animationController.SetBool(parameter.singleShootingHash, true);
+
+    //             GameObject newObject = Object.Instantiate(parameter.bullet, parameter.gunTip.position, parameter.gunTip.rotation);
+    //             newObject.transform.GetChild(0).GetComponent<Bullet>().shootingDirection = parameter.shootingDirection;
+    //             newObject.transform.GetChild(0).GetComponent<Bullet>().speed = parameter.bulletSpeed;
+    //         }
+    //         yield return wait; // next shot will be shot after this delay
+    //     }
+    // }
 }
