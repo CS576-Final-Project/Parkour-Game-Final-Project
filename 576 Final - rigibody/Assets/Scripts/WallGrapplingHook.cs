@@ -77,6 +77,7 @@ public class WallGrapplingHook : MonoBehaviour
         }   
         if (hooked) {
             StartHooking();
+            playerMovement.speedLine.Play();
             gunTip.parent.transform.rotation = Quaternion.LookRotation(triggerPoint.transform.position - gunTip.position) * Quaternion.LookRotation(gunTip.parent.GetComponent<SwitchWeaponPlace>().initialForward, Vector3.up);
         }
     }

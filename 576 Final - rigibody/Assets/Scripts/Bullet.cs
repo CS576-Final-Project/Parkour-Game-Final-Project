@@ -14,7 +14,7 @@ public class Bullet : MonoBehaviour
     public AudioSource inFlightAudioSource;  // audio of the projectile when in flight
     public ParticleSystem inFlightEffect;  // projectile in flight effect
 
-    private float lifeTime = 5f;  // lift time of the projectile
+    private float lifeTime = 3.5f;  // lift time of the projectile
     private float timer = 0f;  // record time 
     
     // Start is called before the first frame update
