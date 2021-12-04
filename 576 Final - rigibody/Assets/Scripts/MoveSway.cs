@@ -47,6 +47,10 @@ public class MoveSway : MonoBehaviour
     private Quaternion bulletTimeLeftRotation;
     private Quaternion bulletTimeRightRotation;
 
+    // Steep slope rotation.
+    private Vector3 steepSlopeVector = new Vector3(0f, 0f, -20f); 
+    private Quaternion steepSlopeRotation;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -80,6 +84,9 @@ public class MoveSway : MonoBehaviour
         // Bullet time camera rotation.
         bulletTimeLeftRotation = Quaternion.Euler(bulletTimeLeftRotationVector);
         bulletTimeRightRotation = Quaternion.Euler(bulletTimeRightRotationVector);
+
+        //Steep slope rotation.
+        steepSlopeRotation = Quaternion.Euler(steepSlopeVector);
     }
 
     // Update is called once per frame
@@ -90,8 +97,8 @@ public class MoveSway : MonoBehaviour
             theta = 0f;
         }
 
-        // If not sliding nor bullett moving, back to normal.
-        if (!playerMovement.isSliding && !playerMovement.isBulletTimeLeft() && !playerMovement.isBulletTimeRight() && !wallRun.isWallLeft && !wallRun.isWallRight) {
+        // If not sliding nor bullet moving not steep sloping, back to normal.
+        if (!playerMovement.isSliding && !playerMovement.isBulletTimeLeft() && !playerMovement.isBulletTimeRight() && !wallRun.isWallLeft && !wallRun.isWallRight && !playerMovement.onShallowSlope()) {
             slidingRotationGoBack = false;
             transform.localRotation = Quaternion.Lerp(transform.localRotation, initionalRotation, Time.fixedDeltaTime);
         }
@@ -144,6 +151,11 @@ public class MoveSway : MonoBehaviour
             BulletTimeLeftSway();
         } else if (playerMovement.isBulletTimeRight()) {
             BulletTimeRightSway();
+        }
+
+        if (playerMovement.onSteepSlope()) {
+            playerMovement.speedLine.Play();
+            SteepSlopeSway();
         }
     }
 
@@ -225,5 +237,10 @@ public class MoveSway : MonoBehaviour
 
     private void BulletTimeRightSway() {
         transform.localRotation = Quaternion.Lerp(transform.localRotation, bulletTimeRightRotation, Time.fixedDeltaTime * 0.3f);
+    }
+
+    private void SteepSlopeSway() {
+        transform.localPosition = Vector3.Lerp(transform.localPosition, slidingPosition, Time.deltaTime * 4f);
+        transform.localRotation = Quaternion.Lerp(transform.localRotation, steepSlopeRotation, Time.deltaTime * 4f);
     }
 }

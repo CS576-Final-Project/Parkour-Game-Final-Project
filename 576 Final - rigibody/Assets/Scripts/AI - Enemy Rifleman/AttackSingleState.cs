@@ -85,22 +85,4 @@ public class AttackSingleState : FSMState
             }
         }
     }
-
-    // public IEnumerator SingleShoot() {
-    //     while (true)
-    //     {   
-    //         float shootingDelay = 3f;
-    //         WaitForSeconds wait = new WaitForSeconds(shootingDelay);
-
-    //         if (parameter.canSeePlayer && !parameter.die) {
-    //             parameter.lights.gameObject.SetActive(false);
-    //             parameter.animationController.SetBool(parameter.singleShootingHash, true);
-
-    //             GameObject newObject = Object.Instantiate(parameter.bullet, parameter.gunTip.position, parameter.gunTip.rotation);
-    //             newObject.transform.GetChild(0).GetComponent<Bullet>().shootingDirection = parameter.shootingDirection;
-    //             newObject.transform.GetChild(0).GetComponent<Bullet>().speed = parameter.bulletSpeed;
-    //         }
-    //         yield return wait; // next shot will be shot after this delay
-    //     }
-    // }
 }

@@ -29,9 +29,6 @@ public class IdleState : FSMState
             parameter.die = true;
             manager.TransitionState(StateType.Die);
         }
-
-        // Quaternion desiredRotation = Quaternion.LookRotation(new Vector3(parameter.playerLastPosition.x, parameter.gunTip.transform.position.y, parameter.playerLastPosition.z) - parameter.gunTip.transform.position);
-        // manager.OrientationTo(desiredRotation);
     }
 
     public void OnExit()

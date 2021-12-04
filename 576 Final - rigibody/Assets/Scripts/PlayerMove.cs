@@ -49,6 +49,7 @@ public class PlayerMove : MonoBehaviour
     private float rbGroundDrag = 6f;
     private float rbAirDrag = 3f;
     private float rbSlidDrag = 12f;
+    private float rbSlopeSlidDrag = 2f;
 
     private float horizontalMovement;
     private float verticalMovement;
@@ -73,6 +74,9 @@ public class PlayerMove : MonoBehaviour
     public bool isBulleting = false;
     public GameObject left;
     public GameObject right;
+    public ParticleSystem speedLine;
+
+    private bool launch = false;
 
     // Start is called before the first frame update
     void Start() {
@@ -84,7 +88,7 @@ public class PlayerMove : MonoBehaviour
         walkingVelocity = 7f;
         crouchingVelocity = 3f;
         runningVelocity = 12.5f;
-        wallRunningVelocity = 12.5f;
+        wallRunningVelocity = 10f;
         //slidingMultiplier = 1f; // Use multiplier because of ForceMode.VelocityChange.
         movementMultiplier = 10.5f;
         airMultiplier = 0.4f;
@@ -136,8 +140,14 @@ public class PlayerMove : MonoBehaviour
                 // When sliding end, reset the time.
                 slideTime = 0f;
             }
+
+            if (!isSliding && !onSteepSlope() && !launch) {
+                speedLine.Stop();
+            }
         } else if (!isGrounded()) {
             isSliding = false;
+            float g = -9.8f * Time.deltaTime;
+            rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y + g, rb.velocity.z);
         }
 
         HookAcc();
@@ -158,6 +168,11 @@ public class PlayerMove : MonoBehaviour
         } else if (isBulletTimeRight()) {
             BulletRightMove();
         }
+
+        if (!onSteepSlope() && launch) {
+            rb.AddForce(orientation.forward * 200f, ForceMode.Impulse);
+            launch = false;
+        }
     }
 
     // Get mouse input, set move direction.
@@ -169,12 +184,14 @@ public class PlayerMove : MonoBehaviour
     }
 
     private void ControlDrag() {
-        if (isGrounded() && !isSliding) {
+        if (isGrounded() && !isSliding && !onSteepSlope()) {
             rb.drag = rbGroundDrag;
         } else if (!isGrounded()){
             rb.drag = rbAirDrag;
         } else if (isGrounded() && isSliding) {
             rb.drag = rbSlidDrag;
+        } else if (isGrounded() && onSteepSlope()) {
+            rb.drag = rbSlopeSlidDrag;
         }
     }
 
@@ -199,6 +216,12 @@ public class PlayerMove : MonoBehaviour
         if (!isGrounded() && wallRun.StopWallRun() && !playerHook.hooked) {
             rb.useGravity = true;
         }
+
+        if (onSteepSlope()) {
+            launch = true;
+            rb.AddForce(Vector3.down * 50f, ForceMode.Acceleration);
+            steepSlopeMovement();
+        }
     }
 
     private void PlayerWallRunning() {
@@ -210,21 +233,21 @@ public class PlayerMove : MonoBehaviour
     }
 
     private void PlayerWalking() {
-        if (isGrounded() && !onSlope()) {
+        if (isGrounded() && !onShallowSlope()) {
             rb.AddForce(moveDirection.normalized * walkingVelocity * movementMultiplier, ForceMode.Acceleration);
         } else if (!isGrounded()) {
             rb.AddForce(moveDirection.normalized * walkingVelocity * movementMultiplier * airMultiplier, ForceMode.Acceleration);
-        } else if (onSlope()) {
+        } else if (onShallowSlope()) {
             rb.AddForce(slopeMoveDirection.normalized * walkingVelocity * movementMultiplier, ForceMode.Acceleration);
         }
     }
 
     private void PlayerRunning() {
-        if (isGrounded() && !onSlope()) {
+        if (isGrounded() && !onShallowSlope()) {
             rb.AddForce(moveDirection.normalized * runningVelocity * movementMultiplier, ForceMode.Acceleration);
         } else if (!isGrounded()) {
             rb.AddForce(moveDirection.normalized * runningVelocity * movementMultiplier * airMultiplier, ForceMode.Acceleration);
-        } else if (onSlope()) {
+        } else if (onShallowSlope()) {
             rb.AddForce(slopeMoveDirection.normalized * runningVelocity * movementMultiplier, ForceMode.Acceleration);
         }
     }
@@ -239,9 +262,9 @@ public class PlayerMove : MonoBehaviour
         return Physics.CheckSphere(groundCheck.position, groundDistance, groundMask) || Physics.CheckSphere(groundCheck.position, groundDistance, wallMask);;
     }
 
-    public bool onSlope() {
+    public bool onShallowSlope() {
         if (Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight / 2 + 0.5f)) {
-            if (slopeHit.normal != Vector3.up) {
+            if (slopeHit.normal != Vector3.up && Vector3.Angle(slopeHit.normal, Vector3.up) < 30f) {
                 return true;
             } else {
                 return false;
@@ -250,11 +273,33 @@ public class PlayerMove : MonoBehaviour
         return false;
     }
 
+    public bool onSteepSlope() {
+        if (Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight / 2 + 0.5f)) {
+            if (slopeHit.normal != Vector3.up && Vector3.Angle(slopeHit.normal, Vector3.up) >= 30f) {
+                speedLine.Play();
+                return true;
+            } else {
+                return false;
+            }
+        }
+        return false;
+    }
+
+    private void steepSlopeMovement() {
+        Vector3 slopeDirection = Vector3.up - slopeHit.normal * Vector3.Dot(Vector3.up, slopeHit.normal);
+        float slideVelocity = crouchingVelocity * movementMultiplier * 0.6f;
+
+        moveDirection = slopeDirection * -slideVelocity;
+        moveDirection.y -= slopeHit.point.y;
+
+        rb.AddForce(moveDirection.normalized * slideVelocity, ForceMode.Acceleration);
+    }
+
     private void Jump() {
         if(isGrounded()) {
             rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
         }
-        rb.velocity = new Vector3(currentDirection.x, currentDirection.y + 40f, currentDirection.z);
+        rb.velocity = new Vector3(moveDirection.x, moveDirection.y + 40f, moveDirection.z);
         //rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
     }
 
@@ -264,6 +309,7 @@ public class PlayerMove : MonoBehaviour
         }
         if(sway.canSlide) {
             isSliding = true;
+            speedLine.Play();
         }
         captureDirection = false;
         rb.velocity = new Vector3(currentDirection.x * 24, currentDirection.y, currentDirection.z * 24);
@@ -271,14 +317,14 @@ public class PlayerMove : MonoBehaviour
 
     // Stand part.
     public bool isWalking() {
-        if ((Input.GetKey(walkForwardKey) || Input.GetKey(walkLeftKey) || Input.GetKey(walkRightKey) || Input.GetKey(walkBackwardKey)) && !Input.GetKey(runKey) && !Input.GetKey(crouchKey) && !wallRun.isWallLeft && !wallRun.isWallRight && !isBulleting) {
+        if ((Input.GetKey(walkForwardKey) || Input.GetKey(walkLeftKey) || Input.GetKey(walkRightKey) || Input.GetKey(walkBackwardKey)) && !Input.GetKey(runKey) && !Input.GetKey(crouchKey) && !wallRun.isWallLeft && !wallRun.isWallRight && !isBulleting && !onSteepSlope()) {
             return true;
         }
         return false;
     }
 
     public bool isRunning() {
-        if ((Input.GetKey(walkForwardKey) || Input.GetKey(walkLeftKey) || Input.GetKey(walkRightKey)) && Input.GetKey(runKey) && !isSliding && !isBulleting) {
+        if ((Input.GetKey(walkForwardKey) || Input.GetKey(walkLeftKey) || Input.GetKey(walkRightKey)) && Input.GetKey(runKey) && !isSliding && !isBulleting && !onSteepSlope()) {
             return true;
         }
         return false;
@@ -293,14 +339,14 @@ public class PlayerMove : MonoBehaviour
 
     // Crouch part.
     public bool isCrouchStationary() {
-        if (Input.GetKey(crouchKey) && isStationary() && !isRunning() && !isSliding && !onSlope()) {
+        if (Input.GetKey(crouchKey) && isStationary() && !isRunning() && !isSliding && !onShallowSlope()) {
             return true;
         }
         return false;
     }
 
     public bool isCrouchWalking() {
-        if (Input.GetKey(crouchKey) && (Input.GetKey(walkForwardKey) || Input.GetKey(walkLeftKey) || Input.GetKey(walkRightKey) || Input.GetKey(walkBackwardKey)) && !isRunning() && !isSliding && !onSlope()) {
+        if (Input.GetKey(crouchKey) && (Input.GetKey(walkForwardKey) || Input.GetKey(walkLeftKey) || Input.GetKey(walkRightKey) || Input.GetKey(walkBackwardKey)) && !isRunning() && !isSliding && !onShallowSlope()) {
             return true;
         }
         return false;
