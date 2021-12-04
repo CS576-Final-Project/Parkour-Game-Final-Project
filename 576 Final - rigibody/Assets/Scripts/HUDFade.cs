@@ -20,13 +20,16 @@ public class HUDFade : MonoBehaviour
         maxDistance = GameObject.FindWithTag("Player").GetComponent<GrapplingHUD>().HUDMaxDistance;
         selfHit = this.transform.parent.parent.gameObject.GetComponent<DeactivateHookHUD>().selfHit;
 
+        StartCoroutine(Fade());
+    }
+
+    private IEnumerator Fade() 
+    {
         float distanceRatio = selfHit.distance / maxDistance;
-        if (distanceRatio >= 0.85f) {
-            distanceRatio = 0.85f;
-        } else if (distanceRatio <= 0.6f) {
+        if (distanceRatio < 0.3f)
             distanceRatio = 0f;
-        }
         canvasGroup.alpha = 1f - distanceRatio;
         canvasGroup.alpha = Mathf.Clamp(canvasGroup.alpha, 0.45f ,1f);
+        yield return new WaitForSeconds(0.1f);
     }
 }

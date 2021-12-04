@@ -36,10 +36,14 @@ public class EnemyRiflemanParameter
     public float walkingVelocity;
     public float runningVelocity;
 
+    public int singleShotReadyHash;
     public int singleShootingHash;
+    public int dieHash;
 
     public Transform gunTip;
     public Transform head;
+    public Transform parallelRotation;
+    public Transform lights;
     public GameObject bullet;
     public Vector3 shootingDirection;
     public Vector3 optimizedPlayerPosition;
@@ -61,6 +65,7 @@ public class FSMRifleman : MonoBehaviour
     public EnemyRiflemanParameter parameter;
     private FSMState currState;
     private Dictionary<StateType, FSMState> states = new Dictionary<StateType, FSMState>();
+    public bool coroutineActive = true;
 
     // Start is called before the first frame update
     void Start()
@@ -71,10 +76,12 @@ public class FSMRifleman : MonoBehaviour
         parameter.wallRun = parameter.player.GetComponent<WallRun>();
         parameter.sway = GameObject.FindWithTag("Head").GetComponent<MoveSway>();
 
+        parameter.singleShotReadyHash = Animator.StringToHash("SingleShootReady");
         parameter.singleShootingHash = Animator.StringToHash("ShootingSingleShot");
+        parameter.dieHash = Animator.StringToHash("Die");
 
         StartCoroutine(FOVRoutine());
-        StartCoroutine(SingleShoot());
+        //StartCoroutine(SingleShoot());
 
         states.Add(StateType.Idle, new IdleState(this));
         states.Add(StateType.AttackSingle, new AttackSingleState(this));
@@ -90,6 +97,10 @@ public class FSMRifleman : MonoBehaviour
 
         parameter.optimizedPlayerPosition = IterativeApproximation(parameter.playerCentroid, parameter.playerMove.rb.velocity, parameter.bulletSpeed);
         parameter.optimizedPlayerPosition.Normalize();
+
+        if (!coroutineActive) {
+            StartCoroutine(FOVRoutine());
+        }
 
         currState.OnUpdate();
     }
@@ -126,17 +137,17 @@ public class FSMRifleman : MonoBehaviour
     // Single shooting part
     public IEnumerator SingleShoot() {
         while (true)
-        {   
-            float shootingDelay = 0.5f;
-            WaitForSeconds wait = new WaitForSeconds(shootingDelay);
+        {  
+            yield return new WaitForSeconds(2.8f);
+            if (parameter.canSeePlayer && !parameter.die) {
+                parameter.lights.gameObject.SetActive(false);
+                parameter.animationController.SetBool(parameter.singleShootingHash, true);
 
-            if (parameter.canSeePlayer && !parameter.die)
-            {
+                yield return new WaitForSeconds(0.2f); // next shot will be shot after this delay
                 GameObject newObject = Instantiate(parameter.bullet, parameter.gunTip.position, parameter.gunTip.rotation);
                 newObject.transform.GetChild(0).GetComponent<Bullet>().shootingDirection = parameter.shootingDirection;
                 newObject.transform.GetChild(0).GetComponent<Bullet>().speed = parameter.bulletSpeed;
             }
-            yield return wait; // next shot will be shot after this delay
         }
     }
 
@@ -169,6 +180,8 @@ public class FSMRifleman : MonoBehaviour
     { 
         if (parameter.playerMove.isSliding || !parameter.sway.canSlide) {
             projectileSpeed *= 20;
+        } else if (!parameter.playerMove.isGrounded()) {
+            projectileSpeed *= 30;
         }
         float t = 0.0f; 
         for (int iteration = 0; iteration < parameter.MAX_ITERATIONS; ++iteration) 

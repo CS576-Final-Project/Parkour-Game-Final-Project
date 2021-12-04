@@ -37,7 +37,7 @@ public class SwitchWeaponPlace : MonoBehaviour
 
         initialPosition = transform.localPosition;
         leftHandPosition = new Vector3(initialPosition.x - 0.3f, initialPosition.y, initialPosition.z);
-        awayPosition = new Vector3(transform.localPosition.x - 0.4f, initialPosition.y - 0.1f, initialPosition.z - 0.6f);
+        awayPosition = new Vector3(transform.localPosition.x - 0.6f, initialPosition.y, initialPosition.z - 0.8f);
 
         initialRotation = transform.localRotation;
         awayRotationVector = new Vector3(-10f, 90f, 0f);
