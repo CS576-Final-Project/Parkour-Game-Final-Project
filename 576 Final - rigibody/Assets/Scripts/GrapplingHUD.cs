@@ -9,6 +9,9 @@ public class GrapplingHUD : MonoBehaviour
     public RaycastHit[] HUDHits;
     public float HUDMaxDistance;
 
+    private RaycastHit firstHit;
+    public GameObject hitObj;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,5 +23,7 @@ public class GrapplingHUD : MonoBehaviour
     void Update()
     {
         HUDHits = Physics.RaycastAll(fpsCam.transform.position, fpsCam.transform.forward, HUDMaxDistance, HUDTrigger);
+        Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out firstHit, HUDMaxDistance);
+        hitObj = firstHit.transform.gameObject;
     }
 }

@@ -15,7 +15,7 @@ public class WallGrapplingHook : MonoBehaviour
     public bool wallHookFired = false;
     public bool hooked = false;
     public bool play = false;
-    // private bool captureObj = false;
+    private bool captureObj = false;
 
     private Vector3 hookPoint;
 
@@ -45,7 +45,7 @@ public class WallGrapplingHook : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        playerTravelSpeed = 35f;
+        playerTravelSpeed = 25f;
         wallMaxDistance = 80f;
         wallHUDMaxDistance = wallMaxDistance - 10f;
 
@@ -58,19 +58,36 @@ public class WallGrapplingHook : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out wallHookHit, wallMaxDistance, wallHookTrigger)) {
-            wallHookTriggerObj = wallHookHit.collider.gameObject;
-            triggerPoint = wallHookTriggerObj.transform.GetChild(0).gameObject;
-            
-            hookPoint = triggerPoint.transform.position;
-
-            if (Input.GetKeyDown(KeyCode.E) && !wallHookFired) {
-                playerMovement.hookCurrentDirection = wallHookHit.point - this.transform.position;
-                wallHookFired = true;
-                play = true;
-                animatorControl.animationController.Play("M1911 Hook Ready");
+        if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out wallHookHit, wallMaxDistance)) {
+            //wallHookTriggerObj = wallHookHit.collider.gameObject;
+            if (!captureObj) {
+                wallHookTriggerObj = wallHookHit.collider.gameObject;
+                captureObj = true;
             }
+
+            GameObject currObj = wallHookHit.collider.gameObject;
+            if (currObj != wallHookTriggerObj && currObj != null) {
+                captureObj = false;
+            }
+
+            if (wallHookTriggerObj.layer == 12) {
+                triggerPoint = wallHookTriggerObj.transform.GetChild(0).gameObject;
+                wallHookTriggerObj.transform.GetChild(1).GetChild(0).GetChild(0).GetComponent<HUDFade>().canSee = true;
+                
+                hookPoint = triggerPoint.transform.position;
+
+                if (Input.GetKeyDown(KeyCode.E) && !wallHookFired) {
+                    playerMovement.hookCurrentDirection = wallHookHit.point - this.transform.position;
+                    wallHookFired = true;
+                    play = true;
+                    animatorControl.animationController.Play("M1911 Hook Ready");
+                }
+            }
+        } else {
+            if (wallHookTriggerObj != null && wallHookTriggerObj.layer == 12)
+                wallHookTriggerObj.transform.GetChild(1).GetChild(0).GetChild(0).GetComponent<HUDFade>().canSee = false;
         }
+
         if (animatorControl.animationController.GetCurrentAnimatorStateInfo(0).IsName("M1911 Hook Ready") && animatorControl.animationController.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f && wallHookFired) {
             animatorControl.animationController.Play("M1911");
             hooked = true; 
@@ -105,7 +122,7 @@ public class WallGrapplingHook : MonoBehaviour
         hooked = false;
         wallHookFired = false;
         play = false;
-        //captureObj = false;
+        captureObj = false;
     }
 
     private void DrawRope() {

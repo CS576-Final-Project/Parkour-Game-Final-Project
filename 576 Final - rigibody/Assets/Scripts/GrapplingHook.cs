@@ -79,15 +79,20 @@ public class GrapplingHook : MonoBehaviour
             }
 
             triggerPoint = hookTriggerObj.transform.GetChild(0).gameObject;
+            hookTriggerObj.transform.GetChild(1).GetChild(0).GetChild(0).GetComponent<HUDFade>().canSee = true;
+
             
             hookPoint = new Vector3(triggerPoint.transform.position.x, triggerPoint.transform.position.y - 8f, triggerPoint.transform.position.z);
 
             if (Input.GetKeyDown(KeyCode.E) && !hookFired) {
-                //playerMovement.hookCurrentDirection = hookHit.point - this.transform.position;
+                playerMovement.hookCurrentDirection = hookHit.point - this.transform.position;
                 hookFired = true;
                 play = true;
                 animatorControl.animationController.Play("M1911 Hook Ready");
             }
+        } else {
+            if (hookTriggerObj != null)
+                hookTriggerObj.transform.GetChild(1).GetChild(0).GetChild(0).GetComponent<HUDFade>().canSee = false;
         }
         
         if (animatorControl.animationController.GetCurrentAnimatorStateInfo(0).IsName("M1911 Hook Ready") && animatorControl.animationController.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f && hookFired) {

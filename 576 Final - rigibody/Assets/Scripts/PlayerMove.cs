@@ -77,6 +77,9 @@ public class PlayerMove : MonoBehaviour
     public ParticleSystem speedLine;
 
     private bool launch = false;
+    private float launchTimer = 0;
+
+    private float ledgeGrabResumeTimer = 0f;
 
     // Start is called before the first frame update
     void Start() {
@@ -118,7 +121,7 @@ public class PlayerMove : MonoBehaviour
 
         // Sliding and jumping can only begin on the ground.
         if (isGrounded()) {
-            if (Input.GetKeyDown(jumpKey) && !isCrouchWalking() && !isCrouchStationary() && !isSliding) {
+            if (Input.GetKeyDown(jumpKey) && !isCrouchWalking() && !isCrouchStationary() && !isSliding && !onSteepSlope()) {
                 Jump();
             }
 
@@ -130,24 +133,23 @@ public class PlayerMove : MonoBehaviour
             // Slide part.
             if ((Input.GetKeyDown(crouchKey) && isRunning()) || isSliding) {
                 Slide();
-                // When sliding, start the timer.
-                slideTime += Time.deltaTime;
-                // Duration of slide action
-                if (slideTime >= slideDuration) {
-                    isSliding = false;
-                }
-            } else if (isRunning()){
-                // When sliding end, reset the time.
-                slideTime = 0f;
             }
+                // When sliding, start the timer.
+            //     slideTime += Time.deltaTime;
+            //     // Duration of slide action
+            //     if (slideTime >= slideDuration) {
+            //         isSliding = false;
+            //     }
+            // } else if (isRunning()){
+            //     // When sliding end, reset the time.
+            //     slideTime = 0f;
+            // }
 
             if (!isSliding && !onSteepSlope() && !launch) {
                 speedLine.Stop();
             }
         } else if (!isGrounded()) {
             isSliding = false;
-            float g = -9.8f * Time.deltaTime;
-            rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y + g, rb.velocity.z);
         }
 
         HookAcc();
@@ -170,9 +172,23 @@ public class PlayerMove : MonoBehaviour
         }
 
         if (!onSteepSlope() && launch) {
-            rb.AddForce(orientation.forward * 200f, ForceMode.Impulse);
+            rb.AddForce(orientation.forward * 180f, ForceMode.Impulse);
             launch = false;
+            launchTimer = 0f;
         }
+
+        if (sway.canLedgeGrab() && !isGrounded() && rb.velocity.y > -5) {
+            LedgeGrab();
+        }
+
+        if (sway.doLedgeGrabRotation) {
+            ledgeGrabResumeTimer += Time.deltaTime;
+            if (ledgeGrabResumeTimer > 0.2f) {
+                sway.doLedgeGrabRotation = false;
+                ledgeGrabResumeTimer = 0f;
+            }
+        }
+
     }
 
     // Get mouse input, set move direction.
@@ -218,9 +234,21 @@ public class PlayerMove : MonoBehaviour
         }
 
         if (onSteepSlope()) {
-            launch = true;
-            rb.AddForce(Vector3.down * 50f, ForceMode.Acceleration);
+            launchTimer += Time.deltaTime;
+            if (launchTimer > 0.8f) launch = true;
+            rb.AddForce(Vector3.down * 30f, ForceMode.Acceleration);
             steepSlopeMovement();
+        }
+
+        if (isSliding) {
+            slideTime += Time.deltaTime;
+            // Duration of slide action
+            if (slideTime >= slideDuration) {
+                isSliding = false;
+            }
+        } else if (isRunning() || !isGrounded()){
+            // When sliding end, reset the time.
+            slideTime = 0f;
         }
     }
 
@@ -263,8 +291,8 @@ public class PlayerMove : MonoBehaviour
     }
 
     public bool onShallowSlope() {
-        if (Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight / 2 + 0.5f)) {
-            if (slopeHit.normal != Vector3.up && Vector3.Angle(slopeHit.normal, Vector3.up) < 30f) {
+        if (Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight / 2 + 0.3f)) {
+            if (slopeHit.normal != Vector3.up && Vector3.Angle(slopeHit.normal, Vector3.up) < 35f) {
                 return true;
             } else {
                 return false;
@@ -274,8 +302,8 @@ public class PlayerMove : MonoBehaviour
     }
 
     public bool onSteepSlope() {
-        if (Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight / 2 + 0.5f)) {
-            if (slopeHit.normal != Vector3.up && Vector3.Angle(slopeHit.normal, Vector3.up) >= 30f) {
+        if (Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight / 2 + 0.3f)) {
+            if (slopeHit.normal != Vector3.up && Vector3.Angle(slopeHit.normal, Vector3.up) >= 35f) {
                 speedLine.Play();
                 return true;
             } else {
@@ -287,7 +315,7 @@ public class PlayerMove : MonoBehaviour
 
     private void steepSlopeMovement() {
         Vector3 slopeDirection = Vector3.up - slopeHit.normal * Vector3.Dot(Vector3.up, slopeHit.normal);
-        float slideVelocity = crouchingVelocity * movementMultiplier * 0.6f;
+        float slideVelocity = runningVelocity * movementMultiplier * Time.deltaTime * 40f;
 
         moveDirection = slopeDirection * -slideVelocity;
         moveDirection.y -= slopeHit.point.y;
@@ -296,10 +324,10 @@ public class PlayerMove : MonoBehaviour
     }
 
     private void Jump() {
-        if(isGrounded()) {
-            rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-        }
-        rb.velocity = new Vector3(moveDirection.x, moveDirection.y + 40f, moveDirection.z);
+        // if(isGrounded()) {
+        //     rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+        // }
+        rb.velocity = new Vector3(moveDirection.x, moveDirection.y + 27f, moveDirection.z);
         //rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
     }
 
@@ -312,7 +340,7 @@ public class PlayerMove : MonoBehaviour
             speedLine.Play();
         }
         captureDirection = false;
-        rb.velocity = new Vector3(currentDirection.x * 24, currentDirection.y, currentDirection.z * 24);
+        rb.velocity = new Vector3(currentDirection.x * 21, currentDirection.y, currentDirection.z * 21);
     }
 
     // Stand part.
@@ -324,7 +352,7 @@ public class PlayerMove : MonoBehaviour
     }
 
     public bool isRunning() {
-        if ((Input.GetKey(walkForwardKey) || Input.GetKey(walkLeftKey) || Input.GetKey(walkRightKey)) && Input.GetKey(runKey) && !isSliding && !isBulleting && !onSteepSlope()) {
+        if ((Input.GetKey(walkForwardKey) || Input.GetKey(walkLeftKey) || Input.GetKey(walkRightKey)) && Input.GetKey(runKey) && !isSliding && !isBulleting && !onSteepSlope() || !wallRun.StopWallRun()) {
             return true;
         }
         return false;
@@ -385,16 +413,23 @@ public class PlayerMove : MonoBehaviour
 
     private void HookAcc() {
         if (isRopeCut) {
-            rb.AddForce(Vector3.up * 12f, ForceMode.Impulse);
-            rb.AddForce(orientation.forward * hookMultiplier, ForceMode.Impulse);
+            // rb.AddForce(Vector3.up * 12f, ForceMode.Impulse);
+            // rb.AddForce(orientation.forward * hookMultiplier, ForceMode.Impulse);
+            rb.AddForce(hookCurrentDirection.normalized * 200f, ForceMode.Impulse);
         }
         isRopeCut = false;
     }
 
     private void WallHookAcc() {
         if (isWallRopeCut) {
-            rb.AddForce(hookCurrentDirection.normalized * 35f, ForceMode.Impulse);
+            //rb.AddForce(hookCurrentDirection.normalized * 35f, ForceMode.Impulse);
+            rb.velocity = hookCurrentDirection.normalized * 40f;
         }
         isWallRopeCut = false;
+    }
+
+    private void LedgeGrab() {
+        sway.doLedgeGrabRotation = true;
+        rb.velocity = new Vector3(rb.velocity.x, 20f, rb.velocity.z);
     }
 }

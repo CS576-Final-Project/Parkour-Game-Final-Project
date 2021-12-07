@@ -12,6 +12,7 @@ public class MoveSway : MonoBehaviour
     public Transform wallLeftCheck;
     public Transform wallRightCheck;
     public LayerMask wallMask;
+    public LayerMask wallAheadMask;
     public float wallDistance;
 
     // Walking sway related parameters.
@@ -51,6 +52,15 @@ public class MoveSway : MonoBehaviour
     private Vector3 steepSlopeVector = new Vector3(0f, 0f, -20f); 
     private Quaternion steepSlopeRotation;
 
+    // Ledge Grab.
+    public Transform ledgeGrabCheck;
+    private Vector3 ledgeGrabVector = new Vector3(0f, 0f, -10f);
+    private Quaternion ledgeGrabRotation;
+    public bool doLedgeGrabRotation = false;
+
+    // Check block top.
+    public Transform blockCheck;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -67,7 +77,7 @@ public class MoveSway : MonoBehaviour
 
         // Camera height for the corresponding action.
         initionalLocalY = transform.localPosition.y;
-        initionalCrouchingPosition = new Vector3(0f, 0.55f * initionalLocalY + 0.0001f, 0f);
+        initionalCrouchingPosition = new Vector3(0f, 0.3f * initionalLocalY + 0.0001f, 0f);
         initionalWalkingPosition = new Vector3(0f, initionalLocalY + 0.0001f, 0f);
         slidingPosition = new Vector3(0f, 0.12f * initionalLocalY + 0.0001f, 0f);
 
@@ -87,6 +97,8 @@ public class MoveSway : MonoBehaviour
 
         //Steep slope rotation.
         steepSlopeRotation = Quaternion.Euler(steepSlopeVector);
+
+        ledgeGrabRotation = Quaternion.Euler(ledgeGrabVector);
     }
 
     // Update is called once per frame
@@ -98,23 +110,18 @@ public class MoveSway : MonoBehaviour
         }
 
         // If not sliding nor bullet moving not steep sloping, back to normal.
-        if (!playerMovement.isSliding && !playerMovement.isBulletTimeLeft() && !playerMovement.isBulletTimeRight() && !wallRun.isWallLeft && !wallRun.isWallRight && !playerMovement.onShallowSlope()) {
+        if (!playerMovement.isSliding && !playerMovement.isBulletTimeLeft() && !playerMovement.isBulletTimeRight() && !wallRun.isWallLeft && !wallRun.isWallRight && !playerMovement.onShallowSlope() && !doLedgeGrabRotation) {
             slidingRotationGoBack = false;
             transform.localRotation = Quaternion.Lerp(transform.localRotation, initionalRotation, Time.fixedDeltaTime);
         }
 
         // Control the height of the camera according to the pose.
-        if (playerMovement.isGrounded() && !playerMovement.isSliding) {
-            if (playerMovement.isCrouchStationary() || playerMovement.isCrouchWalking()) {
+        if (playerMovement.isGrounded() && !playerMovement.isSliding && !playerMovement.onSteepSlope()) {
+            if (playerMovement.isCrouchStationary() || playerMovement.isCrouchWalking() || (hasBlockTop() && !playerMovement.isSliding)) {
                 transform.localPosition = Vector3.Lerp(transform.localPosition, initionalCrouchingPosition, Time.deltaTime * smoothAmount);
             } else if (playerMovement.isStationary() || playerMovement.isWalking() || playerMovement.isRunning()) {
                 transform.localPosition = Vector3.Lerp(transform.localPosition, initionalWalkingPosition, Time.deltaTime * smoothAmount);
             }
-        }
-
-        // When sliding is completely completed, allow next sliding.
-        if (transform.localRotation == initionalRotation) {
-            canSlide = true;
         }
 
         // If there is a wall ahead, stop swaying.
@@ -133,6 +140,11 @@ public class MoveSway : MonoBehaviour
             if (playerMovement.isCrouchWalking() && playerMovement.isGrounded() && !playerMovement.isSliding) {
                 CrouchWalkingSway();
             }
+        }
+
+        // When sliding is completely completed, allow next sliding.
+        if (transform.localRotation == initionalRotation) {
+            canSlide = true;
         }
 
         // If player is sliding, set camera offset.
@@ -154,17 +166,19 @@ public class MoveSway : MonoBehaviour
         }
 
         if (playerMovement.onSteepSlope()) {
-            playerMovement.speedLine.Play();
             SteepSlopeSway();
+        }
+
+        if (doLedgeGrabRotation) {
+            LedgeGrabSway();
         }
     }
 
     void FixedUpdate() {
-
     }
 
     public bool isWallAhead() {
-        return Physics.CheckSphere(wallForwardCheck.position, wallDistance, wallMask);
+        return Physics.CheckSphere(wallForwardCheck.position, wallDistance + 0.1f, wallAheadMask);
     }
 
     public bool isWallLeft() {
@@ -173,6 +187,14 @@ public class MoveSway : MonoBehaviour
 
     public bool isWallRight() {
         return Physics.CheckSphere(wallRightCheck.position, wallDistance, wallMask);
+    }
+
+    public bool canLedgeGrab() {
+        return !Physics.CheckSphere(ledgeGrabCheck.position, 0.09f, wallMask) && Physics.Raycast(ledgeGrabCheck.position, Vector3.down, 1.4f, wallMask);
+    }
+
+    public bool hasBlockTop() {
+        return Physics.CheckSphere(blockCheck.position, 0.2f, wallMask);
     }
 
     private void WalkingSway() {
@@ -242,5 +264,9 @@ public class MoveSway : MonoBehaviour
     private void SteepSlopeSway() {
         transform.localPosition = Vector3.Lerp(transform.localPosition, slidingPosition, Time.deltaTime * 4f);
         transform.localRotation = Quaternion.Lerp(transform.localRotation, steepSlopeRotation, Time.deltaTime * 4f);
+    }
+
+    private void LedgeGrabSway() {
+        transform.localRotation = Quaternion.Lerp(transform.localRotation, ledgeGrabRotation, Time.deltaTime * 10f);
     }
 }

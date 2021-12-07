@@ -18,7 +18,7 @@ public class KeepSame : MonoBehaviour
         size = (Camera.main.transform.position - transform.position).magnitude;
         size *= 0.05f;
         if (size <= 0.5f) size = 0.5f;
-        if (size >= 30) size = 30;
+        if (size >= 2.2f) size = 2.2f;
         transform.localScale = new Vector3(size,size,size);
     }
 }

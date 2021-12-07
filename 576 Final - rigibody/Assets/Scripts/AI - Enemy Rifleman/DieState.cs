@@ -15,7 +15,6 @@ public class DieState : FSMState
 
     public void OnEnter()
     {
-        parameter.lights.gameObject.SetActive(false);
         parameter.animationController.SetBool(parameter.dieHash, true);
         parameter.diePlayerRotation = Quaternion.LookRotation(new Vector3(parameter.parallelRotation.position.x, parameter.gunTip.transform.position.y, parameter.parallelRotation.position.z) - parameter.gunTip.transform.position);
     }
@@ -25,6 +24,8 @@ public class DieState : FSMState
         if (parameter.canSeePlayer) {
             manager.OrientationTo(parameter.diePlayerRotation);
         }
+
+        Object.Destroy(manager.GetComponent<CapsuleCollider>());
 
         if (parameter.animationController.GetCurrentAnimatorStateInfo(0).IsName("Die")) {
             parameter.animationController.SetBool("NoDieLoop", false);
