@@ -61,9 +61,15 @@ public class AttackSingleState : FSMState
 
     public void OnExit()
     {
+        // Stop all coroutines to avoid repetition
         manager.StopAllCoroutines();
         coroutineActive = false;
         manager.coroutineActive = false;
+
+        // Deactivate the prompt object
+        parameter.lights.gameObject.SetActive(false);
+
+        // Terminate the shooting animation and keep correct rotation.
         parameter.animationController.SetBool(parameter.singleShotReadyHash, false);
         if (!parameter.die) {
             if (!parameter.capturePlayerPostition) {

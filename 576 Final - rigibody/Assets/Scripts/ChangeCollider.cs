@@ -5,6 +5,7 @@ using UnityEngine;
 public class ChangeCollider : MonoBehaviour
 {   
     private PlayerMove playerMovement;
+    private MoveSway sway;
     private CapsuleCollider playerCollider;
 
     private Vector3 crouchHeight;
@@ -14,6 +15,7 @@ public class ChangeCollider : MonoBehaviour
     void Start()
     {
         playerMovement = GameObject.FindWithTag("Player").GetComponent<PlayerMove>();
+        sway = GameObject.Find("Head").GetComponent<MoveSway>();
         playerCollider = GetComponent<CapsuleCollider>();
 
         crouchHeight = new Vector3(0f, -0.2f, 0f);
@@ -23,7 +25,7 @@ public class ChangeCollider : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (playerMovement.isCrouchWalking() || playerMovement.isCrouchStationary()) {
+        if (playerMovement.isCrouchWalking() || playerMovement.isCrouchStationary() || (sway.hasBlockTop() && !playerMovement.isSliding)) {
             // Collider when crouching.
             playerCollider.center = crouchHeight;
             playerCollider.radius = 0.7f;

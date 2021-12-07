@@ -31,7 +31,7 @@ public class WallRun : MonoBehaviour
         wallDistance = 1.4f;
         minimumJumpHeight = 1.5f;
         wallRunGravity = 0.1f;
-        wallRunJumpForce = 12f;
+        wallRunJumpForce = 10f;
 
         rb = GetComponent<Rigidbody>();
     }
@@ -70,11 +70,11 @@ public class WallRun : MonoBehaviour
         // Press the space to leave the wall.
         if (Input.GetKeyDown(KeyCode.Space)) {
             if (isWallLeft) {
-                Vector3 wallRunJumpDirection = transform.up + leftWallHit.normal * 2f;
+                Vector3 wallRunJumpDirection = transform.up * 2f + leftWallHit.normal * 1.5f + orientation.forward * 1.08f;
                 rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
                 rb.AddForce(wallRunJumpDirection * wallRunJumpForce * 80f, ForceMode.Force);
             } else if (isWallRight) {
-                Vector3 wallRunJumpDirection = transform.up + rightWallHit.normal * 2f;
+                Vector3 wallRunJumpDirection = transform.up * 2f  + rightWallHit.normal * 1.5f + orientation.forward * 1.08f;
                 rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
                 rb.AddForce(wallRunJumpDirection * wallRunJumpForce * 80f, ForceMode.Force);
             }

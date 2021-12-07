@@ -90,7 +90,7 @@ public class Shooting : MonoBehaviour
     void Shoot()
     {
         RaycastHit hit;  // store info of object hit by raycast 
-        int layerMask = (1 << 7) | (1 << 8) | (1 << 9) | (1 << 10) | (1 << 11) | (1 << 12) | (1 << 13) | (1 << 14);
+        int layerMask = (1 << 7) | (1 << 8) | (1 << 9) | (1 << 10) | (1 << 11) | (1 << 12) | (1 << 13) | (1 << 14) | (1 << 16);
         layerMask = ~layerMask;
 
         if (Physics.Raycast(fpsCamera.transform.position, fpsCamera.transform.forward, out hit, range, layerMask))

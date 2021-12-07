@@ -21,9 +21,9 @@ TagManager:
   - WallHookTrigger
   - WallHUDTrigger
   - Player
-  - 
-  - 
-  - 
+  - CanRunWall
+  - AirWall
+  - Weapon
   - 
   - 
   - 

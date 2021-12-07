@@ -8,6 +8,8 @@ public class HUDFade : MonoBehaviour
     private RaycastHit selfHit;
     private float maxDistance;
 
+    public bool canSee;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,7 +21,6 @@ public class HUDFade : MonoBehaviour
     {
         maxDistance = GameObject.FindWithTag("Player").GetComponent<GrapplingHUD>().HUDMaxDistance;
         selfHit = this.transform.parent.parent.gameObject.GetComponent<DeactivateHookHUD>().selfHit;
-
         StartCoroutine(Fade());
     }
 
@@ -29,7 +30,10 @@ public class HUDFade : MonoBehaviour
         if (distanceRatio < 0.3f)
             distanceRatio = 0f;
         canvasGroup.alpha = 1f - distanceRatio;
-        canvasGroup.alpha = Mathf.Clamp(canvasGroup.alpha, 0.45f ,1f);
+        if (!canSee)
+            canvasGroup.alpha = Mathf.Clamp(canvasGroup.alpha, 0.45f , 0.8f);
+        else
+            canvasGroup.alpha = 1;
         yield return new WaitForSeconds(0.1f);
     }
 }

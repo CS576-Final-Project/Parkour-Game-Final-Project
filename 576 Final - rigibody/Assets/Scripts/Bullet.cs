@@ -33,7 +33,7 @@ public class Bullet : MonoBehaviour
         if (timer > lifeTime)
         {
             GameObject parent = transform.parent.gameObject;
-            Destroy(parent, 5f);
+            Destroy(parent, 3f);
         }
 
         // shoot bullet
@@ -59,8 +59,8 @@ public class Bullet : MonoBehaviour
         
         //  Destroy the projectile after 2 seconds. Using a delay because the particle system needs to finish
         GameObject parent = transform.parent.gameObject;
-        Destroy(parent, 5f);
-        Destroy(rocketFire, 5f);
+        Destroy(parent, 3f);
+        Destroy(rocketFire, 3f);
     }
     
     private void Explode()
