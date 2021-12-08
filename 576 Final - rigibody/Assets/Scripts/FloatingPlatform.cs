@@ -28,7 +28,6 @@ public class FloatingPlatform : MonoBehaviour
 
         if (begin) {
             y += Mathf.Sin(timer * Mathf.PI * 0.85f) * 0.04f;
-            print(Time.deltaTime);
             transform.position = new Vector3(transform.position.x, y, transform.position.z);
         }
     }
