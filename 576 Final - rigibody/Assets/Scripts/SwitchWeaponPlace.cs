@@ -20,7 +20,7 @@ public class SwitchWeaponPlace : MonoBehaviour
     public Vector3 initialForward;
 
     private float smooth = 8f;
-    private float swayMultiplier = 20f;
+    private float swayMultiplier = 35f;
 
     public bool doRecoil = false;
     private float recoilTimer = 0f;

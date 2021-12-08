@@ -20,6 +20,7 @@ public class MouseLook : MonoBehaviour
         xRotation = 0f;
 
         // Hide the mouse cursor.
+        Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
 
         playerHook = GameObject.FindWithTag("Player").GetComponent<GrapplingHook>();
