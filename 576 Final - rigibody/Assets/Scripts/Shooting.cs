@@ -41,7 +41,7 @@ public class Shooting : MonoBehaviour
     {
         // update timer
         timer += Time.deltaTime;
-        if (timer > cd && Input.GetMouseButtonDown(0))  // fire only when gun not in cd & player press left mouse button
+        if (timer > cd && Input.GetMouseButtonDown(0) && Time.deltaTime != 0)  // fire only when gun not in cd & player press left mouse button
         {
             // reset timer
             timer = 0;

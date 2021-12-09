@@ -58,6 +58,11 @@ public class EnemyRiflemanParameter
 
     public int MAX_ITERATIONS = 10;
     public float EPSILON = 0.08f;
+
+    public AudioSource source;
+    public AudioClip oneShotClip;
+
+    public bool oneShotPlayed = false;
 }
 
 public class FSMRifleman : MonoBehaviour
@@ -79,6 +84,8 @@ public class FSMRifleman : MonoBehaviour
         parameter.singleShotReadyHash = Animator.StringToHash("SingleShootReady");
         parameter.singleShootingHash = Animator.StringToHash("ShootingSingleShot");
         parameter.dieHash = Animator.StringToHash("Die");
+
+        parameter.source = parameter.gunTip.GetComponent<AudioSource>();
 
         StartCoroutine(FOVRoutine());
         //StartCoroutine(SingleShoot());
@@ -144,9 +151,14 @@ public class FSMRifleman : MonoBehaviour
                 parameter.animationController.SetBool(parameter.singleShootingHash, true);
 
                 yield return new WaitForSeconds(0.2f); // next shot will be shot after this delay
+                parameter.oneShotPlayed = false;
                 GameObject newObject = Instantiate(parameter.bullet, parameter.gunTip.position, parameter.gunTip.rotation);
                 newObject.transform.GetChild(0).GetComponent<Bullet>().shootingDirection = parameter.shootingDirection;
                 newObject.transform.GetChild(0).GetComponent<Bullet>().speed = parameter.bulletSpeed;
+                if (!parameter.oneShotPlayed) {
+                    parameter.source.PlayOneShot(parameter.oneShotClip);
+                    parameter.oneShotPlayed = true;
+                }
             }
         }
     }

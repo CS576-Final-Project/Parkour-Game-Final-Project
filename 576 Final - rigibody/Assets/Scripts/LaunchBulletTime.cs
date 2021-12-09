@@ -35,7 +35,7 @@ public class LaunchBulletTime : MonoBehaviour
     void Update()
     {
         if ((!playerMovement.isGrounded() || playerMovement.isSliding) && !wallRun.isWallLeft && !wallRun.isWallRight) {
-            if (Input.GetMouseButtonDown(1) && canBullet)
+            if (Input.GetMouseButtonDown(1) && canBullet && Time.timeScale != 0)
             {
                 playerMovement.isBulleting = true;
                 t = 0;
@@ -48,7 +48,7 @@ public class LaunchBulletTime : MonoBehaviour
             if (Input.GetMouseButton(1) && playerMovement.isBulleting)
             {
                 t += Time.deltaTime;
-                Time.timeScale = Mathf.Lerp(Time.timeScale, 0.25f, t);
+                Time.timeScale = Mathf.Lerp(Time.timeScale, 0.2f, t);
                 radiaBlue.Level = Mathf.Lerp(radiaBlue.Level, 10, t);
                 cae.saturation = Mathf.Lerp(cae.saturation, 0.65f, t);
             }
@@ -57,7 +57,7 @@ public class LaunchBulletTime : MonoBehaviour
                 playerMovement.isBulleting = false;
                 playerMovement.bulletTimer = 0f;
                 t = 1f;
-                if (!outPlayed && Time.timeScale < 1) {
+                if (!outPlayed && Time.timeScale < 1 && Time.timeScale != 0f) {
                     ass.PlayOneShot(clipOut);
                     outPlayed = true;
                 }
@@ -70,9 +70,14 @@ public class LaunchBulletTime : MonoBehaviour
             playerMovement.isBulleting = false;
             playerMovement.bulletTimer = 0f;
             t = 1f;
+            if (!outPlayed && Time.timeScale < 1 && Time.timeScale != 0f) {
+                ass.PlayOneShot(clipOut);
+                outPlayed = true;
+            }
             Time.timeScale = Mathf.Lerp(Time.timeScale, 1f, t);
             radiaBlue.Level = Mathf.Lerp(radiaBlue.Level, 1, t);
             cae.saturation = Mathf.Lerp(cae.saturation, 1f, t);
+
             inPlayed = false;
             outPlayed = false;
         }
