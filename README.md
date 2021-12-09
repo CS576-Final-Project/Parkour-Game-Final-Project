@@ -52,8 +52,7 @@ The current decision is to use rigibody, but also to keep the character controll
 ### C# Scripts
 |Script|Instruction|
 |-|-|
-|PlayerMove.cs|**Core Script** <br> Player basic movement on the ground <br> 
-                                    Contain methods that check Player current stats|
+|PlayerMove.cs|**Core Script** <br> Player basic movement on the ground <br> Contain methods that check Player current stats|
 |MoveSway.cs|**Core Script** <br> Implement the effect of camera shake during all player movement states (if it has)|
 |MouseLook.cs|**Core Script** <br> Allows the player to turn the view with the mouse and move directly in front of the view by default|
 |WallRun.cs|**Core Script** <br> Allows players to run on the wall|
