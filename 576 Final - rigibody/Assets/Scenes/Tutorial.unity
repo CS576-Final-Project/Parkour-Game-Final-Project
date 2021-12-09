@@ -6592,7 +6592,7 @@ GameObject:
   - component: {fileID: 970578455}
   - component: {fileID: 970578454}
   - component: {fileID: 970578453}
-  m_Layer: 6
+  m_Layer: 15
   m_Name: ere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7390,6 +7390,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   HUDMaxDistance: 0
+  hitObj: {fileID: 0}
 --- !u!114 &1268533235
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8677,7 +8678,7 @@ GameObject:
   - component: {fileID: 1809688508}
   - component: {fileID: 1809688507}
   - component: {fileID: 1809688506}
-  m_Layer: 6
+  m_Layer: 15
   m_Name: ere (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8900,7 +8901,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5372005985305219018, guid: 79cd96846b06b0749a08854edbae0691, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5372005985305219018, guid: 79cd96846b06b0749a08854edbae0691, type: 3}
       propertyPath: m_LocalPosition.x

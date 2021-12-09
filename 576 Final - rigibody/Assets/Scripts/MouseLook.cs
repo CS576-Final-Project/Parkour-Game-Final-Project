@@ -29,21 +29,23 @@ public class MouseLook : MonoBehaviour
 
     // Update is called once per frame
     void Update() {
-        mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
-        mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
+        if (Time.deltaTime > 0) {
+            mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
+            mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
 
-        xRotation -= mouseY;
+            xRotation -= mouseY;
 
-        // Limits on view range of Y axis.
-        xRotation = Mathf.Clamp(xRotation, -70f, 70f);
+            // Limits on view range of Y axis.
+            xRotation = Mathf.Clamp(xRotation, -70f, 70f);
 
-        if (!playerHook.hooked && !playerWallHook.hooked) {
-            // The camera rotates up and down, indicating head up and head down.
-            transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+            if (!playerHook.hooked && !playerWallHook.hooked) {
+                // The camera rotates up and down, indicating head up and head down.
+                transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
 
-            // Player game object rotates left and right, indicating the head is turned left and right.
-            // playerHead is set manually in unity.
-            playerHead.Rotate(Vector3.up * mouseX);
+                // Player game object rotates left and right, indicating the head is turned left and right.
+                // playerHead is set manually in unity.
+                playerHead.Rotate(Vector3.up * mouseX);
+            }
         }
     }
 }

@@ -15,6 +15,8 @@ public class DeathT : MonoBehaviour
     public GameObject deathCam;
     public GameObject sight;
 
+    public GameObject finish;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,6 +33,7 @@ public class DeathT : MonoBehaviour
             deathCam.GetComponent<AudioListener>().enabled = true;
             PandO.SetActive(false);
             deathUI.SetActive(true);
+            finish.SetActive(false);
             if (Input.GetKeyDown(KeyCode.R)) {
                 PandO.SetActive(true);
                 player.transform.position = new Vector3(58.17828f, -41f, -84f);
@@ -40,6 +43,7 @@ public class DeathT : MonoBehaviour
                 hookInstruction.SetActive(true);
                 deathCam.GetComponent<AudioListener>().enabled = false;
                 sight.SetActive(true);
+                finish.SetActive(true);
             }
         } else {
             deathUI.SetActive(false);

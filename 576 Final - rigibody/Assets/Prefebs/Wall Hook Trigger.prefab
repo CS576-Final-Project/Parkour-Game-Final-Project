@@ -58,6 +58,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 497a2840349467b42a6c9ef410174092, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  blocked: 0
 --- !u!1 &3750200726338525237
 GameObject:
   m_ObjectHideFlags: 0
@@ -68,7 +69,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1147599338203239306}
   - component: {fileID: 9073122239658154851}
-  m_Layer: 11
+  m_Layer: 10
   m_Name: HUD
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -405,6 +406,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 893c4bf568fbed340b5b395df6010535, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canSee: 0
 --- !u!1 &9053287690563279391
 GameObject:
   m_ObjectHideFlags: 0
