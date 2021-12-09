@@ -1,5 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using UnityEditor.Timeline.Actions;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -15,6 +18,10 @@ public class Finish : MonoBehaviour
     public bool paused = false;
 
     public GameObject instruction;
+    
+    public TextMeshProUGUI timeTextSight;  // time text on sight canvas
+    public TextMeshProUGUI timeTextFinish;  // time text on menu canvas
+    public TextMeshProUGUI rank;  // rank on menu canvas
 
     private bool finished = false;
     private bool instructionOpen = false;
@@ -58,6 +65,33 @@ public class Finish : MonoBehaviour
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
             PandO.SetActive(false);
+            
+            string[] strArr = new string[4];
+            string timeStr = timeTextSight.text.Split(" "[0])[2];
+            // update time text on finish UI
+            timeTextFinish.text = "Time Used: " + timeStr + " sec";  // update time text shown
+            int timeInt = int.Parse(timeStr);
+            // calculate rank based on time
+            if (timeInt <= 60)
+            {
+                rank.text = "S";
+            }
+            else if (timeInt <= 80)
+            {
+                rank.text = "A";
+            }
+            else if (timeInt <= 100)
+            {
+                rank.text = "B";
+            }
+            else if (timeInt <= 120)
+            {
+                rank.text = "C";
+            }
+            else 
+            {
+                rank.text = "D";
+            }
             finishUI.SetActive(true);
         }
     }
