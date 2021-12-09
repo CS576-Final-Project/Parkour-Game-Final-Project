@@ -71,6 +71,7 @@ public class FSMRifleman : MonoBehaviour
     private FSMState currState;
     private Dictionary<StateTypeRifleman, FSMState> states = new Dictionary<StateTypeRifleman, FSMState>();
     public bool coroutineActive = true;
+    public HealthBar healthBar;  // enemy health bar
 
     // Start is called before the first frame update
     void Start()
@@ -95,6 +96,8 @@ public class FSMRifleman : MonoBehaviour
         states.Add(StateTypeRifleman.Die, new DieState(this));
 
         TransitionState(StateTypeRifleman.Idle);
+        
+        healthBar.SetHealth(parameter.health);  // set health at start
     }
 
     // Update is called once per frame
@@ -128,6 +131,7 @@ public class FSMRifleman : MonoBehaviour
     public void TakeDamage(float damage)
     {
         parameter.health -= damage;
+        healthBar.SetHealth(parameter.health);  // change health bar if take damage
     }
 
     private IEnumerator FOVRoutine() {

@@ -63,7 +63,6 @@ public class Bullet : MonoBehaviour
         if (other.gameObject.layer == 14)
         {
             GameObject.FindWithTag("Player").transform.GetChild(0).gameObject.GetComponent<PlayerHealth>().health -= damage;
-            Debug.Log(GameObject.FindWithTag("Player").transform.GetChild(0).gameObject.GetComponent<PlayerHealth>().health);
         }
         
         //  Destroy the projectile after 2 seconds. Using a delay because the particle system needs to finish
