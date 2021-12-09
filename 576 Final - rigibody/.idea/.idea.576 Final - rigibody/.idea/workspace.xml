@@ -3,7 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="40106889-e711-48dd-a1d5-7900678fad81" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.576 Final - rigibody/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.576 Final - rigibody/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Shooting.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Shooting.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefebs/P and O.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefebs/P and O.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Bullet.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Bullet.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GrapplingHUD.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/GrapplingHUD.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/PlayerHealth.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PlayerHealth.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,6 +23,7 @@
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.postprocessing@3.1.1/PostProcessing/Runtime/PostProcessLayer.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../CS576_Project3/CS576_Project3/Assets/Resources/Apple/Prefab/Apple.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Target.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/HealthBar.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProjectId" id="21RLjpm4mTB4i30vw7N0ofoUXTE" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -72,6 +77,10 @@
       <workItem from="1637995580450" duration="10734000" />
       <workItem from="1638165491460" duration="3423000" />
       <workItem from="1638176597018" duration="9538000" />
+      <workItem from="1639016537584" duration="8000" />
+      <workItem from="1639016753784" duration="274000" />
+      <workItem from="1639028942764" duration="2589000" />
+      <workItem from="1639031806857" duration="3475000" />
     </task>
     <servers />
   </component>
