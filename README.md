@@ -49,6 +49,27 @@ The current decision is to use rigibody, but also to keep the character controll
 
 ---
 
+### C# Scripts
+|Script|Instruction|
+|-|-|
+|PlayerMove.cs|**Core Script** <br> Player basic movement on the ground <br> 
+                                    Contain methods that check Player current stats|
+|MoveSway.cs|**Core Script** <br> Implement the effect of camera shake during all player movement states (if it has)|
+|MouseLook.cs|**Core Script** <br> Allows the player to turn the view with the mouse and move directly in front of the view by default|
+|WallRun.cs|**Core Script** <br> Allows players to run on the wall|
+|ChangeCollider.cs|**Core Script** <br> Change the player's Collider to fit the player's movement|
+|Shooting.cs|**Core Script** <br> Allow player to shoot|
+|FSMRifleman|**Core Script** <br> Enemy AI Implementation using Finite State Machine|
+|AttackSingleState.cs|**Core Script** <br> Attacking State of AI|
+|DieState|**Core Script** <br> Die State of AI|
+|FSMState|**Core Script** <br> FSM State of AI|
+|IdleState|**Core Script** <br> Idle State of AI|
+|ModelState|**Core Script** <br> Model State of AI|
+|Other|For instruction of other None Core Scripts, please wait for further updating|
+
+
+---
+
 ### 脚本文件
 |文件|说明|
 |-|-|
@@ -76,6 +97,11 @@ The current decision is to use rigibody, but also to keep the character controll
 - ~~完成空中勾索~~ - (Runge Huang 11/05/2021)
 - ~~完成墙壁勾索~~ - (Runge Huang 11/07/2021)
 - ~~完成子弹时间~~ - (Runge Huang 11/20/2021)
-- ~~完成枪械开火部分~~ - (Yiquan Xiao 11/26/2021)
-
+- ~~完成枪械开火~~ - (Yiquan Xiao 11/26/2021)
+- ~~完成游戏菜单~~ - (Runge Huang & ?)
+- ~~完成基础UI~~ - (Runge Huang)
+- ~~完成教程关卡~~ - (Runge Huang)
+- ~~实现血量（玩家&敌人）及相关功能~~ - (Yiquan Xiao)
+- ~~完善UI，加入时间及评分系统~~ - (Yiquan Xiao)
+- 完成第一关(最后一关？) - (Runge Huang)
 
