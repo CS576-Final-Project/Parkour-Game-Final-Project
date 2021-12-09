@@ -24,6 +24,9 @@ public class GrapplingHUD : MonoBehaviour
     {
         HUDHits = Physics.RaycastAll(fpsCam.transform.position, fpsCam.transform.forward, HUDMaxDistance, HUDTrigger);
         Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out firstHit, HUDMaxDistance);
-        hitObj = firstHit.transform.gameObject;
+        if (hitObj != null)
+        {
+            hitObj = firstHit.transform.gameObject;
+        }
     }
 }
