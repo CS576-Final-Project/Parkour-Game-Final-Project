@@ -22,12 +22,12 @@ public class IdleState : FSMState
     public void OnUpdate()
     {
         if (parameter.canSeePlayer) {
-            manager.TransitionState(StateType.AttackSingle);
+            manager.TransitionState(StateTypeRifleman.AttackSingle);
         }
 
         if (parameter.health <= 0) {
             parameter.die = true;
-            manager.TransitionState(StateType.Die);
+            manager.TransitionState(StateTypeRifleman.Die);
         }
     }
 

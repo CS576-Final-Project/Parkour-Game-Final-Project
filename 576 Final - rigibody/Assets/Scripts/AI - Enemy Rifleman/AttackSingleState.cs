@@ -32,12 +32,12 @@ public class AttackSingleState : FSMState
     public void OnUpdate()
     {
         if (!parameter.canSeePlayer) {
-            manager.TransitionState(StateType.Idle);
+            manager.TransitionState(StateTypeRifleman.Idle);
         }
 
         if (parameter.health <= 0) {
             parameter.die = true;
-            manager.TransitionState(StateType.Die);
+            manager.TransitionState(StateTypeRifleman.Die);
         }
 
         if (activatePrompt) {
