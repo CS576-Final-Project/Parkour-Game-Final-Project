@@ -293,7 +293,7 @@ public class PlayerMove : MonoBehaviour
 
     public bool onShallowSlope() {
         if (Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight / 2 + 0.3f)) {
-            if (slopeHit.normal != Vector3.up && Vector3.Angle(slopeHit.normal, Vector3.up) < 35f) {
+            if (slopeHit.normal != Vector3.up && Vector3.Angle(slopeHit.normal, Vector3.up) <= 33f) {
                 return true;
             } else {
                 return false;
@@ -304,7 +304,7 @@ public class PlayerMove : MonoBehaviour
 
     public bool onSteepSlope() {
         if (Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight / 2 + 0.3f)) {
-            if (slopeHit.normal != Vector3.up && Vector3.Angle(slopeHit.normal, Vector3.up) >= 35f) {
+            if (slopeHit.normal != Vector3.up && Vector3.Angle(slopeHit.normal, Vector3.up) > 33f) {
                 speedLine.Play();
                 return true;
             } else {
