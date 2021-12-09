@@ -190,7 +190,7 @@ public class MoveSway : MonoBehaviour
     }
 
     public bool canLedgeGrab() {
-        return !Physics.CheckSphere(ledgeGrabCheck.position, 0.09f, wallMask) && Physics.Raycast(ledgeGrabCheck.position, Vector3.down, 1.4f, wallMask);
+        return !Physics.CheckSphere(ledgeGrabCheck.position, 0.09f, wallAheadMask) && Physics.Raycast(ledgeGrabCheck.position, Vector3.down, 1.4f, wallAheadMask);
     }
 
     public bool hasBlockTop() {

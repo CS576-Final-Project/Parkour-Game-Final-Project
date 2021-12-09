@@ -68,6 +68,7 @@ public class PlayerMove : MonoBehaviour
     public bool isWallRopeCut = false;
     public Collider selfCollider;
     public Vector3 hookCurrentDirection = Vector3.zero;
+    public Vector3 wallHookCurrentDirection = Vector3.zero;
     
     public float bulletTimer = 0f;
     private float bulletDuration = 2f;
@@ -415,7 +416,7 @@ public class PlayerMove : MonoBehaviour
         if (isRopeCut) {
             // rb.AddForce(Vector3.up * 12f, ForceMode.Impulse);
             // rb.AddForce(orientation.forward * hookMultiplier, ForceMode.Impulse);
-            rb.AddForce(hookCurrentDirection.normalized * 200f, ForceMode.Impulse);
+            rb.AddForce(hookCurrentDirection.normalized * 225f, ForceMode.Impulse);
         }
         isRopeCut = false;
     }
@@ -423,7 +424,7 @@ public class PlayerMove : MonoBehaviour
     private void WallHookAcc() {
         if (isWallRopeCut) {
             //rb.AddForce(hookCurrentDirection.normalized * 35f, ForceMode.Impulse);
-            rb.velocity = hookCurrentDirection.normalized * 40f;
+            rb.velocity = wallHookCurrentDirection.normalized * 35f;
         }
         isWallRopeCut = false;
     }

@@ -36,7 +36,7 @@ public class MouseLook : MonoBehaviour
             xRotation -= mouseY;
 
             // Limits on view range of Y axis.
-            xRotation = Mathf.Clamp(xRotation, -70f, 70f);
+            xRotation = Mathf.Clamp(xRotation, -55f, 60f);
 
             if (!playerHook.hooked && !playerWallHook.hooked) {
                 // The camera rotates up and down, indicating head up and head down.

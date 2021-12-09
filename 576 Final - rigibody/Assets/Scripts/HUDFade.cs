@@ -31,7 +31,7 @@ public class HUDFade : MonoBehaviour
             distanceRatio = 0f;
         canvasGroup.alpha = 1f - distanceRatio;
         if (!canSee)
-            canvasGroup.alpha = Mathf.Clamp(canvasGroup.alpha, 0.45f , 0.8f);
+            canvasGroup.alpha = Mathf.Clamp(canvasGroup.alpha, 0.45f , 0.6f);
         else
             canvasGroup.alpha = 1;
         yield return new WaitForSeconds(0.1f);
