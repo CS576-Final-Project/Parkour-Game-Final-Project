@@ -96,10 +96,16 @@ public class Shooting : MonoBehaviour
         if (Physics.Raycast(fpsCamera.transform.position, fpsCamera.transform.forward, out hit, range, layerMask))
         {
             // if we hit an enemy
-            FSMRifleman enemy = hit.transform.GetComponent<FSMRifleman>();
-            if (enemy != null)
+            FSMRifleman Renemy = hit.transform.GetComponent<FSMRifleman>();
+            if (Renemy != null)
             {
-                enemy.TakeDamage(damage);
+                Renemy.TakeDamage(damage);
+            }
+
+            FSMDrone Denemy = hit.transform.GetComponent<FSMDrone>();
+            if (Denemy != null)
+            {
+                Denemy.TakeDamage(damage);
             }
             
             // if we hit an target with rigidbody (eg. enemy), repel it a little bit

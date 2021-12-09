@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public enum StateType
+public enum StateTypeRifleman
 {
     Idle, Patrol, LookForPlayer, AttackSingle, Die
 }
@@ -69,7 +69,7 @@ public class FSMRifleman : MonoBehaviour
 {
     public EnemyRiflemanParameter parameter;
     private FSMState currState;
-    private Dictionary<StateType, FSMState> states = new Dictionary<StateType, FSMState>();
+    private Dictionary<StateTypeRifleman, FSMState> states = new Dictionary<StateTypeRifleman, FSMState>();
     public bool coroutineActive = true;
 
     // Start is called before the first frame update
@@ -90,11 +90,11 @@ public class FSMRifleman : MonoBehaviour
         StartCoroutine(FOVRoutine());
         //StartCoroutine(SingleShoot());
 
-        states.Add(StateType.Idle, new IdleState(this));
-        states.Add(StateType.AttackSingle, new AttackSingleState(this));
-        states.Add(StateType.Die, new DieState(this));
+        states.Add(StateTypeRifleman.Idle, new IdleState(this));
+        states.Add(StateTypeRifleman.AttackSingle, new AttackSingleState(this));
+        states.Add(StateTypeRifleman.Die, new DieState(this));
 
-        TransitionState(StateType.Idle);
+        TransitionState(StateTypeRifleman.Idle);
     }
 
     // Update is called once per frame
@@ -112,7 +112,7 @@ public class FSMRifleman : MonoBehaviour
         currState.OnUpdate();
     }
 
-    public void TransitionState(StateType state)
+    public void TransitionState(StateTypeRifleman state)
     {
         if (currState != null)
             currState.OnExit();

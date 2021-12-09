@@ -38,10 +38,12 @@ public class DeactivateHookHUD : MonoBehaviour
     }
 
     private bool beingWatched() {
-        for (int i = 0; i < HUD.Length ; i++) {
-            if (selfCollider == HUD[i].collider && !blocked) {
-                selfHit = HUD[i];
-                return true;
+        if (HUD != null) {
+            for (int i = 0; i < HUD.Length ; i++) {
+                if (selfCollider == HUD[i].collider && !blocked) {
+                    selfHit = HUD[i];
+                    return true;
+                }
             }
         }
         return false;
