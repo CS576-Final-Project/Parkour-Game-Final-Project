@@ -97,7 +97,7 @@ The current decision is to use rigibody, but also to keep the character controll
 - ~~完成墙壁勾索~~ - (Runge Huang 11/07/2021)
 - ~~完成子弹时间~~ - (Runge Huang 11/20/2021)
 - ~~完成枪械开火~~ - (Yiquan Xiao 11/26/2021)
-- ~~完成游戏菜单~~ - (Runge Huang & ?)
+- ~~完成游戏菜单~~ - (Runge Huang & Xingmeng Wang)
 - ~~完成基础UI~~ - (Runge Huang)
 - ~~完成教程关卡~~ - (Runge Huang)
 - ~~实现血量（玩家&敌人）及相关功能~~ - (Yiquan Xiao)
