@@ -2,11 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="40106889-e711-48dd-a1d5-7900678fad81" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Assets/Prefebs/GameManager.prefab" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Prefebs/GameManager.prefab.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/GameManager.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.576 Final - rigibody/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.576 Final - rigibody/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/AI - Enemy Rifleman/FSMRifleman.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/AI - Enemy Rifleman/FSMRifleman.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Billboard.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Bullet.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Bullet.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/HealthBar.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/HealthBar.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefebs/FinishUI.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefebs/FinishUI.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/testing map.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/testing map.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts For Tutorial/Finish.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts For Tutorial/Finish.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,6 +24,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/explosionDestroy.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Bullet.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.postprocessing@3.1.1/PostProcessing/Runtime/PostProcessLayer.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/GameManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../CS576_Project3/CS576_Project3/Assets/Resources/Apple/Prefab/Apple.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Target.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/HealthBar.cs" root0="FORCE_HIGHLIGHTING" />
@@ -79,7 +84,8 @@
       <workItem from="1639016537584" duration="8000" />
       <workItem from="1639016753784" duration="274000" />
       <workItem from="1639028942764" duration="2589000" />
-      <workItem from="1639031806857" duration="7201000" />
+      <workItem from="1639031806857" duration="10197000" />
+      <workItem from="1639049902315" duration="2125000" />
     </task>
     <servers />
   </component>
