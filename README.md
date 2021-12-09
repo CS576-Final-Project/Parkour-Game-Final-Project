@@ -63,7 +63,7 @@ The current decision is to use rigibody, but also to keep the character controll
 |DieState|**Core Script** <br> Die State of AI|
 |FSMState|**Core Script** <br> FSM State of AI|
 |IdleState|**Core Script** <br> Idle State of AI|
-|ModelState|**Core Script** <br> Model State of AI|
+|ModelState|**Core Script** <br> Template of further Finite State of AI|
 |Other|For instruction of other None Core Scripts, please wait for further updating|
 
 
