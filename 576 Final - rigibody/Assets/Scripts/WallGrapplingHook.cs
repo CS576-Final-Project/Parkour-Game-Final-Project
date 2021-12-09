@@ -45,9 +45,9 @@ public class WallGrapplingHook : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        playerTravelSpeed = 25f;
-        wallMaxDistance = 80f;
-        wallHUDMaxDistance = wallMaxDistance - 10f;
+        playerTravelSpeed = 30f;
+        wallMaxDistance = 70f;
+        wallHUDMaxDistance = wallMaxDistance + 10f;
 
         rb = GetComponent<Rigidbody>(); 
 
@@ -77,7 +77,6 @@ public class WallGrapplingHook : MonoBehaviour
                 hookPoint = triggerPoint.transform.position;
 
                 if (Input.GetKeyDown(KeyCode.E) && !wallHookFired) {
-                    playerMovement.hookCurrentDirection = wallHookHit.point - this.transform.position;
                     wallHookFired = true;
                     play = true;
                     animatorControl.animationController.Play("M1911 Hook Ready");
@@ -106,6 +105,7 @@ public class WallGrapplingHook : MonoBehaviour
     private void StartHooking() {
         rb.useGravity = false;
         this.transform.position = Vector3.MoveTowards(this.transform.position, hookPoint, playerTravelSpeed * Time.deltaTime * 5f);
+        playerMovement.wallHookCurrentDirection = hookPoint - this.transform.position;
         currentDistance = Vector3.Distance(this.transform.position, hookPoint);
 
         lr.positionCount = 2;

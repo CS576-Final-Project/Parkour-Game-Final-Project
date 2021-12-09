@@ -54,9 +54,9 @@ public class GrapplingHook : MonoBehaviour
     {
         hookTravelSpeed = 30f;
         playerTravelSpeed = 35f;
-        maxDistance = 60f;
+        maxDistance = 50f;
         wallMaxDistance = 60f;
-        HUDMaxDistance = maxDistance - 10f;
+        HUDMaxDistance = maxDistance + 10f;
 
         rb = GetComponent<Rigidbody>(); 
 

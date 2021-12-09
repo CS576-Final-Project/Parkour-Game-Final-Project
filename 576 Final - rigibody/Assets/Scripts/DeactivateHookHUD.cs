@@ -8,6 +8,7 @@ public class DeactivateHookHUD : MonoBehaviour
     public RaycastHit[] HUD;
     public RaycastHit selfHit;
     public bool blocked = false;
+    public GameObject hitObj;
 
     // Start is called before the first frame update
     void Start()
@@ -18,14 +19,17 @@ public class DeactivateHookHUD : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        HUD = GameObject.FindWithTag("Player").GetComponent<GrapplingHUD>().HUDHits;
+        if (GameObject.FindWithTag("Player") != null) {
+            HUD = GameObject.FindWithTag("Player").GetComponent<GrapplingHUD>().HUDHits;
+            hitObj = GameObject.FindWithTag("Player").GetComponent<GrapplingHUD>().hitObj;
+        }
+
         if (beingWatched()) {
             this.transform.GetChild(0).gameObject.SetActive(true);
         } else {
              this.transform.GetChild(0).gameObject.SetActive(false);
         }
 
-        GameObject hitObj = GameObject.FindWithTag("Player").GetComponent<GrapplingHUD>().hitObj;
         if (hitObj != null) {
             if (hitObj.layer != 9 && hitObj.layer != 10 && hitObj.layer != 12 && hitObj.layer != 13 && hitObj.layer != 14) {
                 blocked = true;
