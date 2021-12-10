@@ -77,6 +77,11 @@ public class DroneAttackSingleState : FSMState
         }
     }
 
+    public void OnFixedUpdate()
+    {
+
+    }
+
     private void resumePrompt()
     {
         if (!parameter.lights.gameObject.activeInHierarchy) {

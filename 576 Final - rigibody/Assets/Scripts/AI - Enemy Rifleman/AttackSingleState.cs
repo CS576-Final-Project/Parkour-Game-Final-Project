@@ -14,6 +14,9 @@ public class AttackSingleState : FSMState
     private float rand = 0.5f;  // random number to control whether move left or right
     private float timer = 0f;  // timer to record time passed since last generation of rand
 
+    private Vector3 left;
+    private Vector3 right;
+
     public AttackSingleState(FSMRifleman manager)
     {
         this.manager = manager;
@@ -64,8 +67,8 @@ public class AttackSingleState : FSMState
         // define up direction:
         Vector3 up = new Vector3(0f, 1f, 0f);
         // find right vector and left vector of 
-        Vector3 right = Vector3.Cross(parameter.shootingDirection, up.normalized);
-        Vector3 left = -right;
+        right = Vector3.Cross(parameter.shootingDirection, up.normalized);
+        left = -right;
 
         // enemy may change direction of movement every 1 sec
         timer += Time.deltaTime;
@@ -76,7 +79,7 @@ public class AttackSingleState : FSMState
         }
         if (rand < 0.5)  // move left with probability of 0.5
         {
-            parameter.rb.AddForce(left * parameter.randomSpeed, ForceMode.Acceleration);
+            // parameter.rb.AddForce(left * parameter.randomSpeed, ForceMode.Acceleration);
             // change animation
             if (parameter.animationController.GetBool(parameter.singleShotReadyHash))
             {
@@ -90,7 +93,7 @@ public class AttackSingleState : FSMState
         }
         else
         {
-            parameter.rb.AddForce(right * parameter.randomSpeed, ForceMode.Acceleration);
+            // parameter.rb.AddForce(right * parameter.randomSpeed, ForceMode.Acceleration);
             // change animation 
             if (parameter.animationController.GetBool(parameter.singleShotReadyHash))
             {
@@ -127,6 +130,11 @@ public class AttackSingleState : FSMState
         }
     }
 
+    public void OnFixedUpdate()
+    {
+        RobotMove();
+    }
+
     private void resumePrompt()
     {
         if (!parameter.lights.gameObject.activeInHierarchy) {
@@ -137,4 +145,15 @@ public class AttackSingleState : FSMState
             }
         }
     }
+
+    private void RobotMove()
+    {
+        if (rand < 0.5) {
+            parameter.rb.AddForce(left * parameter.randomSpeed, ForceMode.Acceleration);
+        } else {
+            parameter.rb.AddForce(right * parameter.randomSpeed, ForceMode.Acceleration);
+        }
+    }
+
+
 }

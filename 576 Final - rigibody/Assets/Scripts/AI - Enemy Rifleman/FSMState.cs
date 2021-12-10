@@ -5,4 +5,6 @@ public interface FSMState
     void OnUpdate();
 
     void OnExit();
+    
+    void OnFixedUpdate();
 }

@@ -41,4 +41,9 @@ public class DroneIdleState : FSMState
     {
 
     }
+
+    public void OnFixedUpdate()
+    {
+
+    }
 }

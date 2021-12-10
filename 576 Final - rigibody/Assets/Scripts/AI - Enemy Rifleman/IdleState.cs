@@ -35,4 +35,9 @@ public class IdleState : FSMState
     {
 
     }
+
+    public void OnFixedUpdate()
+    {
+
+    }
 }
