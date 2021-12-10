@@ -6,7 +6,7 @@ public class DroneDieState : FSMState
 {
     private FSMDrone manager;
     private EnemyDroneParameter parameter;
-
+    
     public DroneDieState(FSMDrone manager)
     {
         this.manager = manager;

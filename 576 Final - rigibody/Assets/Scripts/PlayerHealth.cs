@@ -26,8 +26,6 @@ public class PlayerHealth : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
         } else {
             playerDie = false;
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
         }
     }
 }

@@ -121,4 +121,9 @@ public class Finish : MonoBehaviour
         instruction.SetActive(false);
         pause.SetActive(true);
     }
+
+    public void RestartL1() {
+        finished = false;
+        SceneManager.LoadScene(3);
+    }
 }

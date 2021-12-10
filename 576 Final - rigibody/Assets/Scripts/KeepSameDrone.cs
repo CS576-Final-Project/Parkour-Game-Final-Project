@@ -15,10 +15,12 @@ public class KeepSameDrone : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        size = (Camera.main.transform.position - transform.position).magnitude;
-        size *= 0.003f;
-        if (size <= 0.5f) size = 0.5f;
-        if (size >= 1.2f) size = 1.2f;
-        transform.localScale = new Vector3(size,size,size);
+        if (Camera.main != null) {
+            size = (Camera.main.transform.position - transform.position).magnitude;
+            size *= 0.003f;
+            if (size <= 0.5f) size = 0.5f;
+            if (size >= 1.2f) size = 1.2f;
+            transform.localScale = new Vector3(size,size,size);
+        }
     }
 }
