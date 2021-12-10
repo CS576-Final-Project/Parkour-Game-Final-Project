@@ -15,10 +15,12 @@ public class KeepSame : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        size = (Camera.main.transform.position - transform.position).magnitude;
-        size *= 0.05f;
-        if (size <= 0.5f) size = 0.5f;
-        if (size >= 2.2f) size = 2.2f;
-        transform.localScale = new Vector3(size,size,size);
+        if (Camera.main != null) {
+            size = (Camera.main.transform.position - transform.position).magnitude;
+            size *= 0.05f;
+            if (size <= 0.5f) size = 0.5f;
+            if (size >= 2.2f) size = 2.2f;
+            transform.localScale = new Vector3(size,size,size);
+        }
     }
 }

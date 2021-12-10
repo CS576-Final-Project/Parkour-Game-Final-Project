@@ -424,7 +424,7 @@ public class PlayerMove : MonoBehaviour
     private void WallHookAcc() {
         if (isWallRopeCut) {
             //rb.AddForce(hookCurrentDirection.normalized * 35f, ForceMode.Impulse);
-            rb.velocity = wallHookCurrentDirection.normalized * 50f;
+            rb.velocity = wallHookCurrentDirection.normalized * 40f;
         }
         isWallRopeCut = false;
     }
