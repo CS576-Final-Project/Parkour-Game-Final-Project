@@ -33,6 +33,11 @@ public class DroneDieState : FSMState
 
     }
 
+    public void OnFixedUpdate()
+    {
+
+    }
+
     private void SelfExplode() {
         Object.Instantiate(parameter.deathExplosionEffect, parameter.explosionPoint.position, parameter.deathExplosionEffect.transform.rotation, null);
         Object.Destroy(manager.gameObject);

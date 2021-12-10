@@ -83,7 +83,6 @@ public class FSMRifleman : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        parameter.rb = GetComponent<Rigidbody>();
         parameter.animationController = GetComponent<Animator>();
         parameter.player = GameObject.FindWithTag("Player");
         parameter.playerMove = parameter.player.GetComponent<PlayerMove>();
@@ -97,6 +96,7 @@ public class FSMRifleman : MonoBehaviour
         parameter.walkRightShootHash = Animator.StringToHash("WalkRightShoot");
 
         parameter.source = parameter.gunTip.GetComponent<AudioSource>();
+        parameter.rb = GetComponent<Rigidbody>();
 
         StartCoroutine(FOVRoutine());
         //StartCoroutine(SingleShoot());
@@ -152,6 +152,11 @@ public class FSMRifleman : MonoBehaviour
             yield return wait;
             FieldOfViewCheck();
         }
+    }
+
+    void FixedUpdate() 
+    {
+        currState.OnFixedUpdate();
     }
 
     

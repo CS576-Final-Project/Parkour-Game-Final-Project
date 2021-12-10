@@ -27,4 +27,9 @@ public class ModelState : FSMState
     {
 
     }
+
+    public void OnFixedUpdate()
+    {
+
+    }
 }

@@ -42,6 +42,11 @@ public class DieState : FSMState
 
     }
 
+    public void OnFixedUpdate()
+    {
+
+    }
+
     private void SelfExplode() {
         parameter.selfExplodeTimer += Time.deltaTime;
         if (parameter.selfExplodeTimer >= parameter.timeToExplode) {
