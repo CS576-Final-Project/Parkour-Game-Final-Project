@@ -21,7 +21,7 @@ public class EnemyDroneParameter
 
     // For detecting player
     public float radius = 80f;
-    public float angle = 120f;
+    public float angle = 170f;
     public LayerMask playerMask;
     public LayerMask obstructionMask;
 
@@ -82,8 +82,7 @@ public class FSMDrone : MonoBehaviour
         parameter.sway = GameObject.FindWithTag("Head").GetComponent<MoveSway>();
 
         parameter.source = parameter.gunTip.GetComponent<AudioSource>();
-
-        StartCoroutine(FOVRoutine());
+        
         //StartCoroutine(SingleShoot());
 
         states.Add(StateTypeDrone.Idle, new DroneIdleState(this));
@@ -101,8 +100,9 @@ public class FSMDrone : MonoBehaviour
         parameter.optimizedPlayerPosition = IterativeApproximation(parameter.playerCentroid, parameter.playerMove.rb.velocity, parameter.bulletSpeed);
         parameter.optimizedPlayerPosition.Normalize();
 
+        parameter.canSeePlayer = true;
+
         if (!coroutineActive) {
-            StartCoroutine(FOVRoutine());
         }
 
         rightBlender.Rotate(0, 800 * Time.deltaTime, 0);
@@ -128,17 +128,6 @@ public class FSMDrone : MonoBehaviour
     {
         parameter.health -= damage;
     }
-
-    private IEnumerator FOVRoutine() {
-        float delay = 0.2f;
-        WaitForSeconds wait = new WaitForSeconds(delay);
-
-        while (true) {
-            yield return wait;
-            FieldOfViewCheck();
-        }
-    }
-
     
     // Single shooting part
     public IEnumerator SingleShoot() {
@@ -158,31 +147,6 @@ public class FSMDrone : MonoBehaviour
                     parameter.oneShotPlayed = true;
                 }
             }
-        }
-    }
-
-    // Detecting player
-    private void FieldOfViewCheck() {
-        Collider[] rangeChecks = Physics.OverlapSphere(parameter.head.position, parameter.radius, parameter.playerMask);
-
-        if (rangeChecks.Length != 0) {
-            Transform target = rangeChecks[0].transform;
-            Vector3 directionToTarget = (target.position - parameter.head.position).normalized;
-
-            if (Vector3.Angle(transform.forward, directionToTarget) < parameter.angle / 2) {
-                float distanceToTarget = Vector3.Distance(transform.position, target.position);
-
-                if (!Physics.Raycast(parameter.head.position, directionToTarget, distanceToTarget, parameter.obstructionMask)) {
-                    parameter.canSeePlayer = true;
-                    parameter.knowPlayerLastPosition = true;
-                } else {
-                    parameter.canSeePlayer = false;
-                }
-            } else {
-                parameter.canSeePlayer = false;
-            }
-        } else if (parameter.canSeePlayer) {
-            parameter.canSeePlayer = false;
         }
     }
 

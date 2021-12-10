@@ -92,7 +92,7 @@ public class PlayerMove : MonoBehaviour
         walkingVelocity = 7f;
         crouchingVelocity = 3f;
         runningVelocity = 12.5f;
-        wallRunningVelocity = 10f;
+        wallRunningVelocity = 12.5f;
         //slidingMultiplier = 1f; // Use multiplier because of ForceMode.VelocityChange.
         movementMultiplier = 10.5f;
         airMultiplier = 0.4f;
@@ -293,7 +293,7 @@ public class PlayerMove : MonoBehaviour
 
     public bool onShallowSlope() {
         if (Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight / 2 + 0.3f)) {
-            if (slopeHit.normal != Vector3.up && Vector3.Angle(slopeHit.normal, Vector3.up) < 35f) {
+            if (slopeHit.normal != Vector3.up && Vector3.Angle(slopeHit.normal, Vector3.up) <= 33f) {
                 return true;
             } else {
                 return false;
@@ -304,7 +304,7 @@ public class PlayerMove : MonoBehaviour
 
     public bool onSteepSlope() {
         if (Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight / 2 + 0.3f)) {
-            if (slopeHit.normal != Vector3.up && Vector3.Angle(slopeHit.normal, Vector3.up) >= 35f) {
+            if (slopeHit.normal != Vector3.up && Vector3.Angle(slopeHit.normal, Vector3.up) > 33f) {
                 speedLine.Play();
                 return true;
             } else {
@@ -328,7 +328,7 @@ public class PlayerMove : MonoBehaviour
         // if(isGrounded()) {
         //     rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
         // }
-        rb.velocity = new Vector3(moveDirection.x, moveDirection.y + 27f, moveDirection.z);
+        rb.velocity = new Vector3(moveDirection.x * 2f, moveDirection.y + 27f, moveDirection.z * 2f);
         //rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
     }
 
@@ -424,7 +424,7 @@ public class PlayerMove : MonoBehaviour
     private void WallHookAcc() {
         if (isWallRopeCut) {
             //rb.AddForce(hookCurrentDirection.normalized * 35f, ForceMode.Impulse);
-            rb.velocity = wallHookCurrentDirection.normalized * 35f;
+            rb.velocity = wallHookCurrentDirection.normalized * 50f;
         }
         isWallRopeCut = false;
     }

@@ -23,6 +23,6 @@ public class ButtonManager : MonoBehaviour
     }
 
     public void BeginLevelOne() {
-
+        SceneManager.LoadScene(3);
     }
 }

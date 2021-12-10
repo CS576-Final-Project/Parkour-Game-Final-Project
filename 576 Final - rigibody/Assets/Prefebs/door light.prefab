@@ -7,6 +7,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7107377090263596178, guid: 3e47fe280c9e903428b6fb8402c38f62, type: 3}
+      propertyPath: m_RenderMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7107377090263596178, guid: 3e47fe280c9e903428b6fb8402c38f62, type: 3}
+      propertyPath: m_Lightmapping
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7107377090263596178, guid: 3e47fe280c9e903428b6fb8402c38f62, type: 3}
+      propertyPath: m_BounceIntensity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7107377091016025121, guid: 3e47fe280c9e903428b6fb8402c38f62, type: 3}
+      propertyPath: m_RenderMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7107377091016025121, guid: 3e47fe280c9e903428b6fb8402c38f62, type: 3}
+      propertyPath: m_Lightmapping
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7107377091016025121, guid: 3e47fe280c9e903428b6fb8402c38f62, type: 3}
+      propertyPath: m_BounceIntensity
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7107377091284723552, guid: 3e47fe280c9e903428b6fb8402c38f62, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -63,9 +87,13 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 7107377091284723556, guid: 3e47fe280c9e903428b6fb8402c38f62, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7107377091284723557, guid: 3e47fe280c9e903428b6fb8402c38f62, type: 3}
       propertyPath: m_Name
-      value: LIGHT (17)
+      value: door light
       objectReference: {fileID: 0}
     - target: {fileID: 7107377091284723559, guid: 3e47fe280c9e903428b6fb8402c38f62, type: 3}
       propertyPath: m_Mesh
