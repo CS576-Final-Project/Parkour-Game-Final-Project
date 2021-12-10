@@ -70,18 +70,21 @@ public class WallGrapplingHook : MonoBehaviour
                 captureObj = false;
             }
 
-            if (wallHookTriggerObj.layer == 12) {
-                triggerPoint = wallHookTriggerObj.transform.GetChild(0).gameObject;
-                wallHookTriggerObj.transform.GetChild(1).GetChild(0).GetChild(0).GetComponent<HUDFade>().canSee = true;
-                
-                hookPoint = triggerPoint.transform.position;
+            if (wallHookTriggerObj != null) {
+                if (wallHookTriggerObj.layer == 12) {
+                    triggerPoint = wallHookTriggerObj.transform.GetChild(0).gameObject;
+                    wallHookTriggerObj.transform.GetChild(1).GetChild(0).GetChild(0).GetComponent<HUDFade>().canSee = true;
+                    
+                    hookPoint = triggerPoint.transform.position;
 
-                if (Input.GetKeyDown(KeyCode.E) && !wallHookFired) {
-                    wallHookFired = true;
-                    play = true;
-                    animatorControl.animationController.Play("M1911 Hook Ready");
+                    if (Input.GetKeyDown(KeyCode.E) && !wallHookFired) {
+                        wallHookFired = true;
+                        play = true;
+                        animatorControl.animationController.Play("M1911 Hook Ready");
+                    }
                 }
             }
+
         } else {
             if (wallHookTriggerObj != null && wallHookTriggerObj.layer == 12)
                 wallHookTriggerObj.transform.GetChild(1).GetChild(0).GetChild(0).GetComponent<HUDFade>().canSee = false;

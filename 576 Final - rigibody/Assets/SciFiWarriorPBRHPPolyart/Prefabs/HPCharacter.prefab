@@ -2807,7 +2807,7 @@ MonoBehaviour:
       m_Bits: 16384
     obstructionMask:
       serializedVersion: 2
-      m_Bits: 72
+      m_Bits: 32840
     canSeePlayer: 0
     capturePlayerPostition: 0
     knowPlayerLastPosition: 0

@@ -85,7 +85,7 @@ public class AttackSingleState : FSMState
     {
         if (!parameter.lights.gameObject.activeInHierarchy) {
             promptTimer += Time.deltaTime;
-            if (promptTimer >= 1.5f) {
+            if (promptTimer >= 1.1f) {
                 parameter.lights.gameObject.SetActive(true);
                 promptTimer = 0f;
             }

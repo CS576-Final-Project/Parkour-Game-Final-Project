@@ -149,7 +149,7 @@ public class FSMRifleman : MonoBehaviour
     public IEnumerator SingleShoot() {
         while (true)
         {  
-            yield return new WaitForSeconds(2.8f);
+            yield return new WaitForSeconds(1.2f);
             if (parameter.canSeePlayer && !parameter.die) {
                 parameter.lights.gameObject.SetActive(false);
                 parameter.animationController.SetBool(parameter.singleShootingHash, true);
