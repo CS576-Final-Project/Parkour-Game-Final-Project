@@ -22,8 +22,6 @@ public class PlayerHealth : MonoBehaviour
         
         if (health <= 0) {
             playerDie = true;
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
         } else {
             playerDie = false;
         }
