@@ -2,15 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="40106889-e711-48dd-a1d5-7900678fad81" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Prefebs/GameManager.prefab" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Prefebs/GameManager.prefab.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/GameManager.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.576 Final - rigibody/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.576 Final - rigibody/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefebs/FinishUI.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefebs/FinishUI.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/testing map.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/testing map.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts For Tutorial/Finish.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts For Tutorial/Finish.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Tutorial.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Tutorial.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/AI - Enemy Rifleman/AttackSingleState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/AI - Enemy Rifleman/AttackSingleState.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/AI - Enemy Rifleman/FSMRifleman.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/AI - Enemy Rifleman/FSMRifleman.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -86,6 +81,9 @@
       <workItem from="1639028942764" duration="2589000" />
       <workItem from="1639031806857" duration="10197000" />
       <workItem from="1639049902315" duration="2125000" />
+      <workItem from="1639062269580" duration="1808000" />
+      <workItem from="1639139095911" duration="1390000" />
+      <workItem from="1639169438116" duration="8813000" />
     </task>
     <servers />
   </component>

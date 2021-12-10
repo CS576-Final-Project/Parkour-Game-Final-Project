@@ -39,6 +39,8 @@ public class EnemyRiflemanParameter
     public int singleShotReadyHash;
     public int singleShootingHash;
     public int dieHash;
+    public int walkLeftShootHash;
+    public int walkRightShootHash;
 
     public Transform gunTip;
     public Transform head;
@@ -63,6 +65,11 @@ public class EnemyRiflemanParameter
     public AudioClip oneShotClip;
 
     public bool oneShotPlayed = false;
+
+    public float randomSpeed = 20f;  // random movement speed 
+
+    public Rigidbody rb;  // character controller of enemy 
+    
 }
 
 public class FSMRifleman : MonoBehaviour
@@ -76,6 +83,7 @@ public class FSMRifleman : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        parameter.rb = GetComponent<Rigidbody>();
         parameter.animationController = GetComponent<Animator>();
         parameter.player = GameObject.FindWithTag("Player");
         parameter.playerMove = parameter.player.GetComponent<PlayerMove>();
@@ -85,6 +93,8 @@ public class FSMRifleman : MonoBehaviour
         parameter.singleShotReadyHash = Animator.StringToHash("SingleShootReady");
         parameter.singleShootingHash = Animator.StringToHash("ShootingSingleShot");
         parameter.dieHash = Animator.StringToHash("Die");
+        parameter.walkLeftShootHash = Animator.StringToHash("WalkLeftShoot");
+        parameter.walkRightShootHash = Animator.StringToHash("WalkRightShoot");
 
         parameter.source = parameter.gunTip.GetComponent<AudioSource>();
 
@@ -150,7 +160,8 @@ public class FSMRifleman : MonoBehaviour
         while (true)
         {  
             yield return new WaitForSeconds(1.2f);
-            if (parameter.canSeePlayer && !parameter.die) {
+            if (parameter.canSeePlayer && !parameter.die)
+            {
                 parameter.lights.gameObject.SetActive(false);
                 parameter.animationController.SetBool(parameter.singleShootingHash, true);
 
