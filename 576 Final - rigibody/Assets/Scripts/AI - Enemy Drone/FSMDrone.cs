@@ -16,7 +16,7 @@ public class EnemyDroneParameter
     public WallRun wallRun;
     public MoveSway sway;
 
-    public float health = 100f;
+    public float health = 300f;
     public Vector3 playerCentroid;
 
     // For detecting player
@@ -63,7 +63,7 @@ public class EnemyDroneParameter
 
     public bool oneShotPlayed = false;
     
-    public float randomSpeed = 30f;  // random movement speed 
+    public float randomSpeed = 50f;  // random movement speed 
 
     public Transform leftDirection;  // denote the left direction of drone
     public Transform rightDirection;  // denote the right direction of drone
@@ -102,12 +102,14 @@ public class FSMDrone : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        transform.position = new Vector3(Mathf.Clamp(transform.position.x, -84.6999969f, -65.3000031f),
+                                         Mathf.Clamp(transform.position.y, 109.547279f, 130.11f),
+                                         Mathf.Clamp(transform.position.z, -155.009995f, -128.899994f));
+
         parameter.playerCentroid = parameter.player.transform.GetChild(0).GetComponent<CapsuleCollider>().bounds.center;
 
         parameter.optimizedPlayerPosition = IterativeApproximation(parameter.playerCentroid, parameter.playerMove.rb.velocity, parameter.bulletSpeed);
         parameter.optimizedPlayerPosition.Normalize();
-
-        parameter.canSeePlayer = true;
 
         if (!coroutineActive) {
         }
@@ -140,11 +142,11 @@ public class FSMDrone : MonoBehaviour
     public IEnumerator SingleShoot() {
         while (true)
         {  
-            yield return new WaitForSeconds(2.8f);
+            yield return new WaitForSeconds(1.2f);
             if (parameter.canSeePlayer && !parameter.die) {
                 parameter.lights.gameObject.SetActive(false);
 
-                yield return new WaitForSeconds(0.2f); // next shot will be shot after this delay
+                yield return new WaitForSeconds(0.3f); // next shot will be shot after this delay
                 parameter.oneShotPlayed = false;
                 GameObject newObject = Instantiate(parameter.bullet, parameter.gunTip.position, parameter.gunTip.rotation);
                 newObject.transform.GetChild(0).GetComponent<Bullet>().shootingDirection = parameter.shootingDirection;
