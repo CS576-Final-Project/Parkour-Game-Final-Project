@@ -179,7 +179,7 @@ public class PlayerMove : MonoBehaviour
             launchTimer = 0f;
         }
 
-        if (sway.canLedgeGrab() && !isGrounded()) {
+        if (sway.canLedgeGrab() && !isGrounded() && rb.velocity.y > -5) {
             LedgeGrab();
         }
 
