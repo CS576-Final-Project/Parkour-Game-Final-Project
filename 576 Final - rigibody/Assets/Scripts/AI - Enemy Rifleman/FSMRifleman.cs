@@ -69,6 +69,9 @@ public class EnemyRiflemanParameter
     public float randomSpeed = 20f;  // random movement speed 
 
     public Rigidbody rb;  // character controller of enemy 
+
+    public Transform leftDirection;
+    public Transform rightDirection;
     
 }
 

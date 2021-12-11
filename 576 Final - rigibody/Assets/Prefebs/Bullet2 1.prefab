@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2236156435419181944}
   - component: {fileID: 2422737430288191239}
   - component: {fileID: 2905026043053797075}
-  m_Layer: 0
+  m_Layer: 19
   m_Name: Smoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4893,7 +4893,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9002691075275005608}
   - component: {fileID: 4959064860050475041}
-  m_Layer: 0
+  m_Layer: 19
   m_Name: bullet_audio
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5025,7 +5025,7 @@ GameObject:
   - component: {fileID: 1203645200443941844}
   - component: {fileID: 9161745239931299290}
   - component: {fileID: 4440686478229836072}
-  m_Layer: 0
+  m_Layer: 19
   m_Name: bullet2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5234,6 +5234,7 @@ MonoBehaviour:
   rocketFire: {fileID: 8243042794987204892}
   inFlightAudioSource: {fileID: 4959064860050475041}
   inFlightEffect: {fileID: 3407402006100259759}
+  damage: 20
 --- !u!54 &4440686478229836072
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5261,7 +5262,7 @@ GameObject:
   - component: {fileID: 2730090086153947768}
   - component: {fileID: 6357190330350950626}
   - component: {fileID: 8514174259973724431}
-  m_Layer: 0
+  m_Layer: 19
   m_Name: FireMesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10120,7 +10121,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7889175462699665583}
-  m_Layer: 0
+  m_Layer: 19
   m_Name: Bullet2 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10154,7 +10155,7 @@ GameObject:
   - component: {fileID: 8262269633454898393}
   - component: {fileID: 3407402006100259759}
   - component: {fileID: 5005068898164878847}
-  m_Layer: 0
+  m_Layer: 19
   m_Name: RocketFire
   m_TagString: Untagged
   m_Icon: {fileID: 0}

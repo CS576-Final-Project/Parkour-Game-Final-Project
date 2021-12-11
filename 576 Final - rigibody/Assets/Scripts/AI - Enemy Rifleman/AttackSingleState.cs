@@ -72,7 +72,7 @@ public class AttackSingleState : FSMState
 
         // enemy may change direction of movement every 1 sec
         timer += Time.deltaTime;
-        if (timer > 1f)
+        if (timer > 1.8f)
         {
             rand = Random.Range(0f, 1f);  // ge ta new random number 
             timer = 0f;  // reset timer
@@ -80,6 +80,7 @@ public class AttackSingleState : FSMState
         if (rand < 0.5)  // move left with probability of 0.5
         {
             // parameter.rb.AddForce(left * parameter.randomSpeed, ForceMode.Acceleration);
+            manager.gameObject.transform.position = Vector3.MoveTowards(manager.gameObject.transform.position, parameter.leftDirection.position, parameter.randomSpeed * Time.deltaTime * 0.1f);
             // change animation
             if (parameter.animationController.GetBool(parameter.singleShotReadyHash))
             {
@@ -94,6 +95,7 @@ public class AttackSingleState : FSMState
         else
         {
             // parameter.rb.AddForce(right * parameter.randomSpeed, ForceMode.Acceleration);
+            manager.gameObject.transform.position = Vector3.MoveTowards(manager.gameObject.transform.position, parameter.rightDirection.position, parameter.randomSpeed * Time.deltaTime * 0.1f);
             // change animation 
             if (parameter.animationController.GetBool(parameter.singleShotReadyHash))
             {
@@ -132,7 +134,7 @@ public class AttackSingleState : FSMState
 
     public void OnFixedUpdate()
     {
-        RobotMove();
+        
     }
 
     private void resumePrompt()
@@ -149,9 +151,11 @@ public class AttackSingleState : FSMState
     private void RobotMove()
     {
         if (rand < 0.5) {
-            parameter.rb.AddForce(left * parameter.randomSpeed, ForceMode.Acceleration);
+            // parameter.rb.AddForce(left * parameter.randomSpeed, ForceMode.Acceleration);
+            manager.gameObject.transform.position = Vector3.MoveTowards(manager.gameObject.transform.position, parameter.leftDirection.position, parameter.randomSpeed);
         } else {
-            parameter.rb.AddForce(right * parameter.randomSpeed, ForceMode.Acceleration);
+            // parameter.rb.AddForce(right * parameter.randomSpeed, ForceMode.Acceleration);
+            manager.gameObject.transform.position = Vector3.MoveTowards(manager.gameObject.transform.position, parameter.rightDirection.position, parameter.randomSpeed);
         }
     }
 

@@ -119,6 +119,7 @@ public class PlayerMove : MonoBehaviour
         Physics.IgnoreLayerCollision(14, 10);
         Physics.IgnoreLayerCollision(14, 12);
         Physics.IgnoreLayerCollision(14, 13);
+        Physics.IgnoreLayerCollision(14, 18);
 
         // Sliding and jumping can only begin on the ground.
         if (isGrounded()) {

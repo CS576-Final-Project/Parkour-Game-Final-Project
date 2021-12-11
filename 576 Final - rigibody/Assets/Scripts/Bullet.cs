@@ -29,6 +29,8 @@ public class Bullet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Physics.IgnoreLayerCollision(18, 19);
+
         // update timer
         timer += Time.deltaTime;
         // destroy after 5 sec of not hitting anything
