@@ -102,5 +102,6 @@ The current decision is to use rigibody, but also to keep the character controll
 - ~~完成教程关卡~~ - (Runge Huang)
 - ~~实现血量（玩家&敌人）及相关功能~~ - (Yiquan Xiao)
 - ~~完善UI，加入时间及评分系统~~ - (Yiquan Xiao)
-- 完成第一关(最后一关？) - (Runge Huang)
+- ~~完成第一关(最后一关？)~~ - (Runge Huang)
+- ~~实现敌人随机移动及相关动画~~ - (Yiquan Xiao)
 
