@@ -487,7 +487,7 @@ MonoBehaviour:
     playerMove: {fileID: 0}
     wallRun: {fileID: 0}
     sway: {fileID: 0}
-    health: 100
+    health: 300
     playerCentroid: {x: 0, y: 0, z: 0}
     radius: 80
     angle: 120

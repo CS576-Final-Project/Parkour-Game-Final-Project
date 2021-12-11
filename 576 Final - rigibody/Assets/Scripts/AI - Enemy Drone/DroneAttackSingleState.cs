@@ -53,7 +53,7 @@ public class DroneAttackSingleState : FSMState
 
         resumePrompt();
 
-        parameter.shootingDirection = (parameter.playerCentroid - parameter.head.position).normalized;
+        parameter.shootingDirection = parameter.optimizedPlayerPosition;
         
         desiredRotation = Quaternion.LookRotation(parameter.shootingDirection - Vector3.zero);
         manager.OrientationTo(desiredRotation);
@@ -128,7 +128,7 @@ public class DroneAttackSingleState : FSMState
     {
         if (!parameter.lights.gameObject.activeInHierarchy) {
             promptTimer += Time.deltaTime;
-            if (promptTimer >= 1.5f) {
+            if (promptTimer >= 0.8f) {
                 parameter.lights.gameObject.SetActive(true);
                 promptTimer = 0f;
             }
