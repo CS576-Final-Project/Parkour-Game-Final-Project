@@ -527,11 +527,11 @@ MonoBehaviour:
     oneShotPlayed: 0
     randomSpeed: 30
     rb: {fileID: 0}
-    leftDirection: {fileID: 0}
-    rightDirection: {fileID: 0}
+    leftDirection: {fileID: 7375585356528548207}
+    rightDirection: {fileID: 5090230472930421016}
   coroutineActive: 1
-  rightBlender: {fileID: 5090230472930421016}
-  leftBlender: {fileID: 7375585356528548207}
+  rightBlender: {fileID: 3900189638846914404}
+  leftBlender: {fileID: 3900189637357103940}
 --- !u!135 &1273400384563487120
 SphereCollider:
   m_ObjectHideFlags: 0
