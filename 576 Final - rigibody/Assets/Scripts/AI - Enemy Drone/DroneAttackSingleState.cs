@@ -11,6 +11,11 @@ public class DroneAttackSingleState : FSMState
     private bool activatePrompt = false;
     private float activateTimer = 0f;
     private bool coroutineActive = false;
+    private float rand = 0.5f;  // random number to control whether move left or right
+    private float timer = 0f;  // timer to record time passed since last generation of rand
+
+    private Vector3 left;
+    private Vector3 right;
 
     public DroneAttackSingleState(FSMDrone manager)
     {
@@ -54,6 +59,24 @@ public class DroneAttackSingleState : FSMState
         
         desiredRotation = Quaternion.LookRotation(parameter.shootingDirection - Vector3.zero);
         manager.OrientationTo(desiredRotation);
+        
+        timer += Time.deltaTime;
+        if (timer > 2f)
+        {
+            rand = Random.Range(0f, 1f);  // ge ta new random number 
+            timer = 0f;  // reset timer
+        }
+        if (rand < 0.5)  // move left with probability of 0.5
+        {
+            manager.gameObject.transform.position = Vector3.MoveTowards(manager.gameObject.transform.position, 
+                parameter.leftDirection.position, parameter.randomSpeed * Time.deltaTime * 0.1f);
+        }
+        else
+        {
+            manager.gameObject.transform.position = Vector3.MoveTowards(manager.gameObject.transform.position, 
+                parameter.rightDirection.position, parameter.randomSpeed * Time.deltaTime * 0.1f);
+        }
+        
     }
 
     public void OnExit() 
