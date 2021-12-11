@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.7302393, g: 0.7889812, b: 0.84985924, a: 1}
+  m_IndirectSpecularColor: {r: 0.7302238, g: 0.7889745, b: 0.8498578, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -8208,6 +8208,11 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!4 &1504591666 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7375585356528548207, guid: 9c72b617fa3411b4a8000e2a6a497f96, type: 3}
+  m_PrefabInstance: {fileID: 2137850437}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1529120816
 GameObject:
   m_ObjectHideFlags: 0
@@ -8539,6 +8544,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1746762145 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5090230472930421016, guid: 9c72b617fa3411b4a8000e2a6a497f96, type: 3}
+  m_PrefabInstance: {fileID: 2137850437}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1760633176
 GameObject:
   m_ObjectHideFlags: 0
@@ -9330,6 +9340,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: PA_Drone (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1273400384563487135, guid: 9c72b617fa3411b4a8000e2a6a497f96, type: 3}
+      propertyPath: parameter.leftDirection
+      value: 
+      objectReference: {fileID: 1504591666}
+    - target: {fileID: 1273400384563487135, guid: 9c72b617fa3411b4a8000e2a6a497f96, type: 3}
+      propertyPath: parameter.rightDirection
+      value: 
+      objectReference: {fileID: 1746762145}
     - target: {fileID: 1273400384563920318, guid: 9c72b617fa3411b4a8000e2a6a497f96, type: 3}
       propertyPath: m_RootOrder
       value: 4
