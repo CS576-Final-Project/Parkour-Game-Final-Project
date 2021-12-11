@@ -65,10 +65,10 @@ public class EnemyDroneParameter
     
     public float randomSpeed = 30f;  // random movement speed 
 
-    public Rigidbody rb;  // character controller of enemy 
-
     public Transform leftDirection;  // denote the left direction of drone
     public Transform rightDirection;  // denote the right direction of drone
+    public Transform upDirection;  // denote the right direction of drone
+    public Transform downDirection;  // denote the right direction of drone
 }
 
 public class FSMDrone : MonoBehaviour
@@ -89,8 +89,7 @@ public class FSMDrone : MonoBehaviour
         parameter.sway = GameObject.FindWithTag("Head").GetComponent<MoveSway>();
 
         parameter.source = parameter.gunTip.GetComponent<AudioSource>();
-        parameter.rb = GetComponent<Rigidbody>();
-        
+
         //StartCoroutine(SingleShoot());
 
         states.Add(StateTypeDrone.Idle, new DroneIdleState(this));
