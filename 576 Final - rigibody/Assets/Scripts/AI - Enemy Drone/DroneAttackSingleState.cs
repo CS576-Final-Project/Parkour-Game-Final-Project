@@ -14,9 +14,6 @@ public class DroneAttackSingleState : FSMState
     private float rand = 0.5f;  // random number to control whether move left or right
     private float timer = 0f;  // timer to record time passed since last generation of rand
 
-    private Vector3 left;
-    private Vector3 right;
-
     public DroneAttackSingleState(FSMDrone manager)
     {
         this.manager = manager;
@@ -66,15 +63,25 @@ public class DroneAttackSingleState : FSMState
             rand = Random.Range(0f, 1f);  // ge ta new random number 
             timer = 0f;  // reset timer
         }
-        if (rand < 0.5)  // move left with probability of 0.5
+        if (rand < 0.25)  // move left/right/up/down with probability 0.25
         {
             manager.gameObject.transform.position = Vector3.MoveTowards(manager.gameObject.transform.position, 
                 parameter.leftDirection.position, parameter.randomSpeed * Time.deltaTime * 0.1f);
         }
-        else
+        else if (rand >= 0.25 && rand < 0.5) 
         {
             manager.gameObject.transform.position = Vector3.MoveTowards(manager.gameObject.transform.position, 
                 parameter.rightDirection.position, parameter.randomSpeed * Time.deltaTime * 0.1f);
+        }
+        else if (rand >= 0.5 && rand < 0.75) 
+        {
+            manager.gameObject.transform.position = Vector3.MoveTowards(manager.gameObject.transform.position, 
+                parameter.upDirection.position, parameter.randomSpeed * Time.deltaTime * 0.1f);
+        }
+        else 
+        {
+            manager.gameObject.transform.position = Vector3.MoveTowards(manager.gameObject.transform.position, 
+                parameter.downDirection.position, parameter.randomSpeed * Time.deltaTime * 0.1f);
         }
         
     }
