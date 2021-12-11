@@ -22,6 +22,13 @@ public class Finish : MonoBehaviour
     public TextMeshProUGUI timeTextSight;  // time text on sight canvas
     public TextMeshProUGUI timeTextFinish;  // time text on menu canvas
     public TextMeshProUGUI rank;  // rank on menu canvas
+    
+    // rank corresponding time
+    public int sTime = 60;
+    public int aTime = 80;
+    public int bTime = 100;
+    public int cTime = 120;
+    
 
     private bool finished = false;
     private bool instructionOpen = false;
@@ -72,19 +79,19 @@ public class Finish : MonoBehaviour
             timeTextFinish.text = "Time Used: " + timeStr + " sec";  // update time text shown
             int timeInt = int.Parse(timeStr);
             // calculate rank based on time
-            if (timeInt <= 60)
+            if (timeInt <= sTime)
             {
                 rank.text = "S";
             }
-            else if (timeInt <= 80)
+            else if (timeInt <= aTime)
             {
                 rank.text = "A";
             }
-            else if (timeInt <= 100)
+            else if (timeInt <= bTime)
             {
                 rank.text = "B";
             }
-            else if (timeInt <= 120)
+            else if (timeInt <= cTime)
             {
                 rank.text = "C";
             }
