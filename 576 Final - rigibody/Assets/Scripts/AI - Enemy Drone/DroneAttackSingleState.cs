@@ -128,7 +128,7 @@ public class DroneAttackSingleState : FSMState
     {
         if (!parameter.lights.gameObject.activeInHierarchy) {
             promptTimer += Time.deltaTime;
-            if (promptTimer >= 0.8f) {
+            if (promptTimer >= 1.5f) {
                 parameter.lights.gameObject.SetActive(true);
                 promptTimer = 0f;
             }

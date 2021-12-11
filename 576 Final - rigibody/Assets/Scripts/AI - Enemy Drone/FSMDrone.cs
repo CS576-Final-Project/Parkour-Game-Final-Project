@@ -142,11 +142,11 @@ public class FSMDrone : MonoBehaviour
     public IEnumerator SingleShoot() {
         while (true)
         {  
-            yield return new WaitForSeconds(1.2f);
+            yield return new WaitForSeconds(2f);
             if (parameter.canSeePlayer && !parameter.die) {
                 parameter.lights.gameObject.SetActive(false);
 
-                yield return new WaitForSeconds(0.3f); // next shot will be shot after this delay
+                yield return new WaitForSeconds(0.2f); // next shot will be shot after this delay
                 parameter.oneShotPlayed = false;
                 GameObject newObject = Instantiate(parameter.bullet, parameter.gunTip.position, parameter.gunTip.rotation);
                 newObject.transform.GetChild(0).GetComponent<Bullet>().shootingDirection = parameter.shootingDirection;
