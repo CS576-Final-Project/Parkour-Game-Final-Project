@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="40106889-e711-48dd-a1d5-7900678fad81" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.576 Final - rigibody/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.576 Final - rigibody/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefebs/PA_Drone.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefebs/PA_Drone.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Tutorial.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Tutorial.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/AI - Enemy Drone/DroneAttackSingleState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/AI - Enemy Drone/DroneAttackSingleState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/AI - Enemy Drone/FSMDrone.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/AI - Enemy Drone/FSMDrone.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/AI - Enemy Rifleman/AttackSingleState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/AI - Enemy Rifleman/AttackSingleState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/AI - Enemy Rifleman/FSMRifleman.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/AI - Enemy Rifleman/FSMRifleman.cs" afterDir="false" />
-    </list>
+    <list default="true" id="40106889-e711-48dd-a1d5-7900678fad81" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

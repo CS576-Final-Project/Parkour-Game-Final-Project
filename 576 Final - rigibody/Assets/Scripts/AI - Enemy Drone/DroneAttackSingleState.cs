@@ -12,6 +12,7 @@ public class DroneAttackSingleState : FSMState
     private float activateTimer = 0f;
     private bool coroutineActive = false;
     private float rand = 0.5f;  // random number to control whether move left or right
+    private float rand2 = 0.5f;  // random number to control whether move up or down
     private float timer = 0f;  // timer to record time passed since last generation of rand
 
     public DroneAttackSingleState(FSMDrone manager)
@@ -61,29 +62,40 @@ public class DroneAttackSingleState : FSMState
         if (timer > 2f)
         {
             rand = Random.Range(0f, 1f);  // ge ta new random number 
+            rand2 = Random.Range(0f, 1f);  // ge ta new random number 
             timer = 0f;  // reset timer
         }
-        if (rand < 0.25)  // move left/right/up/down with probability 0.25
+        if (rand < 0.5)  // random movement
         {
             manager.gameObject.transform.position = Vector3.MoveTowards(manager.gameObject.transform.position, 
                 parameter.leftDirection.position, parameter.randomSpeed * Time.deltaTime * 0.1f);
+            if (rand2 < 0.3)
+            {
+                manager.gameObject.transform.position = Vector3.MoveTowards(manager.gameObject.transform.position, 
+                    parameter.upDirection.position, parameter.randomSpeed * Time.deltaTime * 0.1f);
+            }
+            else if (rand2 >= 0.3 && rand2 < 0.6)
+            {
+                manager.gameObject.transform.position = Vector3.MoveTowards(manager.gameObject.transform.position, 
+                    parameter.downDirection.position, parameter.randomSpeed * Time.deltaTime * 0.1f);
+            }
         }
-        else if (rand >= 0.25 && rand < 0.5) 
+        else
         {
             manager.gameObject.transform.position = Vector3.MoveTowards(manager.gameObject.transform.position, 
                 parameter.rightDirection.position, parameter.randomSpeed * Time.deltaTime * 0.1f);
+            if (rand2 < 0.3)
+            {
+                manager.gameObject.transform.position = Vector3.MoveTowards(manager.gameObject.transform.position, 
+                    parameter.upDirection.position, parameter.randomSpeed * Time.deltaTime * 0.1f);
+            }
+            else if (rand2 >= 0.3 && rand2 < 0.6)
+            {
+                manager.gameObject.transform.position = Vector3.MoveTowards(manager.gameObject.transform.position, 
+                    parameter.downDirection.position, parameter.randomSpeed * Time.deltaTime * 0.1f);
+            }
         }
-        else if (rand >= 0.5 && rand < 0.75) 
-        {
-            manager.gameObject.transform.position = Vector3.MoveTowards(manager.gameObject.transform.position, 
-                parameter.upDirection.position, parameter.randomSpeed * Time.deltaTime * 0.1f);
-        }
-        else 
-        {
-            manager.gameObject.transform.position = Vector3.MoveTowards(manager.gameObject.transform.position, 
-                parameter.downDirection.position, parameter.randomSpeed * Time.deltaTime * 0.1f);
-        }
-        
+
     }
 
     public void OnExit() 
